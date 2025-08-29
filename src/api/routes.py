@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from models import User, Club, Pista, Reserva, Pago
+from .models import User, Club, Pista, Reserva
 
 #------------------------------------------------------------------------------------------------
 
@@ -13,7 +13,6 @@ api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
-
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -26,21 +25,21 @@ def handle_hello():
 
 #------------------------------------------------------------------------------------------------
 
-@api.routes('/users', methods=['GET'])
+@api.route('/users', methods=['GET'])
 def get_all_users():
     users= User.query.all()
     if not users:
         return jsonify({"msg": "ERROR"}), 404
     return jsonify([user.serialize() for user in users]), 200  
 
-@api.routes('/users/<int:id>', methods=['GET'])
+@api.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     unique_user= User.query.get(id)
     if not unique_user:
         return ({"message": "User not found, try with other user."}), 404
     return jsonify([user.serialize()]), 200
 
-@api.routes('/users', methods=['POST'])
+@api.route('/users', methods=['POST'])
 def create_user():
     data= request.get_json()
     if not data.get("name") or not data.get("email") or not data.get("password"):
@@ -59,7 +58,7 @@ def create_user():
     return jsonify(new_user.serialize()), 201
 #------------------------------------------------------------------------------------------------
 
-@api.routes('/clubs', methods=['GET'])
+@api.route('/clubs', methods=['GET'])
 def get_all_clubs():
     clubs= Club.query.all()
     if not clubs:
@@ -67,14 +66,14 @@ def get_all_clubs():
     return jsonify([club.serialize() for club in clubs]), 200
 
 
-@api.routes('/clubs/<int:id>', methods=['GET'])
+@api.route('/clubs/<int:id>', methods=['GET'])
 def get_club(id):
     unique_club= Club.query.get(id)
     if not unique_club:
         return({"message": "Club not found, try with other club."}), 404
     return jsonify([club.serialize()]), 200
 
-@api.routes('/clubs', methods=['POST'])
+@api.route('/clubs', methods=['POST'])
 def create_club():
     data= request.get_json()
     if not data("email") or not data("password") or not data("cif_nif"):
@@ -92,14 +91,14 @@ def create_club():
     return jsonify(new_club.serialize())
 #------------------------------------------------------------------------------------------------
 
-@api.routes('/pistas', methods=['GET'])
+@api.route('/pistas', methods=['GET'])
 def get_all_pistas():
     pistas= Pista.query.all()
     if not pistas:
         return jsonify({"message": "ERROR"}), 404
     return jsonify([pista.serialize() for pista in pistas]), 200
 
-@api.routes('/pistas/<int:id>', methods=['GET'])
+@api.route('/pistas/<int:id>', methods=['GET'])
 def get_pista(id):
     unique_pista= Pista.query.get(id)
     if not unique_pista:
