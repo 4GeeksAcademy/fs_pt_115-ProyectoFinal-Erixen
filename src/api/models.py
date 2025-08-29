@@ -1,6 +1,10 @@
+
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, ForeingKey, Integer
+from sqlalchemy import String, Boolean, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship 
+import enum
+from sqlalchemy import Enum as SqlEnum
+
 
 db = SQLAlchemy()
 
@@ -11,10 +15,10 @@ class User(db.Model):
     lastname: Mapped[str] = mapped_column(String(30), nullable=False)
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
-    telefono: Mapped[int] = mapped_column(int(20), nullable=False)
-    rol: Mapped[list]
+    telefono: Mapped[str] = mapped_column(String(30), nullable=False)
+    rol: Mapped[str] = mapped_column(String(255))
     password: Mapped[str] = mapped_column(nullable=False)
-    reservas_id: Mapped[list["Reserva"]] = relationship(backpopulates="user_reserva")
+    reservas_id: Mapped[list["Reserva"]] = relationship(back_populates="user_reserva")
 
     def serialize(self):
         return {
@@ -35,9 +39,9 @@ class Club(db.Model):
     cif_nif: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
     direccion: Mapped[str] = mapped_column(String(255), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    telefono: Mapped[int] = mapped_column(int(20), nullable=False)
+    telefono: Mapped[str] = mapped_column(String(20), nullable=False)
     horario_apertura_cierre: Mapped[str] = mapped_column(String(255))
-    num_pista: Mapped[list["Pista"]] = relationship(backpopulates="pista")
+    num_pista: Mapped[list["Pista"]] = relationship(back_populates="pista")
     # password: Mapped[str] = mapped_column(nullable=False)
 
     def serialize(self):
@@ -45,7 +49,7 @@ class Club(db.Model):
             "id": self.id,
             "name": self.name,
             "cif_nif": self.cif_nif,
-            "direccion": self.lastname,
+            "direccion": self.direccion,
             "telefono": self.telefono,
             "email": self.email,
             "horario_apertura_cierre": self.horario_apertura_cierre,
@@ -54,15 +58,25 @@ class Club(db.Model):
         }
 
 #------------------------------------------------------------------------------------------------
+class TipoSuperficie(enum.Enum):
+    CESPED="cesped"
+    HORMIGON="hormigon"
+    SINTETICO="sintetico"
+
 class Pista(db.Model):
+
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_club: Mapped[int] = relationship(ForeingKey("club_id"))
+    id_club: Mapped[int] = mapped_column(ForeignKey("club_id"))
     numero_pista: Mapped[int]
-    superficie: Mapped[list]
+    superficie: Mapped[TipoSuperficie] = mapped_column(
+        SqlEnum(TipoSuperficie, name="tipo_superficie"), 
+        nullable=False, 
+        default=TipoSuperficie.CESPED
+    )
     precio_hora: Mapped[float]
-    estado: Mapped[list]
-    pista:Mapped["Club"] = relationship(backpopulates="num_pista")
-    reserva_pista: Mapped[list["Reserva"]] = relationship(backpopulates="pista_reservada")
+    estado: Mapped[str]
+    pista:Mapped["Club"] = relationship(back_populates="num_pista")
+    reserva_pista: Mapped[list["Reserva"]] = relationship(back_populates="pista_reservada")
 
     def serialize(self):
         return {
@@ -81,10 +95,10 @@ class Reserva(db.Model):
     hora_inicio: Mapped[str]
     hora_fin: Mapped[str] 
     precio_total: Mapped[float]
-    estado: Mapped[enumerate]
-    user_reserva: Mapped[int] = relationship(backpopulates="reserva_id")
-    pista_reservada: Mapped["Pista"] = relationship(backpopulates="reserva_pista")
-    pago_id: Mapped["Pago"] = relationship(backpopulates="reserva_pago")
+    estado: Mapped[str]
+    user_reserva: Mapped[int] = relationship(back_populates="reserva_id")
+    pista_reservada: Mapped["Pista"] = relationship(back_populates="reserva_pista")
+    pago_id: Mapped["Pago"] = relationship(back_populates="reserva_pago")
 
     def serialize(self):
         return{
@@ -100,11 +114,11 @@ class Reserva(db.Model):
 #------------------------------------------------------------------------------------------------    
 class Pago(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_reserva: Mapped[int] = relationship(ForeingKey("id_reserva"))  
-    metodo_pago: Mapped[list]
+    id_reserva: Mapped[int] = mapped_column(ForeignKey("id_reserva"))  
+    metodo_pago: Mapped[str]
     monto_cantidad: Mapped[float]
-    estado_pago: Mapped[list] 
-    pago_reserva: Mapped["Reserva"] = relationship(backpopulates="pago_id")
+    estado_pago: Mapped[str] 
+    pago_reserva: Mapped["Reserva"] = relationship(back_populates="pago_id")
 
     def serialize(self):
         return{
