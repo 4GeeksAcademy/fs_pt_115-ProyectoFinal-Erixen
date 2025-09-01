@@ -114,7 +114,7 @@ class Reserva(db.Model):
 #------------------------------------------------------------------------------------------------    
 class Pago(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_reserva: Mapped[int] = mapped_column(ForeignKey("id_reserva"))  
+    id_reserva: Mapped[int] = mapped_column(ForeignKey("reserva.id"))  
     metodo_pago: Mapped[str]
     monto_cantidad: Mapped[float]
     estado_pago: Mapped[str] 
