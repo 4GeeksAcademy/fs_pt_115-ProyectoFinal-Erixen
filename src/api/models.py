@@ -123,4 +123,26 @@ class Reserva(db.Model):
             "hora_inicio": self.hora_inicio.isoformat(),
             "hora_fin": self.hora_fin.isoformat(),
             "precio_total": self.precio_total,
-        } 
+            "estado": self.estado
+        }
+    
+#------------------------------------------------------------------------------------------------    
+class Pago(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    id_reserva: Mapped[int] = mapped_column(ForeignKey("reserva.id"))  
+    metodo_pago: Mapped[str]
+    monto_cantidad: Mapped[float]
+    estado_pago: Mapped[str] 
+    pago_reserva: Mapped["Reserva"] = relationship(back_populates="pago_id")
+
+    def serialize(self):
+        return{
+            "id": self.id,
+            "id_reserva": self.id_reserva,
+            "metodo_pago": self.metodo_pago,
+            "monto_cantidad": self.monto_cantidad,
+            "estado_pago": self.estado_pago
+        }
+    
+
+#------------------------------------------------------------------------------------------------    

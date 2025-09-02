@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Footer } from "../components/Footer.jsx";
 
 export const LandingPage = () => {
 
