@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from .models import User, Club, Pista, Reserva, Pago
+from .models import User, Club, Pista, Reserva
 
 #------------------------------------------------------------------------------------------------
 
