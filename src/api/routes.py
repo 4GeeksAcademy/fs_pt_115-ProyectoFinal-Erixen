@@ -91,7 +91,7 @@ def delete_user(id):
 
 @api.route('/clubs', methods = ['GET'])
 def get_all_clubs():
-    clubs= Club.query.all()
+    clubs = Club.query.all()
     if not clubs:
         return jsonify({"message": "ERROR"}), 404
     return jsonify([club.serialize() for club in clubs]), 200
@@ -171,6 +171,16 @@ def get_pista(id):
         return jsonify({"message": "Pista not found, try with other pista."})
     return jsonify(unique_pista.serialize()), 200
 
+#Pistas de un club concreto
+@api.route('/pistas/<int:club_id>', methods = ['GET'])
+def get_pistas_de_un_club(club_id):
+    pistas_del_club = Pista.query.filter(Pista.id_club == club_id).all()
+
+    if not pistas_del_club:
+        return jsonify({"error": f"pistas for club with id {club_id} not found"}), 404
+    
+    return jsonify([pista_del_club.serialize() for pista_del_club in pistas_del_club]), 200
+
 @api.route('/pistas', methods = ['POST'])
 def create_pista():
     data = request.get_json()
@@ -246,6 +256,24 @@ def get_reserva(id):
     
     return jsonify(my_reserva.serialize()), 200
 
+#get reservas de un usuario
+@api.route('/reservas/<int:usuario_id>', methods = ['GET'])
+def reservas_de_un_usuario(usuario_id):
+    reservas_de_usuario = Reserva.query.filter(Reserva.id_usuario == usuario_id).all()
+
+    # en este caso si no hay reservas devuelve list vacío en vez de devolver error
+    return jsonify([reserva_de_usuario.serialize() for reserva_de_usuario in reservas_de_usuario]), 200
+
+#get reservas que tiene una pista
+@api.route('/reservas/<int:pista_id>', methods = ['GET'])
+def get_reservas_de_una_pista(pista_id):
+    reservas_de_una_pista = Reserva.query.filter(Reserva.id_pista == pista_id).all()
+
+    if not reservas_de_una_pista:
+        return jsonify({"error": f"reservas for pista with id {pista_id} not found"}), 404
+    
+    return jsonify([reserva_de_una_pista.serialize() for reserva_de_una_pista in reservas_de_una_pista]), 200
+
 @api.route('/reservas', methods = ['POST'])
 def create_reserva():
     data = request.get_json()
@@ -305,76 +333,76 @@ def delete_reserva(id):
 
 #------------------------------------------------------------------------------------------------
 
-@api.route('/pagos', methods = ['GET'])
-def get_all_pagos():
-    pagos = Pago.query.all()
+# @api.route('/pagos', methods = ['GET'])
+# def get_all_pagos():
+#     pagos = Pago.query.all()
 
-    if not pagos:
-        return jsonify({"error": "pagos not found"}), 404
+#     if not pagos:
+#         return jsonify({"error": "pagos not found"}), 404
     
-    return jsonify([Pago.serialize() for pago in pagos]), 200
+#     return jsonify([Pago.serialize() for pago in pagos]), 200
 
-@api.route('/pagos/<int:id>', methods = ['GET'])
-def get_pago(id):
-    my_pago = Pago.query.get(id)
+# @api.route('/pagos/<int:id>', methods = ['GET'])
+# def get_pago(id):
+#     my_pago = Pago.query.get(id)
 
-    if not my_pago:
-        return jsonify({"error": f"pago with id {id} not found"})
+#     if not my_pago:
+#         return jsonify({"error": f"pago with id {id} not found"})
     
-    return jsonify(my_pago.serialize()), 200
+#     return jsonify(my_pago.serialize()), 200
 
-@api.route('/pagos', methods = ['POST'])
-def create_pago():
-    data = request.get_json()
+# @api.route('/pagos', methods = ['POST'])
+# def create_pago():
+#     data = request.get_json()
 
-    if not data.get("metodo_pago") or not data.get("monto_cantidad") or not data.get("estado_pago"):
-        return jsonify({"error": "Metodo de pago, monto cantidad and estado del pago are required fields"}), 400
+#     if not data.get("metodo_pago") or not data.get("monto_cantidad") or not data.get("estado_pago"):
+#         return jsonify({"error": "Metodo de pago, monto cantidad and estado del pago are required fields"}), 400
 
-    new_pago = Pago(
-        metodo_pago = data.get("metodo_pago"),
-        monto_cantidad = data.get("monto_cantidad"),
-        estado_pago = data.get("estado_pago")
-    )
+#     new_pago = Pago(
+#         metodo_pago = data.get("metodo_pago"),
+#         monto_cantidad = data.get("monto_cantidad"),
+#         estado_pago = data.get("estado_pago")
+#     )
 
-    db.session.add(new_pago)
-    db.session.commit()
+#     db.session.add(new_pago)
+#     db.session.commit()
 
-    return jsonify({
-        "message": "new pago registered",
-        "pago": new_pago.serialize()
-    })
+#     return jsonify({
+#         "message": "new pago registered",
+#         "pago": new_pago.serialize()
+#     })
 
-@api.route('/pagos/<int:id>', methods = ['PUT'])
-def update_pago(id):
-    pago = Pago.query.get(id)
+# @api.route('/pagos/<int:id>', methods = ['PUT'])
+# def update_pago(id):
+#     pago = Pago.query.get(id)
 
-    if not pago:
-        return jsonify({"error": f"pago with id {id} not found"}), 404
+#     if not pago:
+#         return jsonify({"error": f"pago with id {id} not found"}), 404
     
-    data = request.get_json()
+#     data = request.get_json()
 
-    pago.metodo_pago = data.get("metodo_pago", pago.metodo_pago)
-    pago.monto_cantidad = data.get("monto_cantidad", pago.monto_cantidad)
-    pago.estado_pago = data.get("estado_pago", pago.estado_pago)
+#     pago.metodo_pago = data.get("metodo_pago", pago.metodo_pago)
+#     pago.monto_cantidad = data.get("monto_cantidad", pago.monto_cantidad)
+#     pago.estado_pago = data.get("estado_pago", pago.estado_pago)
 
-    db.session.commit()
+#     db.session.commit()
 
-    return jsonify({
-        "message": f"pago with id {id} updated succesfully",
-        "pago updated": pago.serialize()
-    })
+#     return jsonify({
+#         "message": f"pago with id {id} updated succesfully",
+#         "pago updated": pago.serialize()
+#     })
 
 
-@api.route('/pagos', methods = ['DELETE'])
-def delete_pago(id):
-    my_pago = Pago.query.get(id)
+# @api.route('/pagos', methods = ['DELETE'])
+# def delete_pago(id):
+#     my_pago = Pago.query.get(id)
 
-    if not my_pago:
-        return jsonify({"error": f"pago with id: {id} not found"}), 404
+#     if not my_pago:
+#         return jsonify({"error": f"pago with id: {id} not found"}), 404
     
-    db.session.delete(my_pago)
-    db.session.commit()
-    return jsonify(f"pago with id {id} deleted succesfully"), 200
+#     db.session.delete(my_pago)
+#     db.session.commit()
+#     return jsonify(f"pago with id {id} deleted succesfully"), 200
     
 
 
