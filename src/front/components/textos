@@ -1,0 +1,15 @@
+<nav className="navbar navbar-expand-lg bg-body-tertiary ">
+			<div className="d-flex justify-content-between " style={{backgroundColor: "#013047"}}>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<img src="public/logo_cortado.png" className="mt-1 my-1" style={{maxWidth: "20px", maxHeight: "100px"}}/>
+				<div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+					<a className="navbar-brand ms-1" href="#" style={{color: "white",fontFamily: "DM Serif Text"}}>Padel+</a>
+				</div>
+				<p className="mx-auto" style={{color: "white"}}>pepeeppepepepe</p>
+				<p style={{color: "white"}}>pepeeppepepepe</p>
+				<img src="src/front/components/pepaPig (1).jpg" className="mt-1 my-1" style={{maxWidth: "50px", maxHeight: "100px",borderRadius: "100px"}}/>
+				
+			</div>
+		</nav>
