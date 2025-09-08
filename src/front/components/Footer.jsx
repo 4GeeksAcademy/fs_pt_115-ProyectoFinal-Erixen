@@ -1,4 +1,7 @@
-export const Footer = () => (
+export const Footer = () => {
+
+	return(
+
 	<footer className="footer mt-auto py-3 text-center">
 		<p>
 			Check the <a target="_blank" href="https://4geeks.com/docs/start/react-flask-template">template documentation</a> <i className="fa-solid fa-file"></i> for help.
@@ -8,4 +11,6 @@ export const Footer = () => (
 			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
 		</p>
 	</footer>
-);
+	)
+};
+
