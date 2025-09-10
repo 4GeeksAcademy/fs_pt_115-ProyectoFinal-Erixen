@@ -1,34 +1,38 @@
 // Import necessary components and functions from react-router-dom.
 
 import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
-import { SignUp } from "./pages/SignUp";
-import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { LandingPage } from "./pages/LandingPage";
+import { Clubes } from "./pages/Clubes";
+import { ReservasUsuario } from "./pages/ReservasUsuario";
+import { ReservarPista } from "./pages/ReservarPista";
+import { SobreNosotros } from "./pages/SobreNosotros";
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
+  createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
     // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
     // Root, on the contrary, create a sister Route, if you have doubts, try it!
     // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
     // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
 
-      // Root Route: All navigation will start from here.
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
+    // Root Route: All navigation will start from here.
+    <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        <Route path= "/home" element={<Home />} />
-        <Route path="/profile/<int:user_id>" element={ <Profile />} />
-      </Route>
-    )
+      {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/clubes" element={<Clubes />} />
+      <Route path="/reservar-pista" element={<ReservarPista />} />
+      <Route path="/sobre-nosotros" element={<SobreNosotros />} />
+      <Route path="/profile/<int:user_id>" element={<Profile />} />
+      <Route path="/reservas/<int:user_id>" element={<ReservasUsuario />} />
+    </Route>
+  )
 );
