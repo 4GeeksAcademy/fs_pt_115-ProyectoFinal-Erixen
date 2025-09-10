@@ -1,6 +1,6 @@
 body {
-        color: white;
-        }
+  color: white;
+}
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset;
@@ -14,7 +14,7 @@ input.input-personalizado {
 }
 
 #FondoMegatop{
-  background-image: url('/imgs/pistaQueMeLaPoneTopeDura.png');
+  background-image: url('/src/front/assets/fondo_pista.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -23,7 +23,7 @@ input.input-personalizado {
 
 .profile-background{
 
-background-image: url(/imgs/pistaQueMeLaPoneTopeDura.png);
+background-image: url('/src/front/assets/fondo_pista.png');
  background-size: cover
 
 }

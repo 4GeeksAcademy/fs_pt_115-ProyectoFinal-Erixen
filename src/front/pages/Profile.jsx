@@ -1,4 +1,5 @@
-import { useEffect,useState } from "react"; 
+import { useEffect,useState } from "react";
+
 export const Profile = () => { 
   const [ModoEdicion, SetModoEdicion] = useState(false) 
   const [inputNombre, setInputNombre] = useState("") 
@@ -19,13 +20,11 @@ export const Profile = () => {
     };
   }, []);
 
-
-
   return ( 
     <div className="container mt-4 p-1 pb-2" id="FondoMegatop" style={{ backgroundColor: "#013047", borderRadius: "10px" }}> 
       <div className="d-flex justify-content-between"> 
         <div className="Spacer No borrar"></div> 
-        <img src="/imgs/pepaPig.jpg" className="" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} /> 
+        <img src="../assets/default_profile.jpg" className="" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} /> 
         <i onClick={() => SetModoEdicion(true)} style={{cursor: "pointer"}} class="fa-solid fa-gear" /> 
       </div> 
       <div className="d-flex justify-content-center mt-2" > 
