@@ -13,11 +13,17 @@ input.input-personalizado {
   transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
 }
 
-#divAcederReservas{
-  height: 125px;
+#FondoMegatop{
   background-image: url('/imgs/pistaQueMeLaPoneTopeDura.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+
+}
+
+.profile-background{
+
+background-image: url(/imgs/pistaQueMeLaPoneTopeDura.png);
+ background-size: cover
 
 }
