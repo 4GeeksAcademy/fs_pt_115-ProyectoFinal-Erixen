@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import GlobalStyles from "../components/GlobalStyles";
-import LoginModal from "../components/LoginModal";
-import SignupModal from "../components/SignupModal";
+import { GlobalStyles } from "../components/GlobalStyles";
+import { LoginModal } from "../components/LoginModal";
+import { SignupModal } from "../components/SignupModal";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import Footer from "../components/Footer.jsx";
+import { Footer } from "../components/Footer";
 
 export const LandingPage = () => {
 	// Estados para controlar la visibilidad de los modales de login y registro.
@@ -78,3 +78,4 @@ export const LandingPage = () => {
 		</>
 	);
 };
+

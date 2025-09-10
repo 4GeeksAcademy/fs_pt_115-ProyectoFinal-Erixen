@@ -1,0 +1,29 @@
+body {
+        color: white;
+        }
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
+}
+
+input.input-personalizado {
+  background-color: transparent;
+  border-radius: 5px;
+  transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
+}
+
+#FondoMegatop{
+  background-image: url('/imgs/pistaQueMeLaPoneTopeDura.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.profile-background{
+
+background-image: url(/imgs/pistaQueMeLaPoneTopeDura.png);
+ background-size: cover
+
+}
