@@ -1,6 +1,6 @@
 body {
-        color: white;
-        }
+  color: white;
+}
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px transparent inset;
@@ -13,9 +13,8 @@ input.input-personalizado {
   transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
 }
 
-#divAcederReservas{
-  height: 125px;
-  background-image: url('/imgs/pistaQueMeLaPoneTopeDura.png');
+#FondoMegatop{
+  background-image: url('/src/front/assets/fondo_pista.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -24,4 +23,8 @@ input.input-personalizado {
 
 .myButton:hover{
   text-decoration: underline;
+}
+
+.socialButton:hover{
+  color: #3374beff !important;
 }
