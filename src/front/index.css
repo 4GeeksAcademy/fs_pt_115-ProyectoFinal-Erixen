@@ -21,3 +21,7 @@ input.input-personalizado {
   background-repeat: no-repeat;
 
 }
+
+.myButton:hover{
+  text-decoration: underline;
+}
