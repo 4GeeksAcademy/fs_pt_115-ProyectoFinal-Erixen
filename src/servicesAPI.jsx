@@ -1,7 +1,48 @@
+//---------------------------------------------------------------------
 
-//`${import.meta.env.VITE_BACKEND_URL}/api/signup` ==> aqui lo que vamos a hacer es importar la variable que lleva la url del backend.
+// SignUp de un usuario
+export const createUser = async (newRegister) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(newRegister)
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Login de un usuario
+export const login = async (newLogin) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BACKEND_URL}/api/login`,
+		{
+			method: "POST",
+			body: JSON.stringify(newLogin),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+	if (response.ok) {
+		const res = await response.json();
+		localStorage.setItem("token", res.token);
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
 
 //---------------------------------------------------------------------
+
 //USERS
 
 //Funciona
@@ -27,21 +68,6 @@ export const getUser = async (id) => {
 	return data;
 }
 
-export const createUser = async () => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`,{
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			name: "New Name ",
-			email: "New Email ",
-			password: "New Password"
-		})
-	})
-	const data = await response.json();
-	return data;
-}
 
 export const deleteUser = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`, {

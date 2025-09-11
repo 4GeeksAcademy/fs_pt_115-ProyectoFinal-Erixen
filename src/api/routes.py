@@ -7,29 +7,70 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from .models import db, User, Club, Pista, Reserva
 
-# ------------------------------------------------------------------------------------------------
-
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 
+# ------------------------------------------------------------------------------------------------
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+# Registro de usuario
+@api.route('/users', methods=['POST'])
+def create_user():
+    data = request.get_json()
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+    if not data["email"] or not data["password"]:
+        return jsonify({"msg": "Email and password are required"}), 400
+    
+    existing_user = db.session.execute(db.select(User).where(
+        User.email == data["email"]
+    )).scalar_one_or_none()
 
-    return jsonify(response_body), 200
+    if existing_user:
+        return jsonify({"msg": "User with this email already exists"}), 400
+    
+    new_user = User(
+        nombre = data["nombre"],
+        apellidos = data["apellidos"],
+        email = data["email"],
+        telefono = data["telefono"],
+        rol = data["rol"]
+    )
+    new_user.set_password(data["password"])
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg": "User created successfully"}), 201
+
+# Login de usuario
+@api.route('/login', methods=["POST"])
+def login():
+    data = request.get_json()
+
+    if not data["email"] or not data["password"]:
+        return jsonify({"msg": "Email and password are required"}), 400
+    
+    user = db.session.execute(db.select(User).where(
+        User.email == data["email"]
+    )).scalar_one_or_none()
+
+    if user is None:
+        return jsonify({"msg": "Invalid email or password"}), 400
+    
+    if user.check_password(data["password"]):
+        access_token = create_access_token(identity = str(user.id))
+        return jsonify({"msg": "Login successful", "token": access_token}), 200
+    else:
+        return jsonify({"msg": "Invalid email or password"}), 400
 
 # ------------------------------------------------------------------------------------------------
 # Users endpoints.
 
-
-# funciona.
 @api.route('/users', methods=['GET'])
 def get_all_users():
     users = User.query.all()
@@ -38,7 +79,6 @@ def get_all_users():
 
     return jsonify([user.serialize() for user in users]), 200
 
-# funciona.
 @api.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
     unique_user = User.query.get(id)
@@ -46,28 +86,6 @@ def get_user(id):
         return ({'message': 'User not found, try with other user.'}), 404
 
     return jsonify([unique_user.serialize()]), 200
-
-# para JAVIER CON CARIÑO
-@api.route('/users', methods=['POST'])
-def create_user():
-    data = request.get_json()
-    if not data.get("email") or not data.get("password"):
-        return jsonify({'message': 'Name, Email and Password are required'}), 400
-
-    hashed_password = bcrypt.generate_password_hash(
-        data.get("password")
-    ).decode('utf-8')
-
-    new_user = User(
-        email=data.get("email"),
-        password=hashed_password
-    )
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify([new_user.serialize()]), 201
-
 
 @api.route('/users/<int:id>', methods=['PUT'])
 def update_user(id):
@@ -88,7 +106,6 @@ def update_user(id):
         "message": f"user with id {id} updated succesfully",
         "user updated": user.serialize()
     }), 200
-
 
 @api.route("/users/<int:id>", methods=['DELETE'])
 def delete_user(id):
