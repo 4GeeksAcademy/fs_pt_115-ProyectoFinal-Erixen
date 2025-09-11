@@ -1,4 +1,4 @@
-import 'bootstrap-icons/font/bootstrap-icons.css';
+//import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const Footer = () => {
 
@@ -16,20 +16,20 @@ export const Footer = () => {
 						<p className="text-black ps-1 mb-0" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
 						<div className='d-flex'>
 							<btn className="btn btn-primary m-1 text-black p-0 me-2 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i class="bi bi-instagram"></i>
+								<i className="bi bi-instagram"></i>
 							</btn>
 							<btn className="btn btn-primary m-1 text-black p-0 me-2 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i class="bi bi-twitter-x"></i>
+								<i className="bi bi-twitter-x"></i>
 							</btn>
 							<btn className="btn btn-primary m-1 text-black p-0 m-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i class="bi bi-facebook"></i>
+								<i className="bi bi-facebook"></i>
 							</btn>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className='text-white text-center py-2' style={{ backgroundColor: "#3374beff" }}>
-				Padel+ S.L 2025 <i class="bi bi-c-circle"></i>  Todos los derechos reservados
+				Padel+ S.L 2025 <i className="bi bi-c-circle"></i>  Todos los derechos reservados
 			</div>
 		</div>
 	)
