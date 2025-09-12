@@ -14,7 +14,15 @@ export const SignupModal = ({ show, handleClose, switchToLogin }) => {
                         <button type="button" className="btn-close" onClick={handleClose}></button>
                     </div>
                     <div className="modal-body">
-                        <form>
+                        <form className="row">
+                            <div className="mb-3 col-6">
+                                <label className="form-label">Nombre</label>
+                                <input type="password" className="form-control" id="signupPassword" />
+                            </div>
+                            <div className="mb-3 col-6">
+                                <label className="form-label">Apellido</label>
+                                <input type="password" className="form-control" id="signupPassword" />
+                            </div>
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
                                 <input type="email" className="form-control" id="signupEmail" />
@@ -23,11 +31,15 @@ export const SignupModal = ({ show, handleClose, switchToLogin }) => {
                                 <label className="form-label">Contraseña</label>
                                 <input type="password" className="form-control" id="signupPassword" />
                             </div>
-                            <button type="submit" className="btn btn-primary">Crear Cuenta</button>
+                            <div className="mb-3">
+                                <label className="form-label">Telefono</label>
+                                <input type="password" className="form-control" id="signupPassword" />
+                            </div>
+                            <button type="submit" className="btn btn-primary ">Crear Cuenta</button>
                         </form>
                     </div>
-                    <div className="modal-footer">
-                        <p>¿Ya tienes una cuenta?</p>
+                    <div className="modal-footer d-flex justify-content-center">
+                        <p className="align-middle">¿Ya tienes una cuenta?</p>
                         <a href="#" onClick={switchToLogin}>
                             Inicia Sesión
                         </a>
