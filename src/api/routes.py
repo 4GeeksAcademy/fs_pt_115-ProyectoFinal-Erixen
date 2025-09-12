@@ -297,7 +297,7 @@ def get_all_reservas():
     if not reservas:
         return jsonify({'message': 'ERROR, There not reservas.'}), 404
 
-    return jsonify([Reserva.serialize() for reserva in reservas]), 200
+    return jsonify([reserva.serialize() for reserva in reservas]), 200
 
 
 @api.route('/reservas/<int:id>', methods=['GET'])
