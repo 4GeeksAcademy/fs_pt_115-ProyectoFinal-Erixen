@@ -21,9 +21,10 @@ input.input-personalizado {
 
 }
 
-.profile-background{
+.myButton:hover{
+  text-decoration: underline;
+}
 
-background-image: url('/src/front/assets/fondo_pista.png');
- background-size: cover
-
+.socialButton:hover{
+  color: #3374beff !important;
 }

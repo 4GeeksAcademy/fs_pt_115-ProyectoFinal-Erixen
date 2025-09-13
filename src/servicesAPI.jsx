@@ -1,7 +1,48 @@
+//---------------------------------------------------------------------
 
-//`${import.meta.env.VITE_BACKEND_URL}/api/signup` ==> aqui lo que vamos a hacer es importar la variable que lleva la url del backend.
+// SignUp de un usuario
+export const createUser = async (newRegister) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(newRegister)
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Login de un usuario
+export const login = async (newLogin) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BACKEND_URL}/api/login`,
+		{
+			method: "POST",
+			body: JSON.stringify(newLogin),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+	if (response.ok) {
+		const res = await response.json();
+		localStorage.setItem("token", res.token);
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
 
 //---------------------------------------------------------------------
+
 //USERS
 
 //Funciona
@@ -27,21 +68,6 @@ export const getUser = async (id) => {
 	return data;
 }
 
-export const createUser = async () => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`,{
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			name: "New Name ",
-			email: "New Email ",
-			password: "New Password"
-		})
-	})
-	const data = await response.json();
-	return data;
-}
 
 export const deleteUser = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`, {
@@ -59,13 +85,13 @@ export const deleteUser = async (id) => {
 //---------------------------------------------------------------------
 // CLUBS
 
-export const getclubs = async () => {
+export const getClubs = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`);
 	const data = await response.json();
 	return data;
 }
 
-export const getclub = async (id) => {
+export const getClub = async (id) => {
 	const response = await fetch(`https://silver-rotary-phone-wv5697xw6vc9xpg-3001.app.github.dev/api/clubs/${id}`);
 
 	if (!response.ok) {
@@ -77,7 +103,7 @@ export const getclub = async (id) => {
 	return data;
 }
 
-export const createclub = async () => {
+export const createClub = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`, {
 		method: "POST",
 		headers: {
@@ -95,13 +121,13 @@ export const createclub = async () => {
 //---------------------------------------------------------------------
 // PISTAS
 
-export const getpistas = async () => {
+export const getPistas = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas`);
 	const data = await response.json();
 	return data;
 }
 
-export const getpista = async (id) => {
+export const getPista = async (id) => {
 	const response = await fetch(`https://silver-rotary-phone-wv5697xw6vc9xpg-3001.app.github.dev/api/pistas/${id}`);
 
 	if (!response.ok) {
@@ -117,14 +143,15 @@ export const getpista = async (id) => {
 //---------------------------------------------------------------------
 // RESERVAS
 
-export const getreservas = async () => {
+export const getReservas = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas`);
 	const data = await response.json();
+	console.log(data);
 	return data;
 }
 
-export const getreserva = async (id) => {
-	const response = await fetch(`https://silver-rotary-phone-wv5697xw6vc9xpg-3001.app.github.dev/api/reservas/${id}`);
+export const getReserva = async (id) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`);
 
 	if (!response.ok) {
 		console.log("There's not reserva, look for another.");
@@ -132,9 +159,11 @@ export const getreserva = async (id) => {
 	}
 
 	const data = await response.json();
+	
 	return data;
 
 }
+
 
 export const createReserva = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas`, {

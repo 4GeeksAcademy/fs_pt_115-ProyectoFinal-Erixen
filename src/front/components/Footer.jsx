@@ -1,16 +1,39 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 export const Footer = () => {
 
-	return(
+	return (
+		<div>
+			<hr className="text-black mb-0" />
+			<div className='d-md-flex'>
+				<div className="col-12 col-md-6">
+					<div className='px-2 py-3'>
+						<p className="text-black mb-0 py-1" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
+						<div className='d-flex gap-2 py-1'>
+							<btn className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+								<i className="bi bi-instagram"></i>
+							</btn>
+							<btn className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+								<i className="bi bi-twitter-x"></i>
+							</btn>
+							<btn className="btn btn-primary text-black p-0 m-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+								<i className="bi bi-facebook"></i>
+							</btn>
+						</div>
+					</div>
+				</div>
 
-	<footer className="footer mt-auto py-3 text-center">
-		<p>
-			Check the <a target="_blank" href="https://4geeks.com/docs/start/react-flask-template">template documentation</a> <i className="fa-solid fa-file"></i> for help.
-		</p>
-		<p>
-			Made with <i className="fa fa-heart text-danger" /> by{" "}
-			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-		</p>
-	</footer>
+				<div className="col-12 col-md-6 py-3 d-flex align-items-start flex-column">
+					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Declaración de privacidad</div>
+					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Información sobre cuentas</div>
+					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Condiciones de uso</div>
+				</div>
+
+			</div>
+			<div className='text-white text-center py-2' style={{ backgroundColor: "#3374beff" }}>
+				Padel+ S.L 2025 <i className="bi bi-c-circle"></i>  Todos los derechos reservados
+			</div>
+		</div>
 	)
 };
 
