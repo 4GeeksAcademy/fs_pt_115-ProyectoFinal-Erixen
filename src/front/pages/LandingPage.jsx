@@ -50,10 +50,7 @@ export const LandingPage = () => {
 
 				<main className="main-content">
 					{/* Formas para el fondo. */}
-					{/* a lo simple, buscar recursos para luego, interacion de click con el background*/}
-					<div className="animated-bg-shape animate-blob" style={{ top: '-5%', left: '-10%', backgroundColor: '#8ECAE6' }}></div>
-					<div className="animated-bg-shape animate-blob" style={{ bottom: '-10%', right: '-10%', backgroundColor: '#FFB703' }}></div>
-					<div className="animated-bg-shape animate-blob" style={{ bottom: '5%', left: '20%', backgroundColor: '#FB8500' }}></div>
+					{/* Los elementos del fondo animado se han eliminado de aqui, ahora estan en layout con la finalidad de que sean globales;(PENDIENTE)*/}
 
 					<div className="hero-content">
 						{/* Contenido principal de la landing page. */}
@@ -64,9 +61,12 @@ export const LandingPage = () => {
 							Conecta con jugadores de tu nivel, organiza partidos y mejora tu juego. Tu próximo partido está a un solo clic de distancia.
 						</p>
 						<div style={{ marginTop: '2rem' }}>
-							<button className="btn btn-primary btn-lg">
-								Buscar Partido
-							</button>
+							{/* Botón para buscar un partido. redirecciona a home*/}
+							<a href="/home" target="_blank" rel="noopener noreferrer">
+								<button className="btn btn-primary btn-lg">
+									Buscar Partido
+								</button>
+							</a>
 						</div>
 					</div>
 				</main>
