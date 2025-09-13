@@ -21,9 +21,9 @@ export const Home = () => {
 			</div>
 			{/* Carrusel Section */}
 			<div className="container my-5">
-				<div className="row">
-					
-				</div>
+
+
+				
 			</div>
 			{/* body section */}
 			<div className="container my-5">
