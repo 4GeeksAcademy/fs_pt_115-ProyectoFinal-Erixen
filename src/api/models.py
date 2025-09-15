@@ -111,7 +111,7 @@ class Pista(db.Model):
 #------------------------------------------------------------------------------------------------
 
 class Reserva(db.Model):
-    __tablename__ = "reservas"
+    __tablename__ = "reserva"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     id_pista: Mapped[int] = mapped_column(ForeignKey("pistas.id"))
