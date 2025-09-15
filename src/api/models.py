@@ -9,11 +9,14 @@ from sqlalchemy import Date, Time
 
 db = SQLAlchemy()
 
-#------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------
+
+
 class UserRol(enum.Enum):
     USER = "user"
     CLUB = "club"
     ADMIN = "admin"
+
 
 class User(db.Model):
     __tablename__ = "usuarios"
@@ -21,9 +24,11 @@ class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(30), nullable=False)
     apellidos: Mapped[str] = mapped_column(String(50), nullable=False)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     telefono: Mapped[str] = mapped_column(String(30), nullable=False)
-    rol: Mapped[UserRol] = mapped_column(SqlEnum(UserRol), default=UserRol.USER)
+    rol: Mapped[UserRol] = mapped_column(
+        SqlEnum(UserRol), default=UserRol.USER)
     password_hash: Mapped[str] = mapped_column(nullable=False)
 
     reservas: Mapped[list["Reserva"]] = relationship(back_populates="usuario")
@@ -45,7 +50,8 @@ class User(db.Model):
             "reservas": [reserva.id for reserva in self.reservas]
         }
 
-#------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------
+
 
 class Club(db.Model):
     __tablename__ = "clubs"
@@ -54,7 +60,8 @@ class Club(db.Model):
     nombre: Mapped[str] = mapped_column(String(30), nullable=False)
     cif: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
     direccion: Mapped[str] = mapped_column(String(255), nullable=False)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     telefono: Mapped[str] = mapped_column(String(20), nullable=False)
     hora_apertura: Mapped[time] = mapped_column(Time, nullable=False)
     hora_cierre: Mapped[time] = mapped_column(Time, nullable=False)
@@ -74,17 +81,20 @@ class Club(db.Model):
             "pistas": [pista.id for pista in self.pistas]
         }
 
-#------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------
+
 
 class TipoSuperficie(enum.Enum):
     CESPED = "cesped"
     HORMIGON = "hormigon"
     SINTETICO = "sintetico"
 
+
 class EstadoPista(enum.Enum):
     LIBRE = "libre"
     RESERVADA = "reservada"
     MANTENIMIENTO = "mantenimiento"
+
 
 class Pista(db.Model):
     __tablename__ = "pistas"
@@ -92,10 +102,12 @@ class Pista(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"))
     numero_pista: Mapped[int] = mapped_column(nullable=False)
-    superficie: Mapped[TipoSuperficie] = mapped_column(SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
+    superficie: Mapped[TipoSuperficie] = mapped_column(
+        SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
     precio_hora: Mapped[float] = mapped_column(nullable=False)
-    estado_pista: Mapped[EstadoPista] = mapped_column(SqlEnum(EstadoPista), default=EstadoPista.LIBRE)
-    
+    estado_pista: Mapped[EstadoPista] = mapped_column(
+        SqlEnum(EstadoPista), default=EstadoPista.LIBRE)
+
     club: Mapped["Club"] = relationship(back_populates="pistas")
     reservas: Mapped[list["Reserva"]] = relationship(back_populates="pista")
 
@@ -108,10 +120,11 @@ class Pista(db.Model):
             "estado_pista": self.estado_pista.value
         }
 
-#------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------
+
 
 class Reserva(db.Model):
-    __tablename__ = "reserva"
+    __tablename__ = "reservas"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     id_pista: Mapped[int] = mapped_column(ForeignKey("pistas.id"))
@@ -125,7 +138,7 @@ class Reserva(db.Model):
     pista: Mapped["Pista"] = relationship(back_populates="reservas")
 
     def serialize(self):
-        return{
+        return {
             "id": self.id,
             "id_pista": self.id_pista,
             "fecha_reserva": self.fecha_reserva.isoformat(),
@@ -133,3 +146,29 @@ class Reserva(db.Model):
             "hora_fin": self.hora_fin.isoformat(),
             "precio_total": self.precio_total
         }
+
+# ------------------------------------------------------------------------------------------------
+
+# class Contacto(db.Model):
+#     __tablename__ = "mensajes"
+
+#     id: Mapped[int] = mapped_column(primary_key=True)
+#     id_usuario: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+#     fecha_reserva: Mapped[date] = mapped_column(Date, nullable=False)
+#     hora_inicio: Mapped[time] = mapped_column(Time, nullable=False)
+#     hora_fin: Mapped[time] = mapped_column(Time, nullable=False)
+#     precio_total: Mapped[float] = mapped_column(nullable=False)
+#     id_usuario: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+
+#     usuario: Mapped["User"] = relationship(back_populates="reservas")
+#     pista: Mapped["Pista"] = relationship(back_populates="reservas")
+
+#     def serialize(self):
+#         return{
+#             "id": self.id,
+#             "id_pista": self.id_pista,
+#             "fecha_reserva": self.fecha_reserva.isoformat(),
+#             "hora_inicio": self.hora_inicio.isoformat(),
+#             "hora_fin": self.hora_fin.isoformat(),
+#             "precio_total": self.precio_total
+#         }

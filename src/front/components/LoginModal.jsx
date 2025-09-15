@@ -1,5 +1,8 @@
 import React from "react";
 import { SignupModal } from "./SignupModal";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../services/servicesAPI.js";
 // IMPORTANTE: esta estructura debe servir como modelo para el SignupModal
 
 
@@ -14,6 +17,35 @@ export const LoginModal = ({ show, handleClose, switchToSignup }) => {
         return null;
     }
 
+    const navigate = useNavigate()
+
+	const [newLogin, setNewLogin] = useState({
+		email: "",
+		password: ""
+	})
+
+	function onInputChange(event) {
+		if (event.target.id == "inputEmail") {
+			setNewLogin({ ...newLogin, email: event.target.value });
+		} else if (event.target.id == "inputPassword") {
+			setNewLogin({ ...newLogin, password: event.target.value });
+		}
+	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		const response = await login(newLogin);
+
+		if (response.status === 400) {
+			const errorMsg = response.msg
+			alert(errorMsg)
+		} else {
+			navigate("/home");
+            handleClose();
+		}
+	};
+
     return (
         <div className="modal" style={{ display: 'block' }} >
             <div className="modal-dialog">
@@ -25,14 +57,14 @@ export const LoginModal = ({ show, handleClose, switchToSignup }) => {
                     </div>
                     {/* body del modal, formulario. */}
                     <div className="modal-body">
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
-                                <input type="email" className="form-control" id="loginEmail" />
+                                <input type="email" className="form-control" id="inputEmail" onChange={onInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Contraseña</label>
-                                <input type="password" className="form-control" id="loginPassword" />
+                                <input type="password" className="form-control" id="inputPassword" onChange={onInputChange} />
                             </div>
                             <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
                         </form>

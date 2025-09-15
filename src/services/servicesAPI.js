@@ -4,10 +4,10 @@
 export const createUser = async (newRegister) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
 		method: "POST",
+		body: JSON.stringify(newRegister),
 		headers: {
 			"Content-Type": "application/json"
-		},
-		body: JSON.stringify(newRegister)
+		}
 	})
 
 	if (response.ok) {
