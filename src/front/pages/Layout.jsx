@@ -9,7 +9,16 @@ export const Layout = () => {
     return (
         <ScrollToTop>
             <Navbar />
+      
+            {/* Elementos del fondo animado */}
+            <div className="animated-bg-shape animate-blob" style={{ top: '-5%', left: '-10%', backgroundColor: '#8ECAE6', zIndex: -1 }}></div>
+            <div className="animated-bg-shape animate-blob" style={{ bottom: '-10%', right: '-10%', backgroundColor: '#FFB703', zIndex: -1 }}></div>
+            <div className="animated-bg-shape animate-blob" style={{ bottom: '5%', left: '20%', backgroundColor: '#FB8500', zIndex: -1 }}></div>
+
+            <main style={{ position: 'relative', zIndex: 1 }}>
                 <Outlet />
+            </main>
+
             <Footer />
         </ScrollToTop>
     )
