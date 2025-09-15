@@ -1,10 +1,18 @@
 import { useEffect } from "react";
-import { getReservas } from "../../servicesAPI";
+import { getReservas } from "../../services/servicesAPI.js";
+import { useNavigate } from "react-router-dom";
 
 export const ReservarPista = () => {
 
+	const navigate = useNavigate()
+
 	useEffect(() => {
-		getReservas()},[])
+		if (localStorage.getItem("token") == null) {
+			navigate("/")
+		} else {
+			getReservas()
+		}
+	},[localStorage.getItem("token")])
 
 	return (
 		<div className="container">

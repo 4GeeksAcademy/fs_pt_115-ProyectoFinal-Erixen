@@ -10,15 +10,15 @@ export const Footer = () => {
 					<div className='px-2 py-3'>
 						<p className="text-black mb-0 py-1" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
 						<div className='d-flex gap-2 py-1'>
-							<btn className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+							<button className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
 								<i className="bi bi-instagram"></i>
-							</btn>
-							<btn className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+							</button>
+							<button className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
 								<i className="bi bi-twitter-x"></i>
-							</btn>
-							<btn className="btn btn-primary text-black p-0 m-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
+							</button>
+							<button className="btn btn-primary text-black p-0 m-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
 								<i className="bi bi-facebook"></i>
-							</btn>
+							</button>
 						</div>
 					</div>
 				</div>

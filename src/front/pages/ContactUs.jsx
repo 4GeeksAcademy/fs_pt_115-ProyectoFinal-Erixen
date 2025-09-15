@@ -1,6 +1,10 @@
 import React from 'react';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ContactUs = () => {
+
+    const navigate = useNavigate()
 
     // Estilos en línea para los inputs del formulario
     const inputStyle = {
@@ -10,6 +14,12 @@ export const ContactUs = () => {
         backgroundColor: 'transparent',
         boxShadow: 'none', // Intenta remover el resplandor de foco
     };
+
+	useEffect(() => {
+		if (localStorage.getItem("token") == null) {
+			navigate("/")
+		}
+	}, [localStorage.getItem("token")]);
 
     return (
         <>

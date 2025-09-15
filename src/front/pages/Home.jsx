@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import { Carousel } from "../components/Carousel";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (localStorage.getItem("token") == null) {
+			navigate("/")
+		}
+	}, [localStorage.getItem("token")]);
+
 	return (
 		<div className="main-content">
 			<div className="hero-content">

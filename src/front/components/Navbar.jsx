@@ -90,6 +90,11 @@ export const Navbar = () => {
 									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Sobre nosotros</button>
 								</Link>
 							</li>
+							<li className="nav-item m-1">
+								<Link to="/contacto">
+									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>¡Contáctanos!</button>
+								</Link>
+							</li>
 							<li className="nav-item dropdown m-1" style={{ paddingLeft: "12px", paddingRight: "12px" }}>
 								<img src="/src/front/assets/default_profile.jpg" className="dropdown-toggle" style={{ maxWidth: "37px", borderRadius: "25px" }} role="button" data-bs-toggle="dropdown" aria-expanded="false" />
 

@@ -23,8 +23,10 @@ CORS(api)
 def create_user():
     data = request.get_json()
 
-    if not data["email"] or not data["password"]:
-        return jsonify({"msg": "Email and password are required"}), 400
+    required_fields = ["nombre", "apellidos", "email", "password", "telefono", "rol"]
+
+    if not all(data.get(field) for field in required_fields):
+        return jsonify({"msg": "All fields are required"}), 400
     
     existing_user = db.session.execute(db.select(User).where(
         User.email == data["email"]
