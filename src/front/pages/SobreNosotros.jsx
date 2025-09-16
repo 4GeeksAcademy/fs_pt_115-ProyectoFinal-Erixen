@@ -11,9 +11,18 @@ const creatorInfo = {
 
 export const SobreNosotros = () => {
     return (
-        <div className="container text-center mt-5 text-dark">
+        <div className="text-center text-dark">
+            <div style={{
+                    	background: '#3374beff', // Color
+						padding: '3rem',
+						color: 'white',
+						borderBottomLeftRadius: '30px', 
+						borderBottomRightRadius: '30px',
+						marginBottom: '2rem'
+                }}>
             <h1>Sobre Nosotros</h1>
             <p className="lead">Conoce más sobre el equipo y el propósito de nuestro proyecto.</p>
+            </div>
 
             <div className="row mt-5">
                 <div className="col-md-6">
