@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 export const ReservarPista = () => {
 
-	// const navigate = useNavigate()
+	const navigate = useNavigate()
+  
 	const [pistas, setPistas] = useState([]);
 
 	useEffect(() => {
@@ -21,7 +22,7 @@ export const ReservarPista = () => {
 				}
 			)
 		}
-	}, [])
+	}, [token])
 
 	return (
 		<div className="container">
