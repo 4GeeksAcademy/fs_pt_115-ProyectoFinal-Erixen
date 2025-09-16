@@ -1,32 +1,47 @@
-import { useEffect } from "react";
-import { getReservas } from "../services/servicesAPI";
-import { PageHeader } from "../components/PageHeader"; // 1. Importar
+import { useEffect, useState } from "react";
+import { getPistas, getReservas } from "../../services/servicesAPI.js";
 import { useNavigate } from "react-router-dom";
 
 export const ReservarPista = () => {
-  
+
 	const navigate = useNavigate()
+  
+	const [pistas, setPistas] = useState([]);
 
 	useEffect(() => {
-		if (localStorage.getItem("token") == null) {
+		const token = localStorage.getItem("token");
+
+		if (!token) {
 			navigate("/")
 		} else {
-			getReservas()
+			getPistas().then(
+				data => {
+					if (Array.isArray(data) && data.length > 0) {
+						setPistas(data)
+					}
+				}
+			)
 		}
-	},[localStorage.getItem("token")])
-  
-    return (
-        <div className="text-center">
-            {/* 2. Aplicar el estilo homogéneo */}
-            <PageHeader 
-                title="Reservar Pista" 
-                lead="Encuentra y reserva tu pista ideal en segundos." 
-            />
-                  
-            <div className="container">
-                <p className="text-dark">Aquí se mostrarán las pistas disponibles para reservar.</p>
-            </div>
-        </div>
-    );
+	}, [token])
 
+	return (
+		<div className="container">
+			{pistas?.map(pista => (
+				<div key={pista.id} className="card mt-3">
+					<div className="card-body">
+						<h5 className="card-title">Pista número: {pista.numero_pista}</h5>
+						<p className="card-text">
+							Estado de la pista: {pista.estado_pista} <br />
+							Superficie: {pista.superficie === 'cesped'
+								? "césped"
+								: pista.superficie === 'hormigon'
+									? "hormigón"
+									: "sintético"}
+						</p>
+						<a href="#" className="btn btn-primary">Reservar</a>
+					</div>
+				</div>
+			))}
+		</div>
+	);
 };
