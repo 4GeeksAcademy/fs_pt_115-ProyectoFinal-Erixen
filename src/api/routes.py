@@ -2,10 +2,9 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from .models import db, User, Club, Pista, Reserva
+from .models import db, User, Club, Pista, Reserva, Contacto
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -23,8 +22,10 @@ CORS(api)
 def create_user():
     data = request.get_json()
 
-    if not data["email"] or not data["password"]:
-        return jsonify({"msg": "Email and password are required"}), 400
+    required_fields = ["nombre", "apellidos", "email", "password", "telefono", "rol"]
+
+    if not all(data.get(field) for field in required_fields):
+        return jsonify({"msg": "All fields are required"}), 400
     
     existing_user = db.session.execute(db.select(User).where(
         User.email == data["email"]

@@ -1,6 +1,17 @@
 import { PageHeader } from "../components/PageHeader"; // 1. Importar
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ReservasUsuario = () => {
+  
+  const navigate = useNavigate()
+
+	useEffect(() => {
+		if (localStorage.getItem("token") == null) {
+			navigate("/")
+		}
+	}, [localStorage.getItem("token")]);
+  
     return (
         <div className="text-center">
             {/* 2. Reutilizar el encabezado */}
