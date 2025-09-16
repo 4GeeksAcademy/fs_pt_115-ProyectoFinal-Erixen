@@ -1,36 +1,17 @@
 import { Link } from "react-router-dom";
 import { Carousel } from "../components/Carousel";
+import { PageHeader } from "../components/PageHeader";
 
 export const Home = () => {
 	return (
 		<div className="main-content">
 			<div className="hero-content">
 				{/* Hero Section */}
-				<div 
-					style={{
-						background: '#3374beff', // Color
-						padding: '3rem',
-						color: 'white',
-						borderBottomLeftRadius: '30px', 
-						borderBottomRightRadius: '30px',
-						marginBottom: '2rem'
-					}}
-				>
-					<div className="text-center">
-						<h1 className="display-4">Reserva tu pista de pádel en segundos</h1>
-						<p className="lead">
-							Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar.
-						</p>
-						<hr className="my-4" style={{ borderColor: 'white' }} />
-						<p>
-							¿Listo para el partido?
-						</p>
-						{/* Este botón debería llevar a la página de reservas */}
-						<Link className="btn btn-primary btn-lg" to="/reservar-pista" role="button">
-							¡Reservar ahora!
-						</Link>
-					</div>
-				</div>
+				
+				<PageHeader 
+                title="Reserva tu pista de pádel en segundos" 
+                lead="Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar" 
+            />
 
 				{/* Carrusel Section */}
 				<Carousel />

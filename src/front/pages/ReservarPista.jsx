@@ -1,14 +1,19 @@
 import { useEffect } from "react";
 import { getReservas } from "../../servicesAPI";
+import { PageHeader } from "../components/PageHeader"; // 1. Importar
 
 export const ReservarPista = () => {
+    return (
+        <div className="text-center">
+            {/* 2. Aplicar el estilo homogéneo */}
+            <PageHeader 
+                title="Reservar Pista" 
+                lead="Encuentra y reserva tu pista ideal en segundos." 
+            />
 
-	useEffect(() => {
-		getReservas()},[])
-
-	return (
-		<div className="container">
-			<h1 className="text-black">Vista donde aparezcan las pistas disponibles</h1>
-		</div>
-	);
+            <div className="container">
+                <p className="text-dark">Aquí se mostrarán las pistas disponibles para reservar.</p>
+            </div>
+        </div>
+    );
 };
