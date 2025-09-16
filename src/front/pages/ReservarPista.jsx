@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { getReservas } from "../../services/servicesAPI.js";
+import { getReservas } from "../services/servicesAPI";
+import { PageHeader } from "../components/PageHeader"; // 1. Importar
 import { useNavigate } from "react-router-dom";
 
 export const ReservarPista = () => {
-
+  
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -13,10 +14,19 @@ export const ReservarPista = () => {
 			getReservas()
 		}
 	},[localStorage.getItem("token")])
+  
+    return (
+        <div className="text-center">
+            {/* 2. Aplicar el estilo homogéneo */}
+            <PageHeader 
+                title="Reservar Pista" 
+                lead="Encuentra y reserva tu pista ideal en segundos." 
+            />
+                  
+            <div className="container">
+                <p className="text-dark">Aquí se mostrarán las pistas disponibles para reservar.</p>
+            </div>
+        </div>
+    );
 
-	return (
-		<div className="container">
-			<h1 className="text-black">Vista donde aparezcan las pistas disponibles</h1>
-		</div>
-	);
 };

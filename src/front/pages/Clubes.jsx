@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { PageHeader } from "../components/PageHeader"; // 1. Importar
+import { useEffect, useState } from "react";
 import { getPistas, getClubs } from "../../services/servicesAPI";
+
 
 export const Clubes = () => {
 
 	const navigate = useNavigate()
 	const [clubs, setClubs] = useState([]);
+  
 	const getClubsFromApi = async () => {
 		const clubsApi = await getClubs()
 		setClubs(clubsApi)
@@ -70,5 +73,3 @@ export const Clubes = () => {
 		</>
 	)
 };
-
-
