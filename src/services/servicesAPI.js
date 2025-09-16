@@ -124,6 +124,9 @@ export const createClub = async () => {
 export const getPistas = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas`);
 	const data = await response.json();
+
+	console.log(data);
+
 	return data;
 }
 
