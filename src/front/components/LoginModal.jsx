@@ -17,7 +17,7 @@ export const LoginModal = ({ show, handleClose, switchToSignup }) => {
         return null;
     }
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
 	const [newLogin, setNewLogin] = useState({
 		email: "",
