@@ -22,7 +22,7 @@ CORS(api)
 def create_user():
     data = request.get_json()
 
-    required_fields = ["nombre", "apellidos", "email", "password", "telefono", "rol"]
+    required_fields = ["nombre", "apellidos", "email", "password", "telefono"]
 
     if not all(data.get(field) for field in required_fields):
         return jsonify({"msg": "All fields are required"}), 400
@@ -38,8 +38,7 @@ def create_user():
         nombre = data["nombre"],
         apellidos = data["apellidos"],
         email = data["email"],
-        telefono = data["telefono"],
-        rol = data["rol"]
+        telefono = data["telefono"]
     )
     new_user.set_password(data["password"])
 
@@ -48,7 +47,39 @@ def create_user():
 
     return jsonify({"msg": "User created successfully"}), 201
 
-# Login de usuario
+# Registro de club
+@api.route('/clubs', methods=['POST'])
+def create_club():
+    data = request.get_json()
+
+    required_fields = ["nombre", "email", "password", "direccion", "telefono", "hora_apertura", "hora_cierre"]
+
+    if not all(data.get(field) for field in required_fields):
+        return jsonify({"msg": "All fields are required"}), 400
+    
+    existing_club = db.session.execute(db.select(Club).where(
+        Club.email == data["email"]
+    )).scalar_one_or_none()
+
+    if existing_club:
+        return jsonify({"msg": "Club with this email already exists"}), 400
+    
+    new_club = Club(
+        nombre = data["nombre"],
+        email = data["email"],
+        direccion = data["direccion"],
+        telefono = data["telefono"],
+        hora_apertura = data["hora_apertura"],
+        hora_cierre = data["hora_cierre"]
+    )
+    new_club.set_password(data["password"])
+
+    db.session.add(new_club)
+    db.session.commit()
+
+    return jsonify({"msg": "Club created successfully"}), 201
+
+# Login
 @api.route('/login', methods=["POST"])
 def login():
     data = request.get_json()
@@ -56,16 +87,24 @@ def login():
     if not data["email"] or not data["password"]:
         return jsonify({"msg": "Email and password are required"}), 400
     
-    user = db.session.execute(db.select(User).where(
-        User.email == data["email"]
+    user = db.session.execute(
+        db.select(User).where(User.email == data["email"]
     )).scalar_one_or_none()
+
+    if user:
+        user_type = "user"
+    else:
+        user = db.session.execute(
+            db.select(Club).where(Club.email == data["email"])
+        ).scalar_one_or_none()
+        user_type = "club"
 
     if user is None:
         return jsonify({"msg": "Invalid email or password"}), 400
     
     if user.check_password(data["password"]):
         access_token = create_access_token(identity = str(user.id))
-        return jsonify({"msg": "Login successful", "token": access_token}), 200
+        return jsonify({"msg": "Login successful", "token": access_token, "user_type": user_type}), 200
     else:
         return jsonify({"msg": "Invalid email or password"}), 400
 
@@ -138,32 +177,6 @@ def get_club(id):
     if not unique_club:
         return ({"message": "Club not found, try with other club."}), 404
     return jsonify(unique_club.serialize()), 200
-
-
-@api.route('/clubs', methods=['POST'])
-def create_club():
-    data = request.get_json()
-
-    if not data.get("email") or not data.get("password") or not data.get("cif_nif"):
-        return jsonify({"message": "Email, Password and CIF/NIF are required."}), 400
-
-    if data.get('email') or data.get('cif_nif') in [club.email for club in Club.query.all()]:
-        return jsonify({"error": "Email or CIF/NIF already in use"}), 400
-
-    hashed_password = bcrypt.generate_password_hash(
-        data.get("password")
-    ).decode('utf-8')
-
-    new_club = Club(
-        email=data.get("email"),
-        password=hashed_password,
-        cif_nif=data.get("cif_nif")
-    )
-
-    db.session.add(new_club)
-    db.session.commit()
-
-    return jsonify(new_club.serialize()), 201
 
 
 @api.route('/clubs/<int:id>', methods=['PUT'])

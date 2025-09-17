@@ -1,33 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { LoginModal } from "../components/LoginModal";
-import { SignupModal } from "../components/SignupModal";
 
 export const Navbar = () => {
 	const location = useLocation();
 
-	// Estados para controlar la visibilidad de los modales de login y registro.
+	// Estados para controlar la visibilidad de los modales de login y registro
 	const [showLoginModal, setShowLoginModal] = useState(false);
-	const [showSignupModal, setShowSignupModal] = useState(false);
 
 	// Función para cerrar ambos modales.
-	const handleCloseModals = () => {
+	const handleCloseModal = () => {
 		setShowLoginModal(false);
-		setShowSignupModal(false);
-	};
-
-	// Función para cambiar del modal de login al de registro.
-	const switchToSignup = (e) => {
-		e.preventDefault();
-		setShowLoginModal(false);
-		setShowSignupModal(true);
-	};
-
-	// Función para cambiar del modal de registro al de login.
-	const switchToLogin = (e) => {
-		e.preventDefault();
-		setShowSignupModal(false);
-		setShowLoginModal(true);
 	};
 
 	return (
@@ -43,14 +26,14 @@ export const Navbar = () => {
 					<button className="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span className="navbar-toggler-icon"></span>
 					</button>
-					
+
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav ms-auto">
-							<li className="nav-item m-1">
-								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
+							<li className="d-flex align-items-center">
+								<p className="text-white mb-0">¿Ya tienes una cuenta?</p>
 							</li>
 							<li className="nav-item m-1">
-								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowSignupModal(true)}>Regístrate</button>
+								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
 							</li>
 						</ul>
 					</div>
@@ -112,7 +95,10 @@ export const Navbar = () => {
 									<li><hr className="dropdown-divider" /></li>
 									<li>
 										<Link to="/" style={{ textDecoration: "none" }}>
-											<button className="dropdown-item" style={{ color: "red" }} onClick={() => { localStorage.removeItem('token') }}>Cerrar sesión</button>
+											<button className="dropdown-item" style={{ color: "red" }} onClick={() => { 
+												localStorage.removeItem('token') 
+												localStorage.removeItem('user_type') 
+												}}>Cerrar sesión</button>
 										</Link>
 									</li>
 								</ul>
@@ -123,8 +109,7 @@ export const Navbar = () => {
 			)}
 
 			{/* Aquí se renderizan los modales. Se muestran o se ocultan según el estado. */}
-			<LoginModal show={showLoginModal} handleClose={handleCloseModals} switchToSignup={switchToSignup} />
-			<SignupModal show={showSignupModal} handleClose={handleCloseModals} switchToLogin={switchToLogin} />
+			<LoginModal show={showLoginModal} handleClose={handleCloseModal} />
 		</nav >
 	);
 };

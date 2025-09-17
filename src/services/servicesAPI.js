@@ -1,10 +1,10 @@
 //---------------------------------------------------------------------
 
 // SignUp de un usuario
-export const createUser = async (newRegister) => {
+export const createUser = async (newUser) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
 		method: "POST",
-		body: JSON.stringify(newRegister),
+		body: JSON.stringify(newUser),
 		headers: {
 			"Content-Type": "application/json"
 		}
@@ -19,7 +19,26 @@ export const createUser = async (newRegister) => {
 	}
 };
 
-// Login de un usuario
+// SignUp de un club
+export const createClub = async (newClub) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`, {
+		method: "POST",
+		body: JSON.stringify(newClub),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Login
 export const login = async (newLogin) => {
 	const response = await fetch(
 		`${import.meta.env.VITE_BACKEND_URL}/api/login`,
@@ -34,6 +53,7 @@ export const login = async (newLogin) => {
 	if (response.ok) {
 		const res = await response.json();
 		localStorage.setItem("token", res.token);
+		localStorage.setItem("user_type", res.user_type);
 		return { status: response.status, msg: res.msg };
 	} else {
 		const res = await response.json();
@@ -103,21 +123,6 @@ export const getClub = async (id) => {
 	return data;
 }
 
-export const createClub = async () => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			email: "New Email ",
-			password: "New Password",
-			Cif: "New CIF"
-		})
-	})
-	const data = await response.json();
-	return data;
-}
 //---------------------------------------------------------------------
 // PISTAS
 

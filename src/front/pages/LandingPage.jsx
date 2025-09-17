@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { GlobalStyles } from "../components/GlobalStyles";
+import { UserSignUpModal } from "../components/UserSignUpModal";
+import { ClubSignUpModal } from "../components/ClubSignUpModal";
 
 export const LandingPage = () => {
 	const [isLeftHovered, setIsLeftHovered] = useState(false);
@@ -15,6 +16,14 @@ export const LandingPage = () => {
 		transform: 'scale(1.03)',
 		boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
 		zIndex: 10
+	};
+
+	const [showUserSignUpModal, setShowUserSignUpModal] = useState(false);
+	const [showClubSignUpModal, setShowClubSignUpModal] = useState(false);
+
+	const handleCloseModals = () => {
+		setShowUserSignUpModal(false);
+		setShowClubSignUpModal(false);
 	};
 
 	return (
@@ -33,7 +42,6 @@ export const LandingPage = () => {
 						}}
 						onMouseEnter={() => setIsLeftHovered(true)}
 						onMouseLeave={() => setIsLeftHovered(false)}
-						onClick={() => window.location.href = '/registro-club'}
 					>
 						<div className="hero-content">
 							<h1 className="hero-title">
@@ -43,11 +51,9 @@ export const LandingPage = () => {
 								Registra tu club en nuestra plataforma, gestiona tus pistas y aumenta tu visibilidad para llegar a más jugadores.
 							</p>
 							<div style={{ marginTop: '2rem' }}>
-								<Link to="/registro-club">
-									<button className="btn btn-success btn-lg">
-										Registrar mi Club
-									</button>
-								</Link>
+								<button className="btn btn-success btn-lg" onClick={() => setShowClubSignUpModal(true)}>
+									¡Trabaja con nosotros!
+								</button>
 							</div>
 						</div>
 					</div>
@@ -61,26 +67,27 @@ export const LandingPage = () => {
 						}}
 						onMouseEnter={() => setIsRightHovered(true)}
 						onMouseLeave={() => setIsRightHovered(false)}
-						onClick={() => window.location.href = '/home'}
 					>
 						<div className="hero-content">
 							<h1 className="hero-title">
 								Encuentra tu <span style={{ color: 'var(--color-info)' }}>partido de pádel</span> ideal.
 							</h1>
 							<p className="hero-subtitle">
-								Conecta con jugadores de tu nivel, organiza partidos y mejora tu juego. Tu próximo partido está a un solo clic de distancia.
+								Conecta con jugadores de tu nivel, organiza partidos y mejora tu juego. Tu próximo partido está a un solo click de distancia.
 							</p>
 							<div style={{ marginTop: '2rem' }}>
-								<Link to="/home">
-									<button className="btn btn-primary btn-lg">
-										Buscar Partido
-									</button>
-								</Link>
+								<button className="btn btn-primary btn-lg" onClick={() => setShowUserSignUpModal(true)}>
+									¡Comenzar a jugar!
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			{/* Aquí se renderizan los modales. Se muestran o se ocultan según el estado. */}
+			<UserSignUpModal show={showUserSignUpModal} handleClose={handleCloseModals} />
+			<ClubSignUpModal show={showClubSignUpModal} handleClose={handleCloseModals} />
 		</>
 	);
 };
