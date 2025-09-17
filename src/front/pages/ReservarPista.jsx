@@ -9,9 +9,7 @@ export const ReservarPista = () => {
 	const [pistas, setPistas] = useState([]);
 
 	useEffect(() => {
-		const token = localStorage.getItem("token");
-
-		if (!token) {
+		if (localStorage.getItem("token") == null) {
 			navigate("/")
 		} else {
 			getPistas().then(
@@ -22,7 +20,7 @@ export const ReservarPista = () => {
 				}
 			)
 		}
-	}, [token])
+	}, [localStorage.getItem("token")])
 
 	return (
 		<div className="container">

@@ -11,18 +11,22 @@ db = SQLAlchemy()
 
 # ------------------------------------------------------------------------------------------------
 
+
 class User(db.Model):
     __tablename__ = "usuarios"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(30), nullable=False)
     apellidos: Mapped[str] = mapped_column(String(50), nullable=False)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
     telefono: Mapped[str] = mapped_column(String(30))
 
-    reservas: Mapped[list["Reserva"]] = relationship(back_populates="usuario", cascade="all, delete-orphan")
-    mensajes: Mapped[list["Contacto"]] = relationship(back_populates="usuario", cascade="all, delete-orphan")
+    reservas: Mapped[list["Reserva"]] = relationship(
+        back_populates="usuario", cascade="all, delete-orphan")
+    mensajes: Mapped[list["Contacto"]] = relationship(
+        back_populates="usuario", cascade="all, delete-orphan")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password).decode('utf-8')
@@ -37,8 +41,8 @@ class User(db.Model):
             "apellidos": self.apellidos,
             "email": self.email,
             "telefono": self.telefono,
-            "reservas": [reserva.id for reserva in self.reservas],
-            "mensajes": [mensaje.id for mensaje in self.mensajes]
+            "reservas": [reserva.serialize() for reserva in self.reservas],
+            "mensajes": [mensaje.serialize() for mensaje in self.mensajes]
         }
 
 # ------------------------------------------------------------------------------------------------
@@ -49,15 +53,18 @@ class Club(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(30), nullable=False)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
     direccion: Mapped[str] = mapped_column(String(255), nullable=False)
     telefono: Mapped[str] = mapped_column(String(20), nullable=False)
     hora_apertura: Mapped[time] = mapped_column(Time, nullable=False)
     hora_cierre: Mapped[time] = mapped_column(Time, nullable=False)
 
-    pistas: Mapped[list["Pista"]] = relationship(back_populates="club", cascade="all, delete-orphan")
-    mensajes: Mapped[list["Contacto"]] = relationship(back_populates="club", cascade="all, delete-orphan")
+    pistas: Mapped[list["Pista"]] = relationship(
+        back_populates="club", cascade="all, delete-orphan")
+    mensajes: Mapped[list["Contacto"]] = relationship(
+        back_populates="club", cascade="all, delete-orphan")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password).decode('utf-8')
@@ -75,7 +82,7 @@ class Club(db.Model):
             "hora_apertura": self.hora_apertura.strftime("%H:%M"),
             "hora_cierre": self.hora_cierre.strftime("%H:%M"),
             "pistas": [pista.id for pista in self.pistas],
-            "mensajes": [mensaje.id for mensaje in self.mensajes]
+            "mensajes": [mensaje.serialize() for mensaje in self.mensajes]
         }
 
 # ------------------------------------------------------------------------------------------------
@@ -99,12 +106,15 @@ class Pista(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"))
     numero_pista: Mapped[int] = mapped_column(unique=True)
-    superficie: Mapped[TipoSuperficie] = mapped_column(SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
+    superficie: Mapped[TipoSuperficie] = mapped_column(
+        SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
     precio_hora: Mapped[float] = mapped_column(nullable=False)
-    estado_pista: Mapped[EstadoPista] = mapped_column(SqlEnum(EstadoPista), default=EstadoPista.LIBRE)
+    estado_pista: Mapped[EstadoPista] = mapped_column(
+        SqlEnum(EstadoPista), default=EstadoPista.LIBRE)
 
     club: Mapped["Club"] = relationship(back_populates="pistas")
-    reservas: Mapped[list["Reserva"]] = relationship(back_populates="pista", cascade="all, delete-orphan")
+    reservas: Mapped[list["Reserva"]] = relationship(
+        back_populates="pista", cascade="all, delete-orphan")
 
     __table_args__ = (
         db.UniqueConstraint("id_club", "numero_pista", name="num_pista_unico"),
@@ -113,12 +123,12 @@ class Pista(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "id_club": self.id_club,
             "numero_pista": self.numero_pista,
             "superficie": self.superficie.value,
             "precio_hora": self.precio_hora,
             "estado_pista": self.estado_pista.value,
-            "reservas": [reserva.id for reserva in self.reservas]
+            "reservas": [reserva.serialize() for reserva in self.reservas],
+            "club_info": self.club.serialize()
         }
 
 # ------------------------------------------------------------------------------------------------
@@ -138,7 +148,8 @@ class Reserva(db.Model):
     pista: Mapped["Pista"] = relationship(back_populates="reservas")
 
     __table_args__ = (
-        CheckConstraint("hora_fin > hora_inicio", name="check_rango_horas_valido"),
+        CheckConstraint("hora_fin > hora_inicio",
+                        name="check_rango_horas_valido"),
     )
 
     def serialize(self):
@@ -153,11 +164,13 @@ class Reserva(db.Model):
 
 # ------------------------------------------------------------------------------------------------
 
+
 class Contacto(db.Model):
     __tablename__ = "mensajes"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    id_usuario: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), nullable=True)
+    id_usuario: Mapped[int] = mapped_column(
+        ForeignKey("usuarios.id"), nullable=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"), nullable=True)
     texto: Mapped[str] = mapped_column(String(300), nullable=False)
 
@@ -173,7 +186,7 @@ class Contacto(db.Model):
     )
 
     def serialize(self):
-        return{
+        return {
             "id": self.id,
             "id_usuario": self.id_usuario,
             "id_club": self.id_club,

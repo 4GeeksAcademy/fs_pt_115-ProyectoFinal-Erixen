@@ -1,40 +1,37 @@
 import { useState } from "react"
 import { createUser } from "../../services/servicesAPI.js";
 
-export const SignupModal = ({ show, handleClose, switchToLogin }) => {
+export const UserSignUpModal = ({ show, handleClose }) => {
     if (!show) {
         return null;
     }
 
-    const [newRegister, setNewRegister] = useState({
+    const [newUser, setNewUser] = useState({
         nombre: "",
         apellidos: "",
         email: "",
         password: "",
-        telefono: "",
-        rol: ""
+        telefono: ""
     })
 
     function onInputChange(event) {
         if (event.target.id == "inputNombre") {
-            setNewRegister({ ...newRegister, nombre: event.target.value });
+            setNewUser({ ...newUser, nombre: event.target.value });
         } else if (event.target.id == "inputApellidos") {
-            setNewRegister({ ...newRegister, apellidos: event.target.value });
+            setNewUser({ ...newUser, apellidos: event.target.value });
         } else if (event.target.id == "inputEmail") {
-            setNewRegister({ ...newRegister, email: event.target.value });
+            setNewUser({ ...newUser, email: event.target.value });
         } else if (event.target.id == "inputPassword") {
-            setNewRegister({ ...newRegister, password: event.target.value });
+            setNewUser({ ...newUser, password: event.target.value });
         } else if (event.target.id == "inputTelefono") {
-            setNewRegister({ ...newRegister, telefono: event.target.value });
-        } else if (event.target.id == "inputRol") {
-            setNewRegister({ ...newRegister, rol: event.target.value });
+            setNewUser({ ...newUser, telefono: event.target.value });
         }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await createUser(newRegister);
+        const response = await createUser(newUser);
 
         if (response.status === 400) {
             const errorMsg = response.msg
@@ -74,22 +71,10 @@ export const SignupModal = ({ show, handleClose, switchToLogin }) => {
                                 <label className="form-label">Teléfono</label>
                                 <input type="tel" className="form-control" id="inputTelefono" onChange={onInputChange} />
                             </div>
-                            <div className="mb-3">
-                                <label className="form-label">Rol</label>
-                                <select className="form-select" defaultValue="" id="inputRol" onChange={onInputChange}>
-                                    <option value="" disabled>Selecciona un rol</option>
-                                    <option value="USER">Jugador</option>
-                                    <option value="CLUB">Club</option>
-                                </select>
+                            <div>
+                                <button type="submit" className="btn btn-primary">Crear cuenta</button>
                             </div>
-                            <button type="submit" className="btn btn-primary">Crear Cuenta</button>
                         </form>
-                    </div>
-                    <div className="modal-footer d-flex justify-content-center">
-                        <p className="align-middle">¿Ya tienes una cuenta?</p>
-                        <a href="#" onClick={switchToLogin}>
-                            Inicia Sesión
-                        </a>
                     </div>
                 </div>
             </div>
