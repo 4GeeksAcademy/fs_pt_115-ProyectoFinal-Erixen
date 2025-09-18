@@ -105,7 +105,7 @@ class Pista(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"))
-    numero_pista: Mapped[int] = mapped_column(unique=True)
+    numero_pista: Mapped[int] = mapped_column()
     superficie: Mapped[TipoSuperficie] = mapped_column(
         SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
     precio_hora: Mapped[float] = mapped_column(nullable=False)

@@ -36,7 +36,7 @@ export const Home = () => {
 								<div className="card-body">
 									<h5 className="card-title">Encuentra Clubes</h5>
 									<p className="card-text">Explora los clubes de pádel cercanos y encuentra el lugar perfecto para tu próximo partido.</p>
-									<Link to="/clubes" className="btn btn-outline-primary">Ver Clubes</Link>
+									<Link to="/clubes" className="btn btn-outline-primary boton-padelplus">Ver Clubes</Link>
 								</div>
 							</div>
 						</div>
@@ -45,7 +45,7 @@ export const Home = () => {
 								<div className="card-body">
 									<h5 className="card-title">Gestiona tus Reservas</h5>
 									<p className="card-text">Accede a tu historial de reservas, y gestiona tus partidos con facilidad.</p>
-									<Link to="/reservas/1" className="btn btn-outline-primary">Mis Reservas</Link>
+									<Link to="/reservas/1" className="btn btn-outline-primary boton-padelplus">Mis Reservas</Link>
 								</div>
 							</div>
 						</div>
@@ -54,7 +54,7 @@ export const Home = () => {
 								<div className="card-body">
 									<h5 className="card-title">Tu Perfil</h5>
 									<p className="card-text">Mantén tu información actualizada y gestiona tu perfil de jugador.</p>
-									<Link to="/profile/1" className="btn btn-outline-primary">Mi Perfil</Link>
+									<Link to="/profile/1" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
 								</div>
 							</div>
 						</div>

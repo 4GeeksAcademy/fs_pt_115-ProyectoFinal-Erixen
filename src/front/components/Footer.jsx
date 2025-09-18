@@ -7,7 +7,7 @@ export const Footer = () => {
 			<hr className="text-black mb-0" />
 			<div className='d-md-flex'>
 				<div className="col-12 col-md-6">
-					<div className='px-2 py-3'>
+					<div className='px-4 py-3'>
 						<p className="text-black mb-0 py-1" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
 						<div className='d-flex gap-2 py-1'>
 							<button className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
@@ -23,7 +23,7 @@ export const Footer = () => {
 					</div>
 				</div>
 
-				<div className="col-12 col-md-6 py-3 d-flex align-items-start flex-column">
+				<div className="col-12 col-md-6 py-3 px-4 d-flex align-items-start flex-column">
 					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Declaración de privacidad</div>
 					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Información sobre cuentas</div>
 					<div className="btn btn-success myButton bg-transparent border-0 text-black ps-2">Condiciones de uso</div>

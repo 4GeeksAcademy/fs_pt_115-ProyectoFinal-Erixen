@@ -95,10 +95,10 @@ export const Navbar = () => {
 									<li><hr className="dropdown-divider" /></li>
 									<li>
 										<Link to="/" style={{ textDecoration: "none" }}>
-											<button className="dropdown-item" style={{ color: "red" }} onClick={() => { 
-												localStorage.removeItem('token') 
-												localStorage.removeItem('user_type') 
-												}}>Cerrar sesión</button>
+											<button className="dropdown-item" style={{ color: "red" }} onClick={() => {
+												localStorage.removeItem('token')
+												localStorage.removeItem('user_type')
+											}}>Cerrar sesión</button>
 										</Link>
 									</li>
 								</ul>

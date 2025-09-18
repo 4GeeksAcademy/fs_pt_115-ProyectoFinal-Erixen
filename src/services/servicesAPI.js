@@ -112,7 +112,7 @@ export const getClubs = async () => {
 }
 
 export const getClub = async (id) => {
-	const response = await fetch(`https://silver-rotary-phone-wv5697xw6vc9xpg-3001.app.github.dev/api/clubs/${id}`);
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`);
 
 	if (!response.ok) {
 		console.log("There's not club, create one");
@@ -136,7 +136,7 @@ export const getPistas = async () => {
 }
 
 export const getPista = async (id) => {
-	const response = await fetch(`https://silver-rotary-phone-wv5697xw6vc9xpg-3001.app.github.dev/api/pistas/${id}`);
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas/${id}`);
 
 	if (!response.ok) {
 		console.log("There's not pista, look for another.");
@@ -144,6 +144,10 @@ export const getPista = async (id) => {
 	}
 
 	const data = await response.json();
+
+	// console.log(data);
+	
+
 	return data;
 
 }
