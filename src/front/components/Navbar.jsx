@@ -43,7 +43,7 @@ export const Navbar = () => {
 					<Link to="/home" style={{ textDecoration: "none" }}>
 						<div className="d-flex align-items-center cursor-pointer ms-3">
 							<img src="/src/front/assets/logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
-							<a className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</a>
+							<span className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</span>
 						</div>
 					</Link>
 
@@ -59,8 +59,8 @@ export const Navbar = () => {
 								</Link>
 							</li>
 							<li className="nav-item m-1">
-								<Link to="/reservar-pista">
-									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Reservar pista</button>
+								<Link to="/pistas">
+									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Pistas</button>
 								</Link>
 							</li>
 							<li className="nav-item m-1">
