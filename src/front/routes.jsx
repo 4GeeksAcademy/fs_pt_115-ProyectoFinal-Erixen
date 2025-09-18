@@ -11,7 +11,7 @@ import { Profile } from "./pages/Profile";
 import { LandingPage } from "./pages/LandingPage";
 import { Clubes } from "./pages/Clubes";
 import { ReservasUsuario } from "./pages/ReservasUsuario";
-import { ReservarPista } from "./pages/ReservarPista";
+import { Pistas } from "./pages/Pistas";
 import { SobreNosotros } from "./pages/SobreNosotros";
 import { ContactUs } from "./pages/ContactUs";
 import { CalendarioPista } from "./pages/CalendarioPista";
@@ -32,7 +32,7 @@ export const router = createBrowserRouter(
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<Home />} />
       <Route path="/clubes" element={<Clubes />} />
-      <Route path="/reservar-pista" element={<ReservarPista />} />
+      <Route path="/pistas" element={<Pistas />} />
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
       <Route path="/profile/<int:user_id>" element={<Profile />} />
       <Route path="/reservas/<int:user_id>" element={<ReservasUsuario />} />
