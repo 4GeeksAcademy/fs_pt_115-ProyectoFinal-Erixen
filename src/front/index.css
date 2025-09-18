@@ -28,3 +28,14 @@ input.input-personalizado {
 .socialButton:hover{
   color: #3374beff !important;
 }
+
+.boton-padelplus{
+  background-color: transparent;
+  border-color: #3374beff ;
+  color: #3374beff;
+}
+
+.boton-padelplus:hover{
+  background-color: #3374beff;
+  border-color: #3374beff;
+}

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { getPistas, getReservas } from "../../services/servicesAPI.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 
 export const ReservarPista = () => {
 
 	const navigate = useNavigate()
-  
+
 	const [pistas, setPistas] = useState([]);
 
 	useEffect(() => {
@@ -23,22 +24,29 @@ export const ReservarPista = () => {
 	}, [localStorage.getItem("token")])
 
 	return (
-		<div className="container">
+		<div className="container d-flex justify-content-center gap-3">
 			{pistas?.map(pista => (
-				<div key={pista.id} className="card mt-3">
+
+				<div className="card mt-3" key={pista.id} style={{ width: "80rem" }}>
+					{/* <img src="..." className="card-img-top" alt="..." /> */}
 					<div className="card-body">
-						<h5 className="card-title">Pista número: {pista.numero_pista}</h5>
-						<p className="card-text">
-							Estado de la pista: {pista.estado_pista} <br />
+						<div className="d-flex justify-content-between">
+							<h4 className="card-title">Pista {pista.numero_pista}</h4>
+							<h4 className="card-title" style={{color: "#3374beff"}}>{pista.club_info['nombre']}</h4>
+						</div>
+						<p className="card-text mb-5">
 							Superficie: {pista.superficie === 'cesped'
 								? "césped"
 								: pista.superficie === 'hormigon'
 									? "hormigón"
 									: "sintético"}
 						</p>
-						<a href="#" className="btn btn-primary">Reservar</a>
+						<Link to={`/calendario-pista/${pista.id}`}>
+							<button href="#" className="btn btn-primary boton-padelplus">Consultar horarios disponibles</button>
+						</Link>
 					</div>
 				</div>
+
 			))}
 		</div>
 	);
