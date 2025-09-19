@@ -52,13 +52,13 @@ export const ClubSignUpModal = ({ show, handleClose }) => {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Regístrate</h5>
+                        <h5 className="modal-title">¡Regístrate y añade tus pistas!</h5>
                         <button type="button" className="btn-close" onClick={handleClose}></button>
                     </div>
                     <div className="modal-body">
                         <form className="row" onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label className="form-label">Nombre</label>
+                                <label className="form-label">Nombre del club</label>
                                 <input type="text" className="form-control" id="inputNombre" onChange={onInputChange} />
                             </div>
                             <div className="mb-3">

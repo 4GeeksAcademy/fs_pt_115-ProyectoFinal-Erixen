@@ -46,7 +46,7 @@ export const UserSignUpModal = ({ show, handleClose }) => {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Regístrate</h5>
+                        <h5 className="modal-title">¡Regístrate y comienza a jugar!</h5>
                         <button type="button" className="btn-close" onClick={handleClose}></button>
                     </div>
                     <div className="modal-body">
