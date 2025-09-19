@@ -19,11 +19,11 @@ export const Home = () => {
 		<div className="main-content">
 			<div className="hero-content">
 				{/* Hero Section */}
-				
-				<PageHeader 
-                title="Reserva tu pista de pádel en segundos" 
-                lead="Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar" 
-            />
+
+				<PageHeader
+					title="Reserva tu pista de pádel en segundos"
+					lead="Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar"
+				/>
 
 				{/* Carrusel Section */}
 				<Carousel />
