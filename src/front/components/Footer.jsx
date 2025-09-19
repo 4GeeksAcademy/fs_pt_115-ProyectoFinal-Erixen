@@ -1,7 +1,9 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useNavigate } from "react-router-dom";
 
 export const Footer = () => {
 
+	 const navigate = useNavigate()
 	return (
 		<div>
 			<hr className="text-black mb-0" />
@@ -10,14 +12,14 @@ export const Footer = () => {
 					<div className='px-4 py-3'>
 						<p className="text-black mb-0 py-1" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
 						<div className='d-flex gap-2 py-1'>
-							<button className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i className="bi bi-instagram"></i>
+							<button className="btn btn-primary text-black p-0 bg-transparent  border-0 socialButton"style={{ fontSize: "40px" }}>
+								<a href="https://www.instagram.com/" > <i className="bi bi-instagram socialButton"></i></a>
 							</button>
 							<button className="btn btn-primary text-black p-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i className="bi bi-twitter-x"></i>
+								<a href="https://x.com/"><i className="bi bi-twitter-x socialButton"></i></a>
 							</button>
 							<button className="btn btn-primary text-black p-0 m-0 bg-transparent border-0 socialButton" style={{ fontSize: "40px" }}>
-								<i className="bi bi-facebook"></i>
+								<a href="https://es-es.facebook.com/"> <i className="bi bi-facebook socialButton"></i></a>
 							</button>
 						</div>
 					</div>
