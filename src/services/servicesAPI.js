@@ -1,6 +1,6 @@
 //---------------------------------------------------------------------
 
-// SignUp de un usuario
+// Registro de un usuario
 export const createUser = async (newUser) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
 		method: "POST",
@@ -19,7 +19,7 @@ export const createUser = async (newUser) => {
 	}
 };
 
-// SignUp de un club
+// Registro de un club
 export const createClub = async (newClub) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`, {
 		method: "POST",
@@ -54,6 +54,7 @@ export const login = async (newLogin) => {
 		const res = await response.json();
 		localStorage.setItem("token", res.token);
 		localStorage.setItem("user_type", res.user_type);
+		localStorage.setItem("id", res.id);
 		return { status: response.status, msg: res.msg };
 	} else {
 		const res = await response.json();
@@ -61,136 +62,256 @@ export const login = async (newLogin) => {
 	}
 };
 
-//---------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------
 
-//USERS
-
-//Funciona
+// Obtener todos los usuarios
 export const getUsers = async () => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`);
-	const data = await response.json();
-	return data;
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`);
 
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
+};
 
-}
-
-//Funciona
+// Obtener un usuario concreto
 export const getUser = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`);
 
-	if (!response.ok) {
-		console.log("There's not user, create one");
-		createUser();
-		return null;
-	}
-
-	const data = await response.json();
-	return data;
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
+// ---------------------------------------------------------------------------------------
 
-export const deleteUser = async (id) => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`, {
-		method: "DELETE"
-	});
-
-	if (!response.ok) {
-		console.log("There's not user to delete");
-		return null;
-	}
-
-	const data = await response.json();
-	return data;
-}
-//---------------------------------------------------------------------
-// CLUBS
-
+// Obtener todos los clubes
 export const getClubs = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs`);
-	const data = await response.json();
-	return data;
+
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
+// Obtener un club concreto
 export const getClub = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`);
 
-	if (!response.ok) {
-		console.log("There's not club, create one");
-		return null;
-	}
-
-	const data = await response.json();
-	return data;
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
-//---------------------------------------------------------------------
-// PISTAS
+// ---------------------------------------------------------------------------------------
 
+// Obtener todas las pistas
 export const getPistas = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas`);
-	const data = await response.json();
-
-	console.log(data);
-
-	return data;
+	
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
+// Obtener una pista concreta
 export const getPista = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas/${id}`);
 
-	if (!response.ok) {
-		console.log("There's not pista, look for another.");
-		return null;
-	}
-
-	const data = await response.json();
-
-	// console.log(data);
-	
-
-	return data;
-
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
-//---------------------------------------------------------------------
-// RESERVAS
+// Obtener todas las pistas de un club concreto
+export const getPistasClub = async (id) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}/pistas`);
 
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
+}
+
+// Crear pista
+export const createPista = async (newPista) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas`, {
+		method: "POST",
+		body: JSON.stringify(newPista),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Modificar pista
+export const updatePista = async (id, updatedDataPista) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas/${id}`, {
+		method: "PUT",
+		body: JSON.stringify(updatedDataPista),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Eliminar pista
+export const deletePista = async (id) => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pistas/${id}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// ---------------------------------------------------------------------------------------
+
+// Obtener todas las reservas
 export const getReservas = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas`);
-	const data = await response.json();
-	console.log(data);
-	return data;
+	
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
 export const getReserva = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`);
 
-	if (!response.ok) {
-		console.log("There's not reserva, look for another.");
-		return null;
-	}
-
-	const data = await response.json();
-	
-	return data;
-
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
 }
 
-
-export const createReserva = async () => {
+// Crear reserva
+export const createReserva = async (newReserva) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas`, {
 		method: "POST",
+		body: JSON.stringify(newReserva),
 		headers: {
 			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			fecha: "2024-06-30",
-			hora: "10:00",
-			userId: 1,
-			pistaId: 1
-		})
+		}
 	})
-	const data = await response.json();
-	return data;
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
 }
 
+// Modificar reserva
+export const updateReserva = async (id, updatedDataReserva) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`, {
+		method: "PUT",
+		body: JSON.stringify(updatedDataReserva),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Eliminar reserva
+export const deleteReserva = async (id) => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// ---------------------------------------------------------------------------------------
+
+// Obtener todos los mensajes
+export const getMensajes = async () => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mensajes`);
+	
+	if (response.ok) {
+        const data = await response.json();
+        return data;
+    } else {
+        return { error: { status: response.status, statusText: response.statusText } };
+    };
+}
+
+// Crear mensaje
+export const createMensaje = async (newMensaje) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mensajes`, {
+		method: "POST",
+		body: JSON.stringify(newMensaje),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+}
