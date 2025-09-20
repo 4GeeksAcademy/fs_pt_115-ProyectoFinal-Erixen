@@ -98,6 +98,7 @@ export const Navbar = () => {
 											<button className="dropdown-item" style={{ color: "red" }} onClick={() => {
 												localStorage.removeItem('token')
 												localStorage.removeItem('user_type')
+												localStorage.removeItem('id')
 											}}>Cerrar sesión</button>
 										</Link>
 									</li>
