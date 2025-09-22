@@ -29,9 +29,6 @@ export const Navbar = () => {
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav ms-auto">
-							<li className="d-flex align-items-center">
-								<p className="text-white mb-0">¿Ya tienes una cuenta?</p>
-							</li>
 							<li className="nav-item m-1">
 								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
 							</li>

@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/servicesAPI.js";
+import { z } from "zod";
 
 // Este es el modal para que los usuarios inicien sesión.
 // Recibe tres props:
@@ -16,27 +17,39 @@ export const LoginModal = ({ show, handleClose }) => {
 
     const navigate = useNavigate()
 
+    const [error, setError] = useState("");
     const [newLogin, setNewLogin] = useState({
         email: "",
         password: ""
     })
 
-    function onInputChange(event) {
-        if (event.target.id == "inputEmail") {
-            setNewLogin({ ...newLogin, email: event.target.value });
-        } else if (event.target.id == "inputPassword") {
-            setNewLogin({ ...newLogin, password: event.target.value });
-        }
-    }
+    // Esquema de validación con Zod
+    const loginSchema = z.object({
+        email: z.string().email("El formato del correo electrónico no es válido."),
+        password: z.string().min(1, "La contraseña es obligatoria."),
+    });
+
+    const onInputChange = (event) => {
+        const { name, value } = event.target;
+        setNewLogin({ ...newLogin, [name]: value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(""); // Limpiar errores previos
 
-        const response = await login(newLogin);
+        // Usamos el esquema para validar los datos
+        const result = loginSchema.safeParse(newLogin);
 
-        if (response.status === 400) {
-            const errorMsg = response.msg
-            alert(errorMsg)
+        if (!result.success) {
+            setError(result.error.errors[0].message);
+            return;
+        }
+
+        const response = await login(result.data);
+
+        if (response.status === 400 || response.status === 401) {
+            setError(response.msg);
         } else {
             navigate("/home");
             handleClose();
@@ -54,14 +67,15 @@ export const LoginModal = ({ show, handleClose }) => {
                     </div>
                     {/* body del modal, formulario. */}
                     <div className="modal-body">
-                        <form onSubmit={handleSubmit}>
+                        <form className="row" onSubmit={handleSubmit}>
+                            {error && <div className="alert alert-danger">{error}</div>}
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
-                                <input type="email" className="form-control" id="inputEmail" onChange={onInputChange} />
+                                <input type="email" className="form-control" name="email" value={newLogin.email} onChange={onInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="form-label">Contraseña</label>
-                                <input type="password" className="form-control" id="inputPassword" onChange={onInputChange} />
+                                <input type="password" className="form-control" name="password" value={newLogin.password} onChange={onInputChange} />
                             </div>
                             <div>
                                 <button type="submit" className="btn btn-primary">Iniciar sesión</button>

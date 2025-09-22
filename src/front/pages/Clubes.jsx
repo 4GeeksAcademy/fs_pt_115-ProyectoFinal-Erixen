@@ -30,6 +30,10 @@ export const Clubes = () => {
 
 	return (
 		<>
+			<PageHeader
+					title="Reserva tu pista de pádel en segundos"
+					lead="Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar"
+				/>
 			<div className="container">
 				{/*carousel*/}
 				<div className="card mt-2" style={{ width: "400px", height: "700px" }}>
