@@ -122,3 +122,17 @@ export const Clubes = () => {
 		</>
 	)
 };
+
+
+// faltantes:
+
+// -en el modals de club necesito mi parametro de imagenes 
+// -parametro de descripcion
+
+
+
+
+// Idea de jhon en vez de integrar el boton de crear club clásico la idea es tener esa opción pero en una forma de 
+// tarjeta con el link que te lleve a crear el club (la idea es hacer que ese link sea como un modal que utilizamos en crear usuario) y una vez que se cree el club que siga apareciendo la opcion de crear 
+// otro club.
+
