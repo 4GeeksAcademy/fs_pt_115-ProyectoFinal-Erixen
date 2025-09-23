@@ -54,7 +54,7 @@ export const Home = () => {
 								<div className="card-body">
 									<h5 className="card-title">Tu Perfil</h5>
 									<p className="card-text">Mantén tu información actualizada y gestiona tu perfil de jugador.</p>
-									<Link to="/profile/1" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
+									<Link to="/profile/<int:user_id>" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
 								</div>
 							</div>
 						</div>
