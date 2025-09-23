@@ -32,7 +32,7 @@ export const Pistas = () => {
 					<div className="card-body">
 						<div className="d-flex justify-content-between ">
 							<h4 className="card-title">Pista {pista.numero_pista}</h4>
-							<h4 className="card-title" style={{color: "#3374beff"}}>{pista.club_info['nombre']}</h4>
+							<h4 className="card-title" style={{ color: "#3374beff" }}>{pista.club_info['nombre']}</h4>
 						</div>
 						<p className="card-text mb-4">
 							Superficie: {pista.superficie === 'cesped'

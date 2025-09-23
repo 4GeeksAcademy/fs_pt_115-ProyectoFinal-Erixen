@@ -30,9 +30,6 @@ export const Navbar = () => {
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav ms-auto">
-							<li className="d-flex align-items-center">
-								<p className="text-white mb-0">¿Ya tienes una cuenta?</p>
-							</li>
 							<li className="nav-item m-1">
 								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
 							</li>
@@ -57,11 +54,6 @@ export const Navbar = () => {
 							<li className="nav-item m-1">
 								<Link to="/home">
 									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Inicio</button>
-								</Link>
-							</li>
-							<li className="nav-item m-1">
-								<Link to="/pistas">
-									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Pistas</button>
 								</Link>
 							</li>
 							<li className="nav-item m-1">

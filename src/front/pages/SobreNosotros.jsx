@@ -2,6 +2,7 @@ import React from "react"; // Asegúrate de tener React importado
 import profilePic from "../assets/default_profile.jpg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { PageHeader } from "../components/PageHeader";
 
 // 1.objeto con la información
 const creatorInfo = {
@@ -22,9 +23,12 @@ export const SobreNosotros = () => {
 	}, [localStorage.getItem("token")]);
 
 	return (
-		<div className="container text-center mt-5 text-dark">
-			<h1>Sobre Nosotros</h1>
-			<p className="lead">Conoce más sobre el equipo y el propósito de nuestro proyecto.</p>
+
+		<div className=" text-center text-dark">
+			<PageHeader
+					title="Sobre Nosotros"
+					lead="Conoce más sobre el equipo y el propósito de nuestro proyecto."
+				/>
 
 			<div className="row mt-5">
 				<div className="col-md-6">
