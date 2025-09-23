@@ -9,19 +9,19 @@ export const Pistas = () => {
 
 	const [pistas, setPistas] = useState([]);
 
-	useEffect(() => {
-		if (localStorage.getItem("token") == null) {
-			navigate("/")
-		} else {
-			getPistas().then(
-				data => {
-					if (Array.isArray(data) && data.length > 0) {
-						setPistas(data)
-					}
-				}
-			)
-		}
-	}, [localStorage.getItem("token")])
+	// useEffect(() => {
+	// 	if (localStorage.getItem("token") == null) {
+	// 		navigate("/")
+	// 	} else {
+	// 		getPistas().then(
+	// 			data => {
+	// 				if (Array.isArray(data) && data.length > 0) {
+	// 					setPistas(data)
+	// 				}
+	// 			}
+	// 		)
+	// 	}
+	// }, [localStorage.getItem("token")])
 
 	return (
 		<div className="container d-flex justify-content-center gap-3">

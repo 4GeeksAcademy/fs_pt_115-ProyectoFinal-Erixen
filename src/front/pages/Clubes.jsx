@@ -8,12 +8,18 @@ export const Clubes = () => {
 
 	const navigate = useNavigate()
 	const [clubs, setClubs] = useState([]);
+	const [nombreClub, setNombreclub] = useState("");
+	const [imagenesClub, setImagenesClub] = useState("");
+	const [imagenesClubDos, setImagenesClubDos] = useState("");
+	const [imagenesClubTres, setImagenesClubTres] = useState("");
+	const [descripcionClub, setDescripcionClub] = useState("");
 
 
-	// const getClubsFromApi = async () => {
-	// 	const clubsApi = await getClubs()
-	// 	setClubs(clubsApi)
-	// }
+
+	const getClubsFromApi = async () => {
+		const clubsApi = await getClubs()
+		setClubs(clubsApi)
+	}
 
 	// useEffect(() => {
 	// 	if (localStorage.getItem("token") == null) {
@@ -24,10 +30,10 @@ export const Clubes = () => {
 
 	// // FUNCION PARA UN FUTURO PARA CONSEGUIR LAS PISTAS
 
-	// useEffect(()=>{
-	// 	getClubsFromApi()
+	useEffect(()=>{
+		getClubsFromApi()
 
-	// },[])
+	},[])
 
 	return (
 		<>
@@ -41,13 +47,13 @@ export const Clubes = () => {
 					<div id="carouselExample" className="carousel slide">
 						<div className="carousel-inner">
 							<div className="carousel-item active ratio ratio-1x1">
-								<img src="src/front/assets/1.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+								<img src="src/front/assets/1.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }}/>
 							</div>
 							<div className="carousel-item ratio ratio-1x1">
-								<img src="src/front/assets/2.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+								<img src="src/front/assets/2.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }}/>
 							</div>
 							<div className="carousel-item ratio ratio-1x1">
-								<img src="src/front/assets/3.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+								<img src="src/front/assets/3.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }}/>
 							</div>
 						</div>
 						<button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -67,6 +73,8 @@ export const Clubes = () => {
 					<Link to={"/pistas"} className="btn btn-primary m-1">Ver pistas</Link>
 
 				</div>
+
+				{/* plantilla de crear club */}
 				<div className="card m-2" data-bs-toggle="modal" data-bs-target="#crearClubModal" style={{ width: "400px", height: "700px" }}>
 					<div className="ratio ratio-1x1">
 						<img src="src/front/assets/cruceta2.png" style={{ objectFit: "cover", objectPosition: "center" }} />
@@ -88,17 +96,17 @@ export const Clubes = () => {
 						<form>
 							<div className="Nombre del polideportivo row m-3">
 								<label className="mb-1" htmlFor="Name" placeholder="Nombre del club">Nombre del polideportivo</label>
-								<input type="text" id="Name"></input>
+								<input type="text" id="Name" value={nombreClub}></input>
 							</div>
 							<div className="imagenes row m-3">
 								<label for="imagenes" className="mb-3">Inserta imagenes del club</label>
-								<input type="file" id="imagenes" placeholder="Obligatoria"></input>
-								<input type="file" id="imagenes" placeholder="Opcional"></input>
-								<input type="file" id="imagenes" placeholder="Opcional"></input>
+								<input type="file" id="imagenes" placeholder="Obligatoria" value={imagenesClub}></input>
+								<input type="file" id="imagenes" placeholder="Opcional" value={imagenesClubDos}></input>
+								<input type="file" id="imagenes" placeholder="Opcional" value={imagenesClubTres}></input>
 							</div>
 							<div className="description row m-3">
 								<label className="mb-1" htmlFor="description">Descripcion del club</label>
-								<input type="text" id="description" placeholder="Descripcion del club"></input>
+								<input type="text" id="description" placeholder="Descripcion del club" value={descripcionClub}></input>
 							</div>
 						</form>
 						<div className="modal-footer">
@@ -106,11 +114,6 @@ export const Clubes = () => {
 							<button type="submit" className="btn btn-primary">Guardar club</button>
 						</div>
 					</div >
-
-					<div className="container justify-content-center align-item-center d-flex mx-auto">
-						<button className="btn btn-primary">Crear Club.</button>
-					</div>
-
 				</div>
 			</div>
 		</>
