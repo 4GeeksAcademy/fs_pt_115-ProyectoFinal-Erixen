@@ -15,6 +15,7 @@ export const Profile = () => {
 
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -47,7 +48,7 @@ export const Profile = () => {
           <div className="">
             {!ModoEdicion &&
               <div className="row m-0 d-flex flex-colum justify-content-around">
-                <div className="mt-2 col-12 col-md-12 align-items-center" >
+                <div className=" col-12 col-md-12 align-items-center" >
                   <div className="" style={{ borderRadius: "10px" }}>
                     <div className="d-flex justify-content-center mx-auto align-items-center" >
                       <h4>{user.nombre}</h4>
@@ -55,7 +56,7 @@ export const Profile = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-2 col-12 col-md-12 align-items-center" >
+                <div className=" col-12 col-md-12 align-items-center" >
                   <div className="" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center">
                       <h4>{user.email}</h4>

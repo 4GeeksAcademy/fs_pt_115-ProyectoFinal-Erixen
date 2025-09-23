@@ -219,6 +219,8 @@ export const getReservas = async () => {
     };
 }
 
+
+
 export const getReserva = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`);
 

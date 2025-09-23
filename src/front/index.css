@@ -4,6 +4,7 @@ body {
 
 body.reserva{
   background-color: rgb(240, 239, 239);
+  
 }
 
 input:-webkit-autofill {
