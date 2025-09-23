@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const GlobalStyles = () => (
-    <style>{`
+  <style>{`
     :root {
       --color-primary: #219EBC;
       --color-secondary: #023047;
@@ -11,9 +11,6 @@ export const GlobalStyles = () => (
       --color-text: #212529;
     }
     html, body {
-    overflow: hidden;
-}
-    body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       background-color: var(--color-bg);
