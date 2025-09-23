@@ -88,6 +88,40 @@ export const getUser = async (id) => {
     };
 }
 
+// Modificar usuario
+export const updateUser = async (id, updatedDataUser) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`, {
+		method: "PUT",
+		body: JSON.stringify(updatedDataUser),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Eliminar usuario
+export const deleteUser = async (id) => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
 // ---------------------------------------------------------------------------------------
 
 // Obtener todos los clubes
@@ -113,6 +147,40 @@ export const getClub = async (id) => {
         return { error: { status: response.status, statusText: response.statusText } };
     };
 }
+
+// Modificar club
+export const updateClub = async (id, updatedDataClub) => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`, {
+		method: "PUT",
+		body: JSON.stringify(updatedDataClub),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	})
+
+	if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
+
+// Eliminar club
+export const deleteClub = async (id) => {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clubs/${id}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok) {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	} else {
+		const res = await response.json();
+		return { status: response.status, msg: res.msg };
+	}
+};
 
 // ---------------------------------------------------------------------------------------
 

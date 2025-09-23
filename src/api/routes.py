@@ -128,6 +128,50 @@ def get_user(id):
 
     return jsonify([unique_user.serialize()]), 200
 
+# Modificar usuario
+@api.route('/users/<int:id>', methods=['PUT'])
+def update_user(id):
+    data = request.get_json()
+
+    user = User.query.get(id)
+
+    if not user:
+        return jsonify({"msg": f"Usuario con id {id} no encontrado"}), 404
+    
+    required_fields = ["nombre", "apellidos", "email", "telefono"]
+
+    if not all(data.get(field) for field in required_fields):
+        return jsonify({"msg": "Todos los campos son requeridos"}), 400
+    
+    existing_user = db.session.execute(db.select(User).where(
+        User.email == data["email"]
+    )).scalar_one_or_none()
+
+    if existing_user:
+        return jsonify({"msg": "Ya existe un usuario con este email"}), 400
+    
+    user.nombre=data["nombre"]
+    user.apellidos=data["apellidos"]
+    user.email=data["email"]
+    user.telefono=data["telefono"]
+
+    db.session.commit()
+
+    return jsonify({"msg": f"Usuario con id {id} modificado con éxito"}), 200
+
+# Eliminar usuario
+@api.route('/users/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    my_user = User.query.get(id)
+
+    if not my_user:
+        return jsonify({"msg": f"Usuario con id {id} no encontrado"}), 404
+
+    db.session.delete(my_user)
+    db.session.commit()
+
+    return jsonify({"msg": f"Usuario con id {id} eliminado con éxito"}), 200
+
 # ------------------------------------------------------------------------------------------------
 
 # Obtener todos los clubes
@@ -149,6 +193,52 @@ def get_club(id):
         return ({"message": f"Club con id {id} no encontrado"}), 404
 
     return jsonify(unique_club.serialize()), 200
+
+# Modificar club
+@api.route('/clubs/<int:id>', methods=['PUT'])
+def update_club(id):
+    data = request.get_json()
+
+    club = Club.query.get(id)
+
+    if not club:
+        return jsonify({"msg": f"Club con id {id} no encontrado"}), 404
+    
+    required_fields = ["nombre", "email", "direccion", "telefono", "hora_apertura", "hora_cierre"]
+
+    if not all(data.get(field) for field in required_fields):
+        return jsonify({"msg": "Todos los campos son requeridos"}), 400
+    
+    existing_club = db.session.execute(db.select(Club).where(
+        Club.email == data["email"]
+    )).scalar_one_or_none()
+
+    if existing_club:
+        return jsonify({"msg": "Ya existe un club con este email"}), 400
+    
+    club.nombre=data["nombre"]
+    club.email=data["email"]
+    club.direccion=data["direccion"]
+    club.telefono=data["telefono"]
+    club.hora_apertura=data["hora_apertura"]
+    club.hora_cierre=data["hora_cierre"]
+
+    db.session.commit()
+
+    return jsonify({"msg": f"Club con id {id} modificado con éxito"}), 200
+
+# Eliminar club
+@api.route('/clubs/<int:id>', methods=['DELETE'])
+def delete_club(id):
+    my_club = Club.query.get(id)
+
+    if not my_club:
+        return jsonify({"msg": f"Club con id {id} no encontrado"}), 404
+
+    db.session.delete(my_club)
+    db.session.commit()
+
+    return jsonify({"msg": f"Club con id {id} eliminado con éxito"}), 200
 
 # ------------------------------------------------------------------------------------------------
 
