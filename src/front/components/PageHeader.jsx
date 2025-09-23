@@ -7,6 +7,8 @@ export const PageHeader = ({ title, lead }) => {
             color: 'white',
             borderBottomLeftRadius: '30px',
             borderBottomRightRadius: '30px',
+            borderTopRightRadius: '30px',
+            borderTopLeftRadius: '30px',
             marginBottom: '2rem',
             fontFamily: 'Arial, sans-serif',
         }}>
