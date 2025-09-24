@@ -119,9 +119,11 @@ def get_all_users():
     return jsonify([user.serialize() for user in users]), 200
 
 # Obtener un usuario concreto
-@api.route('/users/<int:id>', methods=['GET'])
-def get_user(id):
-    unique_user = User.query.get(id)
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user_id = get_jwt_identity()
+    unique_user = User.query.get(current_user_id)
 
     if not unique_user:
         return ({"msg": f"Usuario con id {id} no encontrado"}), 404
@@ -194,6 +196,16 @@ def get_club(id):
 
     return jsonify(unique_club.serialize()), 200
 
+@api.route('/club', methods=['GET'])
+@jwt_required()
+def get_club_profile():
+    current_club_id = get_jwt_identity()
+    unique_club = Club.query.get(current_club_id)
+
+    if not unique_club:
+        return ({"message": f"Club con id {id} no encontrado"}), 404
+
+    return jsonify([unique_club.serialize()]), 200
 # Modificar club
 @api.route('/clubs/<int:id>', methods=['PUT'])
 def update_club(id):

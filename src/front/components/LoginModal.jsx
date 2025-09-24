@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/servicesAPI.js";
 import { z } from "zod";
+import Swal from 'sweetalert2';
 
 // Este es el modal para que los usuarios inicien sesión.
 // Recibe tres props:
@@ -17,7 +18,6 @@ export const LoginModal = ({ show, handleClose }) => {
 
     const navigate = useNavigate()
 
-    const [error, setError] = useState("");
     const [newLogin, setNewLogin] = useState({
         email: "",
         password: ""
@@ -36,23 +36,37 @@ export const LoginModal = ({ show, handleClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Limpiar errores previos
 
         // Usamos el esquema para validar los datos
         const result = loginSchema.safeParse(newLogin);
 
         if (!result.success) {
-            setError(result.error.errors[0].message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de validación',
+                text: result.error.errors[0].message,
+            });
             return;
         }
 
         const response = await login(result.data);
 
         if (response.status === 400 || response.status === 401) {
-            setError(response.msg);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al iniciar sesión',
+                text: response.msg,
+            });
         } else {
-            navigate("/home");
             handleClose();
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Bienvenido/a!',
+                text: 'Inicio de sesión exitoso.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            navigate("/home");
         }
     };
 
@@ -68,7 +82,6 @@ export const LoginModal = ({ show, handleClose }) => {
                     {/* body del modal, formulario. */}
                     <div className="modal-body">
                         <form className="row" onSubmit={handleSubmit}>
-                            {error && <div className="alert alert-danger">{error}</div>}
                             <div className="mb-3">
                                 <label className="form-label">Email</label>
                                 <input type="email" className="form-control" name="email" value={newLogin.email} onChange={onInputChange} />
