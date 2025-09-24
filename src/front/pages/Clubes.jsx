@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { PageHeader } from "../components/PageHeader"; // 1. Importar
 import { useEffect, useState } from "react";
-import { getPistas, getClubs } from "../../services/servicesAPI";
+import { getClubs } from "../../services/servicesAPI";
 import { map } from "zod";
 
 
@@ -44,13 +44,13 @@ export const Clubes = () => {
 							<div id="carouselExample" className="carousel slide">
 								<div className="carousel-inner">
 									<div className="carousel-item active ratio ratio-1x1">
-										<img src="src/front/assets/1.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+										<img src={Club.imagen} className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
 									</div>
 									<div className="carousel-item ratio ratio-1x1">
-										<img src="src/front/assets/2.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+										<img src={Club.imagenDos} className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
 									</div>
 									<div className="carousel-item ratio ratio-1x1">
-										<img src="src/front/assets/3.webp" className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
+										<img src={Club.imagenTres} className="d-block w-100" style={{ objectPosition: "center", objectFit: "cover" }} alt="nombre del polideportivo" />
 									</div>
 								</div>
 								<button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -64,8 +64,7 @@ export const Clubes = () => {
 							</div>
 							<div className="card-body">
 								<h5 className="card-title">{Club.nombre}</h5>
-								<p className="card-text">{Club.descripcion}Un polideportivo perfecto para poder pasar una tarde con amigos disfrutando de todas nuestras instalaciones
-									y eligiendo jugar en la pista que mas te guste, si quieres consultar todas nuestras pistas haz click en el siguiente boton.</p>
+								<p className="card-text">{Club.descripcion}</p>
 							</div>
 							<Link to={"/pistas"} className="btn btn-primary m-1">Ver pistas</Link>
 
