@@ -69,6 +69,11 @@ export const Navbar = () => {
 								</Link>
 							</li>
 							<li className="nav-item m-1">
+								<Link to="/pistas">
+									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Pistas</button>
+								</Link>
+							</li>
+							<li className="nav-item m-1">
 								<Link to="/sobre-nosotros">
 									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Sobre nosotros</button>
 								</Link>
