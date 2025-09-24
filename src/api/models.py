@@ -11,7 +11,6 @@ db = SQLAlchemy()
 
 # ------------------------------------------------------------------------------------------------
 
-
 class User(db.Model):
     __tablename__ = "usuarios"
 
@@ -47,7 +46,6 @@ class User(db.Model):
 
 # ------------------------------------------------------------------------------------------------
 
-
 class Club(db.Model):
     __tablename__ = "clubs"
 
@@ -56,6 +54,10 @@ class Club(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
+    imagen: Mapped[str] = mapped_column(String(255), nullable=True)
+    imagenDos: Mapped[str] = mapped_column(String(255), nullable=True)
+    imagenTres: Mapped[str] = mapped_column(String(255), nullable=True)
+    descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
     direccion: Mapped[str] = mapped_column(String(255), nullable=False)
     telefono: Mapped[str] = mapped_column(String(20), nullable=False)
     hora_apertura: Mapped[time] = mapped_column(Time, nullable=False)
@@ -77,6 +79,10 @@ class Club(db.Model):
             "id": self.id,
             "nombre": self.nombre,
             "email": self.email,
+            "imagen": self.imagen,
+            "imagenDos": self.imagenDos,
+            "imagenTres": self.imagenTres,
+            "descripcion": self.descripcion,
             "direccion": self.direccion,
             "telefono": self.telefono,
             "hora_apertura": self.hora_apertura.strftime("%H:%M"),
@@ -87,25 +93,21 @@ class Club(db.Model):
 
 # ------------------------------------------------------------------------------------------------
 
-
 class TipoSuperficie(enum.Enum):
     CESPED = "cesped"
     HORMIGON = "hormigon"
     SINTETICO = "sintetico"
 
-
 class EstadoPista(enum.Enum):
     LIBRE = "libre"
-    RESERVADA = "reservada"
     MANTENIMIENTO = "mantenimiento"
-
 
 class Pista(db.Model):
     __tablename__ = "pistas"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"))
-    numero_pista: Mapped[int] = mapped_column()
+    numero_pista: Mapped[int] = mapped_column(nullable=False)
     superficie: Mapped[TipoSuperficie] = mapped_column(
         SqlEnum(TipoSuperficie), default=TipoSuperficie.CESPED)
     precio_hora: Mapped[float] = mapped_column(nullable=False)
@@ -132,7 +134,6 @@ class Pista(db.Model):
         }
 
 # ------------------------------------------------------------------------------------------------
-
 
 class Reserva(db.Model):
     __tablename__ = "reservas"
@@ -164,7 +165,6 @@ class Reserva(db.Model):
 
 # ------------------------------------------------------------------------------------------------
 
-
 class Contacto(db.Model):
     __tablename__ = "mensajes"
 
@@ -172,7 +172,7 @@ class Contacto(db.Model):
     id_usuario: Mapped[int] = mapped_column(
         ForeignKey("usuarios.id"), nullable=True)
     id_club: Mapped[int] = mapped_column(ForeignKey("clubs.id"), nullable=True)
-    texto: Mapped[str] = mapped_column(String(300), nullable=False)
+    texto: Mapped[str] = mapped_column(String(500), nullable=False)
 
     usuario: Mapped["User"] = relationship(back_populates="mensajes")
     club: Mapped["Club"] = relationship(back_populates="mensajes")

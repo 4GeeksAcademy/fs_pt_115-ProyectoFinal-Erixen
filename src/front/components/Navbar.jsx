@@ -29,9 +29,6 @@ export const Navbar = () => {
 
 					<div className="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul className="navbar-nav ms-auto">
-							<li className="d-flex align-items-center">
-								<p className="text-white mb-0">¿Ya tienes una cuenta?</p>
-							</li>
 							<li className="nav-item m-1">
 								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
 							</li>
@@ -43,7 +40,7 @@ export const Navbar = () => {
 					<Link to="/home" style={{ textDecoration: "none" }}>
 						<div className="d-flex align-items-center cursor-pointer ms-3">
 							<img src="/src/front/assets/logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
-							<a className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</a>
+							<span className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</span>
 						</div>
 					</Link>
 
@@ -56,11 +53,6 @@ export const Navbar = () => {
 							<li className="nav-item m-1">
 								<Link to="/home">
 									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Inicio</button>
-								</Link>
-							</li>
-							<li className="nav-item m-1">
-								<Link to="/reservar-pista">
-									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Reservar pista</button>
 								</Link>
 							</li>
 							<li className="nav-item m-1">
@@ -88,7 +80,7 @@ export const Navbar = () => {
 
 								<ul className="dropdown-menu dropdown-menu-end">
 									<li>
-										<Link to="/profile/<int:user_id>" style={{ textDecoration: "none" }}>
+										<Link to="/profile" style={{ textDecoration: "none" }}>
 											<button className="dropdown-item">Perfil</button>
 										</Link>
 									</li>
@@ -103,6 +95,7 @@ export const Navbar = () => {
 											<button className="dropdown-item" style={{ color: "red" }} onClick={() => {
 												localStorage.removeItem('token')
 												localStorage.removeItem('user_type')
+												localStorage.removeItem('id')
 											}}>Cerrar sesión</button>
 										</Link>
 									</li>

@@ -5,21 +5,31 @@ import { Footer } from "../components/Footer";
 
 // Base component that maintains the navbar and footer throughout the page and the scroll to top functionality.
 export const Layout = () => {
+    const location = useLocation();
+    const isLandingPage = location.pathname === "/";
 
-    return (
-        <ScrollToTop>
-            <Navbar />
-      
-            {/* Elementos del fondo animado */}
-            <div className="animated-bg-shape animate-blob" style={{ top: '-5%', left: '-10%', backgroundColor: '#8ECAE6', zIndex: -1 }}></div>
-            <div className="animated-bg-shape animate-blob" style={{ bottom: '-10%', right: '-10%', backgroundColor: '#FFB703', zIndex: -1 }}></div>
-            <div className="animated-bg-shape animate-blob" style={{ bottom: '5%', left: '20%', backgroundColor: '#FB8500', zIndex: -1 }}></div>
-
-            <main style={{ position: 'relative', zIndex: 1 }}>
+    if (isLandingPage) {
+        // Para la LandingPage, no queremos el contenedor principal ni el footer
+        return (
+            <>
+                <Navbar />
                 <Outlet />
-            </main>
-
-            <Footer />
-        </ScrollToTop>
-    )
+            </>
+        );
+    } else {
+        // Para el resto de las páginas, mantenemos la estructura original
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <ScrollToTop>
+                    <Navbar/>
+                    <main style={{ flex: 1, width: '100%', padding: '0 1rem' }}>
+                        <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+                            <Outlet />
+                        </div>
+                    </main>
+                    <Footer />
+                </ScrollToTop>
+            </div>
+        )
+    }
 }
