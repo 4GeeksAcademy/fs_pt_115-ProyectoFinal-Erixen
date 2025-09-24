@@ -1,3 +1,7 @@
+{/* <PENDIENTE>
+implemtar sweetalert2 en el front
+implemtar zod en el front */}
+
 import { useState } from "react"
 import { createClub } from "../../services/servicesAPI.js";
 

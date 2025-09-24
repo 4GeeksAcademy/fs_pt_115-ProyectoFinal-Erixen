@@ -18,7 +18,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const UserArray = await getUser(id); // esto devuelve un array
+        const UserArray = await getUser(); // esto devuelve un array
         setUser(UserArray[0]); // me quedo con el objeto dentro
       } catch (error) {
         console.error("Error cargando usuario:", error);
@@ -103,6 +103,11 @@ export const Profile = () => {
                     </div>
                   </div>
                 </div>
+                {localStorage.getItem("user_type") == "club" &&(
+                  <div>
+                    image upload
+                  </div>
+                )}
                 <div className="mt-2 d-flex justify-content-center">
                   <button type="button" class="btn btn-outline-primary btn-lg">Guardar Cambios</button>
                 </div>
