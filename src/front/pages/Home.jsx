@@ -33,6 +33,7 @@ export const Home = () => {
 					<div className="row text-center">
 						<div className="col-md-4 mb-4">
 							<div className="card h-100">
+								{/* deberia aplicar un efectivo de hover a las cards de aqui embaixo */}
 								<div className="card-body">
 									<h5 className="card-title">Encuentra Clubes</h5>
 									<p className="card-text">Explora los clubes de pádel cercanos y encuentra el lugar perfecto para tu próximo partido.</p>
@@ -54,7 +55,7 @@ export const Home = () => {
 								<div className="card-body">
 									<h5 className="card-title">Tu Perfil</h5>
 									<p className="card-text">Mantén tu información actualizada y gestiona tu perfil de jugador.</p>
-									<Link to="/profile/1" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
+									<Link to="/profile/<int:user_id>" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
 								</div>
 							</div>
 						</div>
