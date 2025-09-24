@@ -5,6 +5,7 @@ export const PageHeader = ({ title, lead }) => {
             background: '#3374beff', // El color azul característico
             padding: '3rem',
             color: 'white',
+            marginTop: '1rem',
             borderBottomLeftRadius: '30px',
             borderBottomRightRadius: '30px',
             borderTopRightRadius: '30px',

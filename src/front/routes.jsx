@@ -35,7 +35,7 @@ export const router = createBrowserRouter(
       <Route path="/clubes" element={<Clubes />} />
       <Route path="/pistas" element={<Pistas />} />
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
-      <Route path="/profile/<int:user_id>" element={<Profile />} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/reservas/:user_id" element={<ReservasUsuario />} />
       <Route path="/reservasInfo/:id" element={<ReservasUsuarioInfo />} />
       <Route path="/contacto" element={<ContactUs />} />

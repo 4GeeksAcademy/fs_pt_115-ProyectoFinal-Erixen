@@ -11,24 +11,24 @@ export const Clubes = () => {
 	const [clubs, setClubs] = useState([]);
 
 
-	const getClubsFromApi = async () => {
-		const clubsApi = await getClubs()
-		setClubs(clubsApi)
-	}
+	// const getClubsFromApi = async () => {
+	// 	const clubsApi = await getClubs()
+	// 	setClubs(clubsApi)
+	// }
 
-	useEffect(() => {
-		if (localStorage.getItem("token") == null) {
-			navigate("/")
-		}
-	}, [localStorage.getItem("token")]);
+	// useEffect(() => {
+	// 	if (localStorage.getItem("token") == null) {
+	// 		navigate("/")
+	// 	}
+	// }, [localStorage.getItem("token")]);
 
 
-	// FUNCION PARA UN FUTURO PARA CONSEGUIR LAS PISTAS
+	// // FUNCION PARA UN FUTURO PARA CONSEGUIR LAS PISTAS
 
-	useEffect(() => {
-		getClubsFromApi()
+	// useEffect(()=>{
+	// 	getClubsFromApi()
 
-	}, [])
+	// },[])
 
 	return (
 		<>
