@@ -14,9 +14,8 @@ import { ReservasUsuario } from "./pages/ReservasUsuario";
 import { Pistas } from "./pages/Pistas";
 import { SobreNosotros } from "./pages/SobreNosotros";
 import { ContactUs } from "./pages/ContactUs";
-import { CalendarioPista } from "./pages/CalendarioPista";
 import { ReservasUsuarioInfo } from "./pages/ReservasUsuarioInfo";
-
+import { CalendarioPista } from "./pages/CalendarioPista";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

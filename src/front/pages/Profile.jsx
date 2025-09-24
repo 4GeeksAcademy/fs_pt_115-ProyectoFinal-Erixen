@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../../services/servicesAPI";
+import { getUser, updateUser } from "../../services/servicesAPI";
+
 
 export const Profile = () => {
-  const [ModoEdicion, SetModoEdicion] = useState(false)
-  const [inputNombre, setInputNombre] = useState("")
-  const [inputApellidos, setInputApellidos] = useState("")
-  const [inputTelefono, setInputTelefono] = useState("")
-  const [inputEmail, setInputEmail] = useState("")
-
-  const handleInputNombre = (e) => { setInputNombre(e.target.value) }
-  const handleInputApellidos = (e) => { setInputApellidos(e.target.value) }
-  const handleInputEmail = (e) => { setInputEmail(e.target.value) }
-  const handleInputTelefono = (e) => { setInputTelefono(e.target.value) }
-
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
-  
+
+
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -29,18 +21,40 @@ export const Profile = () => {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      setInputNombre(user.nombre || "");
+      setInputApellidos(user.apellidos || "");
+      setInputEmail(user.email || "");
+      setInputTelefono(user.telefono || "");
+    }
+  }, [user]);
 
+
+
+
+  const [ModoEdicion, SetModoEdicion] = useState(false)
+  const [inputNombre, setInputNombre] = useState("")
+  const [inputApellidos, setInputApellidos] = useState("")
+  const [inputTelefono, setInputTelefono] = useState("")
+  const [inputEmail, setInputEmail] = useState("")
+
+  const handleInputNombre = (e) => { setInputNombre(e.target.value) }
+  const handleInputApellidos = (e) => { setInputApellidos(e.target.value) }
+  const handleInputEmail = (e) => { setInputEmail(e.target.value) }
+  const handleInputTelefono = (e) => { setInputTelefono(e.target.value) }
 
   console.log(user)
 
   return (
     <>
       {user && (
-        <div className="container mi-caja mt-4 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "500px" }}>
+        <div className="container mi-caja mt-5 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "500px" }}>
           <div className="d-flex justify-content-between">
             <div className="Spacer No borrar"></div>
             <img src="/src/front/assets/default_profile.jpg" className="ms-3" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} />
-            <i onClick={() => SetModoEdicion(true)} style={{ cursor: "pointer" }} class="fa-solid fa-gear" />
+            <i onClick={() => SetModoEdicion(prev => !prev)}
+              style={{ cursor: "pointer" }} class="fa-solid fa-gear" />
           </div>
           <div className="d-flex text-center justify-content-center mt-2" >
             <h3 className="px-2" style={{ borderRadius: "10px" }}>INFORMACION DE USUARIO</h3>
@@ -105,7 +119,32 @@ export const Profile = () => {
                   </div>
                 </div>
                 <div className="mt-2 d-flex justify-content-center">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Guardar Cambios</button>
+                  <button
+
+                    type="button"
+                    onClick={async () => {
+                      const updatedDataUser = {
+                        nombre: inputNombre,
+                        apellidos: inputApellidos,
+                        email: inputEmail,
+                        telefono: inputTelefono.replace(/\D/g, ""), // elimina cualquier letra
+                      };
+
+                      const result = await updateUser(id, updatedDataUser);
+                      console.log(updatedDataUser)
+                      if (result.error) {
+                        alert(`Error al actualizar: ${result.error.message}`);
+                        console.error(result.error);
+                      } else {
+                        alert("Usuario actualizado correctamente");
+                        console.log(result);
+                      }
+                    }}
+                    className="btn btn-outline-primary btn-lg"
+                  >
+                    Guardar Cambios
+                  </button>
+
                 </div>
               </div>
             }

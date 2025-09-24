@@ -97,3 +97,14 @@ input.input-personalizado {
 font-size:25px;
 
 }
+
+.borderInfoUsuario{
+  display: inline-block;
+  width: fit-content;
+  border: 3px solid #3374beff; /* borde azul neón */
+  padding: 2px 8px;        /* opcional, para que no quede tan pegado */
+  margin: 2px 0;
+    
+  
+
+}

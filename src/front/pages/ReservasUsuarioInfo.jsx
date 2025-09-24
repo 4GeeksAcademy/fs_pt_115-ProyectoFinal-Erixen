@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getPista, getReserva, getUser } from "../../services/servicesAPI";
+import { deleteReserva, getPista, getReserva, getUser } from "../../services/servicesAPI";
 import { useParams } from "react-router-dom";
 
 
@@ -60,45 +60,96 @@ export const ReservasUsuarioInfo = () => {
 		fetchReserva();
 	}, [idReserva]);
 
-	console.log(pista)
-	console.log(reserva)
+	function useIsMobile(maxWidth = 770) {
+		const [isMobile, setIsMobile] = useState(window.innerWidth <= maxWidth);
+
+		useEffect(() => {
+			const handleResize = () => setIsMobile(window.innerWidth <= maxWidth);
+			window.addEventListener("resize", handleResize);
+			return () => window.removeEventListener("resize", handleResize);
+		}, [maxWidth]);
+
+		return isMobile;
+	}
 
 
-	console.log(user)
+	const isMobile = useIsMobile(770);
 
 	return (
 		<>
 			{user && reserva && pista && (
-				<div className="container" >
+				!isMobile ? (
+
+					<div className="container" >
 
 
-					<div className="text-center mt-5">
-						<h1 className="text-black ">Hola, {user.nombre} {user.apellidos}! Bienvenido.</h1>
-						<h3 style={{ color: "#7d7d7d" }}>Esta es tu reserva en {pista.club_info.nombre}</h3>
+						<div className=" text-center mt-5">
+							<h1 className="text-black ">Hola, {user.nombre}! Bienvenido.</h1>
+							<h3 style={{ color: "#7d7d7d" }}>Esta es tu reserva en {pista.club_info.nombre}</h3>
+						</div>
+
+						<div className="d-flex justify-content-between mt-5 row TextOfReservasInfo pb-3 text-center text-md-start" style={{ backgroundColor: "white", borderRadius: "5px", }}>
+							<div className="mt-2 col-12 col-md-4  ms-md-3">
+
+								<p className="ReservaInfo">Club de padel:  {pista.club_info.nombre}</p>
+								<p className="ReservaInfo">Superficie: {pista.superficie}</p>
+								<p className="ReservaInfo">Hora de inicio: {reserva.hora_inicio}</p>
+								<p className="ReservaInfo">direccion: {pista.club_info.direccion}</p>
+							</div>
+
+							<div className="mt-2 col-12 col-md-4">
+								<p className="ReservaInfo">Numero de pista: {pista.numero_pista}</p>
+								<p className="ReservaInfo">Precio/hora: {pista.precio_hora}€</p>
+								<p className="ReservaInfo">Hora de fin: {reserva.hora_fin}</p>
+								<p className="ReservaInfo">Fecha de reserva: {reserva.fecha_reserva}</p>
+							</div>
+
+
+							<div class="d-grid gap-2 col-5 mt-3 mx-auto">
+								<button class="btn btn-danger" type="button">CANCELAR RESERVA</button>
+							</div>
+						</div>
 					</div>
+				) : (
+					<div className="container" >
 
-					<div className="d-flex justify-content-between mt-5 row TextOfReservasInfo pb-3" style={{ backgroundColor: "white", borderRadius: "5px", }}>
-						<div className="mt-2 col-4 ms-3">
-							
-							<p className="">Club de padel:  {pista.club_info.nombre}</p>
-							<p className="">Superficie: {pista.superficie}</p>
-							<p className="">Hora de inicio: {reserva.hora_inicio}</p>
-							<p>direccion: {pista.club_info.direccion}</p>
+
+						<div className=" text-center mt-5">
+							<h1 className="text-black ">Hola, {user.nombre}! Bienvenido.</h1>
+							<h3 style={{ color: "#7d7d7d" }}>Esta es tu reserva en {pista.club_info.nombre}</h3>
 						</div>
 
-						<div className="mt-2 col-4 me-3">
-							<p>Pista: {pista.numero_pista}</p>
-							<p>Precio: {pista.precio_hora}€</p>
-							<p>Hora de fin: {reserva.hora_fin}</p>
-							<p>Fecha de reserva: {reserva.fecha_reserva}</p>
-						</div>
+						<div className="d-flex justify-content-between mt-5 row TextOfReservasInfo pb-3 text-center text-md-start" style={{ backgroundColor: "white", borderRadius: "5px", }}>
+							<div className="mt-2 col-12 col-md-4  ms-md-3" style={{display: "flex",flexDirection: "column"}}>
+								
+								<p className="ReservaInfo mx-auto">Club de padel:  </p>
+								<p className="borderInfoUsuario mx-auto">{pista.club_info.nombre}</p>
+								<p className="ReservaInfo mt-3  mx-auto">Superficie: </p>
+								<p className="borderInfoUsuario mx-auto">{pista.superficie}</p>
+								<p className="ReservaInfo mt-3 mx-auto">Hora de inicio:</p>
+								<p className="borderInfoUsuario mx-auto"> {reserva.hora_inicio}</p>
+								<p className="ReservaInfo mx-auto mt-2">direccion: </p>
+								<p className="borderInfoUsuario mx-auto">{pista.club_info.direccion}</p>
+							</div>
+
+							<div className="mt-3 col-12 col-md-4">
+								<p className="ReservaInfo mt-3  mx-auto">Numero de pista:</p>
+								<p className="borderInfoUsuario mx-auto">{pista.numero_pista}</p>
+								<p className="ReservaInfo mt-3  mx-auto">Precio/hora:</p>
+								<p className="borderInfoUsuario mx-auto">{pista.precio_hora}€</p>
+								<p className="ReservaInfo mt-3  mx-auto">Hora de fin:</p>
+								<p className="borderInfoUsuario mx-auto">{reserva.hora_fin}</p>
+								<p className="ReservaInfo mt-3  mx-auto">Fecha de reserva:</p>
+								<p className="borderInfoUsuario mx-auto">{reserva.fecha_reserva}</p>
+							</div>
 
 
-						<div class="d-grid gap-2 col-5 mt-3 mx-auto">
-							<button class="btn btn-danger" type="button">CANCELAR RESERVA</button>
+							<div class="d-grid gap-2 col-5 mt-3 mx-auto">
+								<button class="btn btn-danger" type="button">CANCELAR RESERVA</button>
+							</div>
 						</div>
 					</div>
-				</div>
+				)
 			)}
 		</>
 	);

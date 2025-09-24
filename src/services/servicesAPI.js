@@ -77,8 +77,13 @@ export const getUsers = async () => {
 };
 
 // Obtener un usuario concreto
-export const getUser = async (id) => {
-	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`);
+export const getUser = async () => {
+	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${localStorage.getItem("user_type") == "club" ? "club" : "user"}`,{
+		headers: {
+			"Authorization": `Bearer ${localStorage.getItem("token")}`
+		}
+	
+	});
 
 	if (response.ok) {
         const data = await response.json();
@@ -286,8 +291,6 @@ export const getReservas = async () => {
         return { error: { status: response.status, statusText: response.statusText } };
     };
 }
-
-
 
 export const getReserva = async (id) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/reservas/${id}`);
