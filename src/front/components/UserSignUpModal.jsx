@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUser } from "../../services/servicesAPI.js";
 import { z } from "zod";
+import Swal from 'sweetalert2';
 
 export const UserSignUpModal = ({ show, handleClose }) => {
     if (!show) {
@@ -19,10 +20,10 @@ export const UserSignUpModal = ({ show, handleClose }) => {
 
     // 1. Definimos el esquema de validación con Zod
     const userSchema = z.object({
-        nombre: z.string().min(1, "El nombre es obligatorio."),
-        apellidos: z.string().min(1, "Los apellidos son obligatorios."),
-        email: z.string().email("El formato del correo electrónico no es válido."),
-        telefono: z.string().min(1, "El teléfono es obligatorio."),
+        nombre: z.string().min(3, "El nombre es obligatorio."),
+        apellidos: z.string().min(3, "Los apellidos son obligatorios."),
+        email: z.email("El formato del correo electrónico no es válido."),
+        telefono: z.string().min(8, "El teléfono es obligatorio."),
         password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres."),
     }).refine(data => data.password === confirmPassword, {
         message: "Las contraseñas no coinciden.",
@@ -42,18 +43,32 @@ export const UserSignUpModal = ({ show, handleClose }) => {
         const result = userSchema.safeParse(newUser);
 
         if (!result.success) {
-            // Zod nos da el primer error encontrado de forma sencilla
-            setError(result.error.errors[0].message);
+            // Mostramos el error de validación con SweetAlert
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de validación',
+                text: result.error.errors[0].message,
+            });
             return;
         }
 
         // 3. Si la validación es exitosa, enviamos los datos (sin confirmPassword)
         const response = await createUser(result.data);
 
-        if (response.status === 400) {
-            setError(response.msg);
+        if (response.status === 400 || response.status === 409) { // Manejamos también conflictos (ej: email ya existe)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error en el registro',
+                text: response.msg,
+            });
         } else {
-            alert("¡Registro exitoso!");
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: 'Ya puedes iniciar sesión con tu nueva cuenta.',
+                timer: 2000,
+                showConfirmButton: false
+            });
             handleClose();
         }
     };
@@ -68,7 +83,7 @@ export const UserSignUpModal = ({ show, handleClose }) => {
                     </div>
                     <div className="modal-body">
                         <form className="row" onSubmit={handleSubmit}>
-                            {error && <div className="alert alert-danger">{error}</div>}
+                            {/* El estado de error ya no es necesario mostrarlo aquí, SweetAlert se encarga */}
                             <div className="mb-3">
                                 <label className="form-label">Nombre</label>
                                 <input type="text" className="form-control" name="nombre" value={newUser.nombre} onChange={onInputChange} />

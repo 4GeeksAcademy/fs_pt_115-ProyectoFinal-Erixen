@@ -6,26 +6,31 @@ export const Profile = () => {
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
 
+  const [ModoEdicion, SetModoEdicion] = useState(false)
+  const [inputNombre, setInputNombre] = useState("")
+  const [inputApellidos, setInputApellidos] = useState("")
+  const [inputTelefono, setInputTelefono] = useState("")
+  const [inputEmail, setInputEmail] = useState("")
 
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const UserArray = await getUser(id); // esto devuelve un array
+        const UserArray = await getUser(); // esto devuelve un array
         setUser(UserArray[0]); // me quedo con el objeto dentro
       } catch (error) {
         console.error("Error cargando usuario:", error);
       }
     };
-
+    console.log(user)
     fetchUser();
   }, []);
 
   useEffect(() => {
     if (user) {
-      setInputNombre(user.nombre || "");
-      setInputApellidos(user.apellidos || "");
-      setInputEmail(user.email || "");
+      setInputNombre(user.nombre);
+      setInputApellidos(user.apellidos);
+      setInputEmail(user.email);
       setInputTelefono(user.telefono || "");
     }
   }, [user]);
@@ -33,11 +38,7 @@ export const Profile = () => {
 
 
 
-  const [ModoEdicion, SetModoEdicion] = useState(false)
-  const [inputNombre, setInputNombre] = useState("")
-  const [inputApellidos, setInputApellidos] = useState("")
-  const [inputTelefono, setInputTelefono] = useState("")
-  const [inputEmail, setInputEmail] = useState("")
+  
 
   const handleInputNombre = (e) => { setInputNombre(e.target.value) }
   const handleInputApellidos = (e) => { setInputApellidos(e.target.value) }
@@ -118,6 +119,11 @@ export const Profile = () => {
                     </div>
                   </div>
                 </div>
+                {localStorage.getItem("user_type") == "club" &&(
+                  <div>
+                    image upload
+                  </div>
+                )}
                 <div className="mt-2 d-flex justify-content-center">
                   <button
 

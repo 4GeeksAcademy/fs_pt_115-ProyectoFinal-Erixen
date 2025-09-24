@@ -76,7 +76,7 @@ export const Navbar = () => {
 
 								<ul className="dropdown-menu dropdown-menu-end">
 									<li>
-										<Link to={`/profile/${id}`} style={{ textDecoration: "none" }}>
+										<Link to="/profile" style={{ textDecoration: "none" }}>
 											<button className="dropdown-item">Perfil</button>
 										</Link>
 									</li>
