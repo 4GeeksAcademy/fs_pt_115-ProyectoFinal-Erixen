@@ -238,8 +238,7 @@ export const CalendarioPista = () => {
                                     onClick={() => {
                                         setModalDosVisible(false)
                                     }}
-                                >
-                                    Close</button>
+                                >Cerrar</button>
                             </div>
                         </div>
                     </div>
