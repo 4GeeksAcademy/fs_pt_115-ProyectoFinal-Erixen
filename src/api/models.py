@@ -54,6 +54,10 @@ class Club(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     password_hash: Mapped[str] = mapped_column(String(128), nullable=False)
+    imagen: Mapped[str] = mapped_column(String(255), nullable=True)
+    imagenDos: Mapped[str] = mapped_column(String(255), nullable=True)
+    imagenTres: Mapped[str] = mapped_column(String(255), nullable=True)
+    descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
     direccion: Mapped[str] = mapped_column(String(255), nullable=False)
     telefono: Mapped[str] = mapped_column(String(20), nullable=False)
     hora_apertura: Mapped[time] = mapped_column(Time, nullable=False)
@@ -75,6 +79,10 @@ class Club(db.Model):
             "id": self.id,
             "nombre": self.nombre,
             "email": self.email,
+            "imagen": self.imagen,
+            "imagenDos": self.imagenDos,
+            "imagenTres": self.imagenTres,
+            "descripcion": self.descripcion,
             "direccion": self.direccion,
             "telefono": self.telefono,
             "hora_apertura": self.hora_apertura.strftime("%H:%M"),
