@@ -38,12 +38,12 @@ const [reserva, setreserva] = useState();
 
 	return (
 		<div className="container">
-
-			<div className="text-center mt-3">
-				<h1 className="text-black ">MIS RESERVAS</h1>
-			</div>
+			<PageHeader 
+			title="Mis Reservas"
+			lead="Gestiona tus reservas de pistas de pádel"
+			/>
+			
 			<div className="row  d-flex justify-content-around mt-3">
-
 				{!user ? (
 					<p className="text-center">Cargando reservas...</p>
 				) : !user.reservas || user.reservas.length === 0 ? (
