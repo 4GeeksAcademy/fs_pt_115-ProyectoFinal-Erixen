@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getUser, updateUser } from "../../services/servicesAPI";
+import { updateUser } from "../../services/servicesAPI";
 
 
 export const Profile = () => {
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
+ 
 
 const getUser = async (userId) => {
 
@@ -22,11 +23,15 @@ console.log("Usuario no encontrado")
   useEffect(() => {
     const fetchUser = async () => {
       const data = await getUser(id)
-      if (data) setUser(data)
+      if (data) {
+        setUser(data)
+      }
     };
 
     if(id) fetchUser();
-  console.log(user)}, []);
+    }, [id]);
+
+    console.log(user)
 
   useEffect(() => {
     if (user) {
