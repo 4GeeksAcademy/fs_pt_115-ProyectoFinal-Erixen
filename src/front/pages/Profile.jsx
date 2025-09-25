@@ -1,7 +1,39 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../../services/servicesAPI";
+import { getUserForId, updateUser } from "../../services/servicesAPI";
+
 
 export const Profile = () => {
+  const [user, setUser] = useState();
+  const id = localStorage.getItem("id")
+ 
+
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUserForId(id)
+      if (data) {
+        setUser(data)
+      }
+    };
+
+    if(id) fetchUser();
+    }, [id]);
+
+    console.log(user)
+
+  useEffect(() => {
+    if (user) {
+      setInputNombre(user.nombre ?? "");
+      setInputApellidos(user.apellidos ?? "");
+      setInputEmail(user.email ?? "");
+      setInputTelefono(user.telefono ?? "");
+    }
+  }, [user]);
+
+
+
+
   const [ModoEdicion, SetModoEdicion] = useState(false)
   const [inputNombre, setInputNombre] = useState("")
   const [inputApellidos, setInputApellidos] = useState("")
@@ -13,33 +45,16 @@ export const Profile = () => {
   const handleInputEmail = (e) => { setInputEmail(e.target.value) }
   const handleInputTelefono = (e) => { setInputTelefono(e.target.value) }
 
-  const [user, setUser] = useState();
-  const id = localStorage.getItem("id")
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const UserArray = await getUser(); // esto devuelve un array
-        setUser(UserArray[0]); // me quedo con el objeto dentro
-      } catch (error) {
-        console.error("Error cargando usuario:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-
-
-  console.log(user)
 
   return (
     <>
       {user && (
-        <div className="container mi-caja mt-4 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "500px" }}>
+        <div className="container mi-caja mt-5 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "500px" }}>
           <div className="d-flex justify-content-between">
             <div className="Spacer No borrar"></div>
             <img src="/src/front/assets/default_profile.jpg" className="ms-3" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} />
-            <i onClick={() => SetModoEdicion(true)} style={{ cursor: "pointer" }} class="fa-solid fa-gear" />
+            <i onClick={() => SetModoEdicion(prev => !prev)}
+              style={{ cursor: "pointer" }} className="fa-solid fa-gear" />
           </div>
           <div className="d-flex text-center justify-content-center mt-2" >
             <h3 className="px-2" style={{ borderRadius: "10px" }}>INFORMACION DE USUARIO</h3>
@@ -47,7 +62,7 @@ export const Profile = () => {
           <div className="">
             {!ModoEdicion &&
               <div className="row m-0 d-flex flex-colum justify-content-around">
-                <div className="mt-2 col-12 col-md-12 align-items-center" >
+                <div className=" col-12 col-md-12 align-items-center" >
                   <div className="" style={{ borderRadius: "10px" }}>
                     <div className="d-flex justify-content-center mx-auto align-items-center" >
                       <h4>{user.nombre}</h4>
@@ -55,7 +70,7 @@ export const Profile = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-2 col-12 col-md-12 align-items-center" >
+                <div className=" col-12 col-md-12 align-items-center" >
                   <div className="" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center">
                       <h4>{user.email}</h4>
@@ -72,7 +87,7 @@ export const Profile = () => {
                         <h2 className="mt-1" style={{ fontFamily: "DM Serif Text" }}>MIS RESERVAS</h2>
                       </div>
                       <div className="d-flex flex-column pb-2 align-items-center">
-                        <button type="button" style={{ fontFamily: "DM Serif Text" }} class="btn btn-outline-primary btn-lg">ACCEDER</button>
+                        <button type="button" style={{ fontFamily: "DM Serif Text" }} className="btn btn-outline-primary btn-lg">ACCEDER</button>
                       </div>
                     </div>
                   </div>
@@ -84,10 +99,10 @@ export const Profile = () => {
                 <div className="mt-2 col-12 col-md-12 align-items-center" >
                   <div className="pb-2" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center" >
-                      <label for="nombre"><h4>NOMBRE:</h4></label>
+                      <label htmlFor="nombre"><h4>NOMBRE:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.nombre} type="text" value={inputNombre} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputNombre(e)} id="nombre" />
 
-                      <label for="Apellidos"><h4>APELLIDOS:</h4></label>
+                      <label htmlFor="Apellidos"><h4>APELLIDOS:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.apellidos} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputApellidos} onChange={(e) => handleInputApellidos(e)} id="Apellidos" />
                     </div>
                   </div>
@@ -95,26 +110,55 @@ export const Profile = () => {
                 <div className="mt-2 col-12 col-md-12 align-items-center" >
                   <div className="pb-2" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center" >
-                      <label for="Email"><h4>EMAIL:</h4></label>
+                      <label htmlFor="Email"><h4>EMAIL:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.email} type="text" value={inputEmail} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputEmail(e)} id="Email" />
 
-                      <label for="Telefono"><h4>TELEFONO:</h4></label>
-                      <input className="form-control text-center border-0" placeholder={user.telefono} type="number" value={inputTelefono} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputTelefono(e)} id="Telefono" />
+                      <label htmlFor="Telefono"><h4>TELEFONO:</h4></label>
+                      <input className="form-control text-center border-0" placeholder={user.telefono} type="tel" value={inputTelefono} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputTelefono(e)} id="Telefono" />
                     </div>
                   </div>
                 </div>
-                {localStorage.getItem("user_type") == "club" &&(
+                {localStorage.getItem("user_type") == "club" && (
                   <div>
                     image upload
                   </div>
                 )}
                 <div className="mt-2 d-flex justify-content-center">
-                  <button type="button" class="btn btn-outline-primary btn-lg">Guardar Cambios</button>
-                </div>
+                  <button
+
+                    type="button"
+                    onClick={async () => {
+                      const updatedDataUser = {
+                        nombre: (inputNombre ?? "").trim() ||(user?.nombre ?? ""),
+                        apellidos: (inputApellidos ?? "").trim() ||(user?.apellidos ?? ""),
+                        email: (inputEmail ?? "").trim() ||(user?.email ?? ""),
+                        telefono: (((inputTelefono ?? "") || (user?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
+                      };
+
+                      const result = await updateUser(id, updatedDataUser);
+                      console.log(updatedDataUser);
+
+                      if (result.error) {
+                        alert(`Error al actualizar:${result.error.message}`);
+                  console.error(result.error);
+  } else {
+                    // actualiza el estado local para que la UI refleje los cambios
+                    setUser(prev => ({ ...prev, ...updatedDataUser }));
+                  SetModoEdicion(false); // opcional: salir del modo edición
+                  alert("Usuario actualizado correctamente");
+                  console.log(result);
+  }
+}}
+                  className="btn btn-outline-primary btn-lg"
+                  >
+                  Guardar Cambios
+                </button>
+
+              </div>
               </div>
             }
-          </div>
         </div>
+        </div >
       )}
     </>
   );

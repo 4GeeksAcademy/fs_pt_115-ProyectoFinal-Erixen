@@ -14,9 +14,8 @@ import { ReservasUsuario } from "./pages/ReservasUsuario";
 import { Pistas } from "./pages/Pistas";
 import { SobreNosotros } from "./pages/SobreNosotros";
 import { ContactUs } from "./pages/ContactUs";
-import { CalendarioPista } from "./pages/CalendarioPista";
 import { ReservasUsuarioInfo } from "./pages/ReservasUsuarioInfo";
-
+import { CalendarioPista } from "./pages/CalendarioPista";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,7 +36,7 @@ export const router = createBrowserRouter(
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/reservas/:user_id" element={<ReservasUsuario />} />
-      <Route path="/reservasInfo/:id" element={<ReservasUsuarioInfo />} />
+        <Route path="/reservasInfo/:idReserva" element={<ReservasUsuarioInfo />} />
       <Route path="/contacto" element={<ContactUs />} />
       <Route path="/calendario-pista/:pista_id" element={<CalendarioPista />} />
     </Route>
