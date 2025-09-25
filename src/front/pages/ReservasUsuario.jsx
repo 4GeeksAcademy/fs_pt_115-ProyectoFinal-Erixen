@@ -8,7 +8,6 @@ import { getPista, getReserva, getUser } from "../../services/servicesAPI";
 
 export const ReservasUsuario = () => {
 const [reserva, setreserva] = useState();
-	const [pista, setpista] = useState();
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -26,7 +25,7 @@ const [reserva, setreserva] = useState();
 				const data = await getUser(id);
 				setUser(Array.isArray(data) ? data[0] : data);
 				const userTemp = ((Array.isArray(data) ? data[0] : data))
-				setReserva(userTemp.reservas || [])
+				setreserva(userTemp.reservas || [])
 			} catch (error) {
 				console.error("Error cargando usuario:", error);
 			}
@@ -34,13 +33,6 @@ const [reserva, setreserva] = useState();
 		fetchUser();
 	}, [id]);
 
-
-
-
-
-
-	console.log(user)
-	console.log(pista)
 
 	
 
@@ -68,7 +60,7 @@ const [reserva, setreserva] = useState();
 							</div>
 							<div className="card-body d-flex justify-content-center">
 								<Link to={`/reservasInfo/${reserva.id}`}>
-									<a href="#" className="btn btn-primary">VER MAS</a>
+									<button className="btn btn-primary">VER MAS</button>
 								</Link>
 							</div>
 						</div>

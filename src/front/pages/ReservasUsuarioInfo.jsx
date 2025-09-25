@@ -105,8 +105,24 @@ export const ReservasUsuarioInfo = () => {
 							</div>
 
 
-							<div class="d-grid gap-2 col-5 mt-3 mx-auto">
-								<button class="btn btn-danger" type="button">CANCELAR RESERVA</button>
+							<button type="button" className="btn btn-danger d-grid gap-2 col-5 mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+								CANCELAR RESERVA
+							</button>
+
+
+							<div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div className="modal-dialog">
+									<div className="modal-content">
+										<div className="modal-header">
+											<h2 className="modal-title fs-5c text-center " id="staticBackdropLabel">Vas a cancelar tu reserva estas seguro?</h2>
+											
+										</div>
+										<div className="modal-footer d-flex justify-content-around btn-sm">
+											<button type="button" className="btn btn-success btn-lg" style={{width: ""}} data-bs-dismiss="modal">MANTENER RESERVA</button>
+											<button type="button" onClick={ async (id)=> {await deleteReserva(reserva.id); navigate(`/reservas/${id}`); window.location.reload();}} className="btn btn-danger btn-lg" style={{}}>CANCELAR RESERVA</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -120,8 +136,8 @@ export const ReservasUsuarioInfo = () => {
 						</div>
 
 						<div className="d-flex justify-content-between mt-5 row TextOfReservasInfo pb-3 text-center text-md-start" style={{ backgroundColor: "white", borderRadius: "5px", }}>
-							<div className="mt-2 col-12 col-md-4  ms-md-3" style={{display: "flex",flexDirection: "column"}}>
-								
+							<div className="mt-2 col-12 col-md-4  ms-md-3" style={{ display: "flex", flexDirection: "column" }}>
+
 								<p className="ReservaInfo mx-auto">Club de padel:  </p>
 								<p className="borderInfoUsuario mx-auto">{pista.club_info.nombre}</p>
 								<p className="ReservaInfo mt-3  mx-auto">Superficie: </p>
@@ -143,10 +159,26 @@ export const ReservasUsuarioInfo = () => {
 								<p className="borderInfoUsuario mx-auto">{reserva.fecha_reserva}</p>
 							</div>
 
+							<button type="button" className="btn btn-danger d-grid gap-2 col-5 mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+								CANCELAR RESERVA
+							</button>
 
-							<div class="d-grid gap-2 col-5 mt-3 mx-auto">
-								<button class="btn btn-danger" type="button">CANCELAR RESERVA</button>
+							<div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div className="modal-dialog">
+									<div className="modal-content">
+										<div className="modal-header">
+											<h2 className="modal-title fs-5c text-center " id="staticBackdropLabel">Vas a cancelar tu reserva estas seguro?</h2>
+											
+										</div>
+										<div className="modal-footer d-flex justify-content-around btn-sm">
+											<button type="button" className="btn btn-success btn-lg" style={{}} data-bs-dismiss="modal">MANTENER RESERVA</button>
+											<button type="button" onClick={ async (id)=> {await deleteReserva(reserva.id); navigate(`/reservas/${id}`); window.location.reload();}} className="btn btn-danger btn-lg" style={{}}>CANCELAR RESERVA</button>
+										</div>
+									</div>
+								</div>
 							</div>
+
+							
 						</div>
 					</div>
 				)
