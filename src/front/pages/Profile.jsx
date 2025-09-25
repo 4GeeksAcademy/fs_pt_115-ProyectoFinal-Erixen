@@ -6,11 +6,6 @@ export const Profile = () => {
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
 
-  const [ModoEdicion, SetModoEdicion] = useState(false)
-  const [inputNombre, setInputNombre] = useState("")
-  const [inputApellidos, setInputApellidos] = useState("")
-  const [inputTelefono, setInputTelefono] = useState("")
-  const [inputEmail, setInputEmail] = useState("")
 
 
   useEffect(() => {
@@ -22,15 +17,15 @@ export const Profile = () => {
         console.error("Error cargando usuario:", error);
       }
     };
-    console.log(user)
+
     fetchUser();
   }, []);
 
   useEffect(() => {
     if (user) {
-      setInputNombre(user.nombre);
-      setInputApellidos(user.apellidos);
-      setInputEmail(user.email);
+      setInputNombre(user.nombre || "");
+      setInputApellidos(user.apellidos || "");
+      setInputEmail(user.email || "");
       setInputTelefono(user.telefono || "");
     }
   }, [user]);
@@ -38,7 +33,11 @@ export const Profile = () => {
 
 
 
-  
+  const [ModoEdicion, SetModoEdicion] = useState(false)
+  const [inputNombre, setInputNombre] = useState("")
+  const [inputApellidos, setInputApellidos] = useState("")
+  const [inputTelefono, setInputTelefono] = useState("")
+  const [inputEmail, setInputEmail] = useState("")
 
   const handleInputNombre = (e) => { setInputNombre(e.target.value) }
   const handleInputApellidos = (e) => { setInputApellidos(e.target.value) }
@@ -119,7 +118,7 @@ export const Profile = () => {
                     </div>
                   </div>
                 </div>
-                {localStorage.getItem("user_type") == "club" &&(
+                {localStorage.getItem("user_type") == "club" && (
                   <div>
                     image upload
                   </div>
@@ -137,25 +136,29 @@ export const Profile = () => {
                       };
 
                       const result = await updateUser(id, updatedDataUser);
-                      console.log(updatedDataUser)
-                      if (result.error) {
-                        alert(`Error al actualizar: ${result.error.message}`);
-                        console.error(result.error);
-                      } else {
-                        alert("Usuario actualizado correctamente");
-                        console.log(result);
-                      }
-                    }}
-                    className="btn btn-outline-primary btn-lg"
-                  >
-                    Guardar Cambios
-                  </button>
+                      console.log(updatedDataUser);
 
-                </div>
+                      if (result.error) {
+                        alert(`Error al actualizar:${result.error.message}`);
+                  console.error(result.error);
+  } else {
+                    // actualiza el estado local para que la UI refleje los cambios
+                    setUser(prev => ({ ...prev, ...updatedDataUser }));
+                  SetModoEdicion(false); // opcional: salir del modo edición
+                  alert("Usuario actualizado correctamente");
+                  console.log(result);
+  }
+}}
+                  className="btn btn-outline-primary btn-lg"
+                  >
+                  Guardar Cambios
+                </button>
+
+              </div>
               </div>
             }
-          </div>
         </div>
+        </div >
       )}
     </>
   );
