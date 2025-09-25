@@ -30,11 +30,11 @@ export const LandingPage = () => {
 		<>
 			{/* Componente que aplica estilos globales a la página. */}
 			<GlobalStyles />
-			<div className="container-fluid vh-100 p-0">
-				<div className="row g-0 h-100" style={{ overflow: 'hidden' }}>
+			<div className="container-fluid min-vh-100 p-0">
+				<div className="row g-0">
 					{/* Columna Izquierda - Registro de Clubes */}
 					<div
-						className="col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-5"
+						className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-4 py-5"
 						style={{
 							...columnStyle,
 							background: '#f8f9fa',
@@ -59,7 +59,7 @@ export const LandingPage = () => {
 					</div>
 					{/* Columna Derecha - Jugadores */}
 					<div
-						className="col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-5 text-white"
+						className="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center text-center p-4 py-5 text-white"
 						style={{
 							...columnStyle,
 							background: '#343a40',
