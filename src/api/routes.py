@@ -174,6 +174,17 @@ def delete_user(id):
 
     return jsonify({"msg": f"Usuario con id {id} eliminado con éxito"}), 200
 
+
+@api.route('/users/<int:id>', methods=['GET'])
+def get_user(id):
+    user = User.query.get(id)
+
+    if not user:
+        return jsonify({"msg": f"Usuario con id {id} no encontrado"}), 404
+    
+    return jsonify(user.serialize()),200
+
+
 # ------------------------------------------------------------------------------------------------
 
 # Obtener todos los clubes

@@ -6,27 +6,34 @@ export const Profile = () => {
   const [user, setUser] = useState();
   const id = localStorage.getItem("id")
 
+const getUser = async (userId) => {
 
+const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${userId}`)
+
+if (response.ok){
+const data = await response.json()
+return data
+
+}
+console.log("Usuario no encontrado")
+
+} 
 
   useEffect(() => {
     const fetchUser = async () => {
-      try {
-        const UserArray = await getUser(); // esto devuelve un array
-        setUser(UserArray[0]); // me quedo con el objeto dentro
-      } catch (error) {
-        console.error("Error cargando usuario:", error);
-      }
+      const data = await getUser(id)
+      if (data) setUser(data)
     };
 
-    fetchUser();
-  }, []);
+    if(id) fetchUser();
+  console.log(user)}, []);
 
   useEffect(() => {
     if (user) {
-      setInputNombre(user.nombre || "");
-      setInputApellidos(user.apellidos || "");
-      setInputEmail(user.email || "");
-      setInputTelefono(user.telefono || "");
+      setInputNombre(user.nombre ?? "");
+      setInputApellidos(user.apellidos ?? "");
+      setInputEmail(user.email ?? "");
+      setInputTelefono(user.telefono ?? "");
     }
   }, [user]);
 
@@ -44,7 +51,6 @@ export const Profile = () => {
   const handleInputEmail = (e) => { setInputEmail(e.target.value) }
   const handleInputTelefono = (e) => { setInputTelefono(e.target.value) }
 
-  console.log(user)
 
   return (
     <>
@@ -54,7 +60,7 @@ export const Profile = () => {
             <div className="Spacer No borrar"></div>
             <img src="/src/front/assets/default_profile.jpg" className="ms-3" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} />
             <i onClick={() => SetModoEdicion(prev => !prev)}
-              style={{ cursor: "pointer" }} class="fa-solid fa-gear" />
+              style={{ cursor: "pointer" }} className="fa-solid fa-gear" />
           </div>
           <div className="d-flex text-center justify-content-center mt-2" >
             <h3 className="px-2" style={{ borderRadius: "10px" }}>INFORMACION DE USUARIO</h3>
@@ -87,7 +93,7 @@ export const Profile = () => {
                         <h2 className="mt-1" style={{ fontFamily: "DM Serif Text" }}>MIS RESERVAS</h2>
                       </div>
                       <div className="d-flex flex-column pb-2 align-items-center">
-                        <button type="button" style={{ fontFamily: "DM Serif Text" }} class="btn btn-outline-primary btn-lg">ACCEDER</button>
+                        <button type="button" style={{ fontFamily: "DM Serif Text" }} className="btn btn-outline-primary btn-lg">ACCEDER</button>
                       </div>
                     </div>
                   </div>
@@ -99,10 +105,10 @@ export const Profile = () => {
                 <div className="mt-2 col-12 col-md-12 align-items-center" >
                   <div className="pb-2" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center" >
-                      <label for="nombre"><h4>NOMBRE:</h4></label>
+                      <label htmlFor="nombre"><h4>NOMBRE:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.nombre} type="text" value={inputNombre} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputNombre(e)} id="nombre" />
 
-                      <label for="Apellidos"><h4>APELLIDOS:</h4></label>
+                      <label htmlFor="Apellidos"><h4>APELLIDOS:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.apellidos} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputApellidos} onChange={(e) => handleInputApellidos(e)} id="Apellidos" />
                     </div>
                   </div>
@@ -110,11 +116,11 @@ export const Profile = () => {
                 <div className="mt-2 col-12 col-md-12 align-items-center" >
                   <div className="pb-2" style={{ borderRadius: "10px" }}>
                     <div className="d-flex flex-column align-items-center" >
-                      <label for="Email"><h4>EMAIL:</h4></label>
+                      <label htmlFor="Email"><h4>EMAIL:</h4></label>
                       <input className="form-control text-center border-0" placeholder={user.email} type="text" value={inputEmail} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputEmail(e)} id="Email" />
 
-                      <label for="Telefono"><h4>TELEFONO:</h4></label>
-                      <input className="form-control text-center border-0" placeholder={user.telefono} type="number" value={inputTelefono} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputTelefono(e)} id="Telefono" />
+                      <label htmlFor="Telefono"><h4>TELEFONO:</h4></label>
+                      <input className="form-control text-center border-0" placeholder={user.telefono} type="tel" value={inputTelefono} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputTelefono(e)} id="Telefono" />
                     </div>
                   </div>
                 </div>
@@ -129,10 +135,10 @@ export const Profile = () => {
                     type="button"
                     onClick={async () => {
                       const updatedDataUser = {
-                        nombre: inputNombre,
-                        apellidos: inputApellidos,
-                        email: inputEmail,
-                        telefono: inputTelefono.replace(/\D/g, ""), // elimina cualquier letra
+                        nombre: (inputNombre ?? "").trim() ||(user?.nombre ?? ""),
+                        apellidos: (inputApellidos ?? "").trim() ||(user?.apellidos ?? ""),
+                        email: (inputEmail ?? "").trim() ||(user?.email ?? ""),
+                        telefono: (((inputTelefono ?? "") || (user?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
                       };
 
                       const result = await updateUser(id, updatedDataUser);
