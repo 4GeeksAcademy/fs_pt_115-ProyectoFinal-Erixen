@@ -16,7 +16,6 @@ export const UserSignUpModal = ({ show, handleClose }) => {
         telefono: ""
     });
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState("");
 
     // 1. Definimos el esquema de validación con Zod
     const userSchema = z.object({
@@ -37,7 +36,6 @@ export const UserSignUpModal = ({ show, handleClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Limpiar errores previos
 
         // 2. Usamos el esquema para validar los datos
         const result = userSchema.safeParse(newUser);
@@ -55,13 +53,7 @@ export const UserSignUpModal = ({ show, handleClose }) => {
         // 3. Si la validación es exitosa, enviamos los datos (sin confirmPassword)
         const response = await createUser(result.data);
 
-        if (response.status === 400 || response.status === 409) { // Manejamos también conflictos (ej: email ya existe)
-            Swal.fire({
-                icon: 'error',
-                title: 'Error en el registro',
-                text: response.msg,
-            });
-        } else {
+        if (response.status === 201) {
             Swal.fire({
                 icon: 'success',
                 title: '¡Registro exitoso!',
@@ -70,6 +62,12 @@ export const UserSignUpModal = ({ show, handleClose }) => {
                 showConfirmButton: false
             });
             handleClose();
+        } else { // Manejamos cualquier otro caso como un error
+            Swal.fire({
+                icon: 'error',
+                title: 'Error en el registro',
+                text: response.msg || 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.',
+            });
         }
     };
 

@@ -107,4 +107,35 @@ font-size:25px;
     
   
 
+.boton-padelplus:hover{
+  background-color: #3374beff;
+  border-color: #3374beff;
+}
+
+.boton-padelplus-reserva{
+  background-color: #3374beff;
+  border-color: #3374beff;
+}
+
+.boton-padelplus-reserva:hover{
+  background-color: rgb(43, 98, 161);
+  border-color: rgb(43, 98, 161);
+}
+
+.rbc-time-slot {
+  border-top: none !important;
+  z-index: 1;
+}
+
+.rbc-event {
+  z-index: 2;
+  width: 100%;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.rbc-time-gutter .rbc-timeslot-group .rbc-time-slot button{
+  background-color: white !important;  
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }
