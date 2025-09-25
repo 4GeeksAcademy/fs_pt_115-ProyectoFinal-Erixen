@@ -142,11 +142,11 @@ def update_user(id):
     
     required_fields = ["nombre", "apellidos", "email", "telefono"]
 
-    if not all(data.get(field) for field in required_fields):
+    if not all(data.get(f) and str(data[f]).strip() for f in required_fields):
         return jsonify({"msg": "Todos los campos son requeridos"}), 400
     
     existing_user = db.session.execute(db.select(User).where(
-        User.email == data["email"]
+        User.email == data["email"], User.id != id
     )).scalar_one_or_none()
 
     if existing_user:
