@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { updateUser } from "../../services/servicesAPI";
+import { getUserForId, updateUser } from "../../services/servicesAPI";
 
 
 export const Profile = () => {
@@ -7,22 +7,11 @@ export const Profile = () => {
   const id = localStorage.getItem("id")
  
 
-const getUser = async (userId) => {
 
-const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${userId}`)
-
-if (response.ok){
-const data = await response.json()
-return data
-
-}
-console.log("Usuario no encontrado")
-
-} 
 
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await getUser(id)
+      const data = await getUserForId(id)
       if (data) {
         setUser(data)
       }

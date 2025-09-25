@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { deleteReserva, getPista, getReserva, getUser } from "../../services/servicesAPI";
+import { deleteReserva, getPista, getReserva, getUser, getUserForId } from "../../services/servicesAPI";
 import { useParams } from "react-router-dom";
 
 
