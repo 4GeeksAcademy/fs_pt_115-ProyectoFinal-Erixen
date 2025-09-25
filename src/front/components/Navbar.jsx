@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { LoginModal } from "../components/LoginModal";
+const id = localStorage.getItem("id")
 
 export const Navbar = () => {
 	const location = useLocation();
@@ -85,7 +86,7 @@ export const Navbar = () => {
 										</Link>
 									</li>
 									<li>
-										<Link to="/reservas/<int:user_id>" style={{ textDecoration: "none" }}>
+										<Link to={`/reservas/${id}`} style={{ textDecoration: "none" }}>
 											<button className="dropdown-item">Mis reservas</button>
 										</Link>
 									</li>
