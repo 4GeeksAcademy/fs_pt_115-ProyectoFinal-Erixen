@@ -21,6 +21,9 @@ export const CalendarioPista = () => {
     const [celdaSeleccionada, setCeldaSeleccionada] = useState(null)
     const [mensajeReserva, setMensajeReserva] = useState("")
     const [confirmacionReserva, setConfirmacionReserva] = useState("")
+    const [fechaReserva, setFechaReserva] = useState("")
+    const [horaInicio, setHoraInicio] = useState("")
+    const [horaFin, setHoraFin] = useState("")
 
     const fechaMinimaReserva = new Date()
     const fechaMaximaReserva = new Date(fechaMinimaReserva)
@@ -90,13 +93,23 @@ export const CalendarioPista = () => {
                     }}
                     onClick={() => {
                         if (!disponible) return;
+
+                        const inicio = moment(value)
+                        const fin = moment(value).add(30, "minutes")
+
                         setCeldaSeleccionada(value)
                         setModalVisible(true)
-                        const fechaReserva = moment(value)
-                        const fechaFinReserva = moment(value).add(30, "minutes")
 
-                        setMensajeReserva(`¿Está seguro de que quiere reservar la pista el día ${fechaReserva.format("DD/MM/YYYY")} de ${fechaReserva.format("HH:mm")} a ${fechaFinReserva.format("HH:mm")}?`)
-                        setConfirmacionReserva(`Se ha reservado la pista el dia ${fechaReserva.format("DD/MM/YYYY")} de ${fechaReserva.format("HH:mm")} a ${fechaFinReserva.format("HH:mm")} con éxito`)
+                        setFechaReserva(inicio.format("YYYY-MM-DD"))
+
+                        const horaDeInicio = inicio.format("HH:mm")
+                        const horaDeFin = fin.format("HH:mm")
+
+                        setHoraInicio(horaDeInicio)
+                        setHoraFin(horaDeFin)
+
+                        setMensajeReserva(`¿Está seguro de que quiere reservar la pista el día ${inicio.format("DD/MM/YYYY")} de ${horaDeInicio} a ${horaDeFin}?`)
+                        setConfirmacionReserva(`Se ha reservado la pista el dia ${inicio.format("DD/MM/YYYY")} de ${horaDeInicio} a ${horaDeFin} con éxito`)
                         console.log(value);
                     }}
                 >
@@ -110,7 +123,7 @@ export const CalendarioPista = () => {
 
         getPista(pista_id).then((data) => {
             setPista(data)
-            // console.log(data);
+            console.log(data);
 
             const eventosFormateados = data['reservas'].map(reserva => ({
                 title: "Reservado",
@@ -189,10 +202,10 @@ export const CalendarioPista = () => {
                                         setModalDosVisible(true)
                                         setModalVisible(false)
                                         createReserva({
-                                            "fecha_reserva": "2025-09-27",
-                                            "hora_fin": "22:00",
-                                            "hora_inicio": "21:00",
-                                            "id_pista": 2,
+                                            "fecha_reserva": fechaReserva,
+                                            "hora_inicio": horaInicio,
+                                            "hora_fin": horaFin,
+                                            "id_pista": pista["id"],
                                             "id_usuario": 1
                                         })
                                             .then(response => {
