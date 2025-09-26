@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'moment/dist/locale/es'
+import { id } from "zod/locales";
 
 export const CalendarioPista = () => {
 
@@ -18,12 +19,14 @@ export const CalendarioPista = () => {
     const [vista, setVista] = useState('month')
     const [modalVisible, setModalVisible] = useState(false)
     const [modalDosVisible, setModalDosVisible] = useState(false)
-    const [celdaSeleccionada, setCeldaSeleccionada] = useState(null)
+    const [celdaSeleccionada, setCeldaSeleccionada] = useState({})
     const [mensajeReserva, setMensajeReserva] = useState("")
     const [confirmacionReserva, setConfirmacionReserva] = useState("")
-    const [fechaReserva, setFechaReserva] = useState("")
-    const [horaInicio, setHoraInicio] = useState("")
-    const [horaFin, setHoraFin] = useState("")
+    // const [fechaReserva, setFechaReserva] = useState("")
+    // const [horaInicio, setHoraInicio] = useState("")
+    // const [horaFin, setHoraFin] = useState("")
+
+    const id = localStorage.getItem("id")
 
     const fechaMinimaReserva = new Date()
     const fechaMaximaReserva = new Date(fechaMinimaReserva)
@@ -54,6 +57,14 @@ export const CalendarioPista = () => {
         return dateSinHoras >= minDateSinHoras && dateSinHoras <= maxDateSinHoras
     }
 
+    const estaReservado = (date) => {
+        return eventos.some(evento => {
+            const inicio = new Date(evento.start)
+            const fin = new Date(evento.end)
+            return date >= inicio && date < fin
+        })
+    }
+
     const celdasPersonalizadas = ({ children, value }) => {
         const disponible = estaDisponible(value)
 
@@ -81,6 +92,7 @@ export const CalendarioPista = () => {
 
     const celdasHorasPersonalizadas = ({ children, value }) => {
         const disponible = estaDisponible(value)
+        const reservado = estaReservado(value)
 
         return (
             <div className="rbc-time-slot">
@@ -89,27 +101,28 @@ export const CalendarioPista = () => {
                         width: "100%",
                         height: "100%",
                         border: "none",
-                        backgroundColor: disponible ? "#2e832dff" : "#adadad"
+                        backgroundColor: disponible
+                                ? "#2e832dff"
+                                : "#adadadff",
+                        cursor: disponible && !reservado
+                            ? "pointer"
+                            : "default"
                     }}
                     onClick={() => {
                         if (!disponible) return;
 
-                        const inicio = moment(value)
-                        const fin = moment(value).add(30, "minutes")
+                        const inicio = moment(value);
+                        const fin = moment(value).add(30, "minutes");
 
-                        setCeldaSeleccionada(value)
-                        setModalVisible(true)
+                        // Guardamos inicio y fin en el estado para el botón de reservar
+                        setCeldaSeleccionada({ inicio, fin });
 
-                        setFechaReserva(inicio.format("YYYY-MM-DD"))
+                        // Usamos directamente inicio y fin para mostrar el mensaje
+                        setMensajeReserva(`¿Está seguro de que quiere reservar la pista el día ${inicio.format("DD/MM/YYYY")} de ${inicio.format("HH:mm")} a ${fin.format("HH:mm")}?`);
+                        setConfirmacionReserva(`Se ha reservado la pista el dia ${inicio.format("DD/MM/YYYY")} de ${inicio.format("HH:mm")} a ${fin.format("HH:mm")} con éxito`);
 
-                        const horaDeInicio = inicio.format("HH:mm")
-                        const horaDeFin = fin.format("HH:mm")
+                        setModalVisible(true);
 
-                        setHoraInicio(horaDeInicio)
-                        setHoraFin(horaDeFin)
-
-                        setMensajeReserva(`¿Está seguro de que quiere reservar la pista el día ${inicio.format("DD/MM/YYYY")} de ${horaDeInicio} a ${horaDeFin}?`)
-                        setConfirmacionReserva(`Se ha reservado la pista el dia ${inicio.format("DD/MM/YYYY")} de ${horaDeInicio} a ${horaDeFin} con éxito`)
                         console.log(value);
                     }}
                 >
@@ -118,6 +131,8 @@ export const CalendarioPista = () => {
             </div>
         )
     }
+
+    const [recarga, setRecarga] = useState(true)
 
     useEffect(() => {
 
@@ -135,7 +150,7 @@ export const CalendarioPista = () => {
 
         })
 
-    }, [])
+    }, [recarga])
 
     if (!pista) return null
 
@@ -183,7 +198,7 @@ export const CalendarioPista = () => {
 
             {modalVisible && (
                 <div className="modal show d-block" tabIndex="-1">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Reservar Pista</h5>
@@ -197,25 +212,32 @@ export const CalendarioPista = () => {
                                 <button
                                     type="button"
                                     className="btn btn-primary boton-padelplus-reserva"
-                                    onClick={() => {
+                                    onClick={async () => {
+                                        const { inicio, fin } = celdaSeleccionada
+
                                         console.log(celdaSeleccionada);
                                         setModalDosVisible(true)
                                         setModalVisible(false)
-                                        createReserva({
-                                            "fecha_reserva": fechaReserva,
-                                            "hora_inicio": horaInicio,
-                                            "hora_fin": horaFin,
-                                            "id_pista": pista["id"],
-                                            "id_usuario": 1
-                                        })
-                                            .then(response => {
-                                                if (response.status === 200 || response.status === 201) {
-                                                    console.log("Reserva creada:", response.msg);
-                                                } else {
-                                                    console.error("Error creando reserva:", response.msg);
-                                                }
+
+                                        try {
+                                            const response = await createReserva({
+                                                fecha_reserva: inicio.format("YYYY-MM-DD"),
+                                                hora_inicio: inicio.format("HH:mm"),
+                                                hora_fin: fin.format("HH:mm"),
+                                                id_pista: pista.id,
+                                                id_usuario: id
                                             });
-                                        console.log("reserva creada");
+
+                                            if (response.status === 200 || response.status === 201) {
+                                                console.log("Reserva creada: ", response.msg);
+                                            } else {
+                                                console.error("Error creando reserva: ", response.msg);
+                                            }
+                                        } catch (err) {
+                                            console.error("Error en la petición:", err);
+                                        }
+                                            
+                                        setRecarga(prev => !prev)
                                     }}
                                 >
                                     Reservar
@@ -228,7 +250,7 @@ export const CalendarioPista = () => {
 
             {modalDosVisible && (
                 <div className="modal show d-block" tabIndex="-1">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Reservar Pista</h5>
