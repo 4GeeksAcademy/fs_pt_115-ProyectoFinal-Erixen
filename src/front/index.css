@@ -104,9 +104,18 @@ font-size:25px;
   border: 3px solid #3374beff; /* borde azul neón */
   padding: 2px 8px;        /* opcional, para que no quede tan pegado */
   margin: 2px 0;
-    
-  
+}
 
+.boton-padelplus{
+  background-color: #3374beff;
+  border-color: #3374beff;
+  color: white;
+}
+
+.boton-padelplus:hover{
+  background-color: rgb(37, 86, 141);
+  border-color: rgb(37, 86, 141);
+  color: white
 }
 
 .boton-padelplus-reserva{

@@ -46,9 +46,7 @@ export const Pistas = () => {
 						</Link>
 					</div>
 				</div>
-
             ))}
         </div>
     );
 };
-
