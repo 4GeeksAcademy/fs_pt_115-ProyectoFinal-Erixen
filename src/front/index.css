@@ -98,15 +98,15 @@ font-size:25px;
 
 }
 
-.boton-padelplus{
-  background-color: transparent;
-  border-color: #3374beff ;
-  color: #3374beff;
-}
+.borderInfoUsuario{
+  display: inline-block;
+  width: fit-content;
+  border: 3px solid #3374beff; /* borde azul neón */
+  padding: 2px 8px;        /* opcional, para que no quede tan pegado */
+  margin: 2px 0;
+    
+  
 
-.boton-padelplus:hover{
-  background-color: #3374beff;
-  border-color: #3374beff;
 }
 
 .boton-padelplus-reserva{

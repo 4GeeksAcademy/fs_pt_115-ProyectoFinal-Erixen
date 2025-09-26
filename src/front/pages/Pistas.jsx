@@ -5,27 +5,27 @@ import { useNavigate, Link } from "react-router-dom";
 
 export const Pistas = () => {
 
-	const navigate = useNavigate()
+    const navigate = useNavigate()
 
-	const [pistas, setPistas] = useState([]);
+    const [pistas, setPistas] = useState([]);
 
-	useEffect(() => {
-		if (localStorage.getItem("token") == null) {
-			navigate("/")
-		} else {
-			getPistas().then(
-				data => {
-					if (Array.isArray(data) && data.length > 0) {
-						setPistas(data)
-					}
-				}
-			)
-		}
-	}, [localStorage.getItem("token")])
+    useEffect(() => {
+        if (localStorage.getItem("token") == null) {
+            navigate("/")
+        } else {
+            getPistas().then(
+                data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        setPistas(data)
+                    }
+                }
+            )
+        }
+    }, [localStorage.getItem("token")])
 
-	return (
-		<div className="container d-flex justify-content-center gap-3">
-			{pistas?.map(pista => (
+    return (
+        <div className="container d-flex justify-content-center gap-3">
+            {pistas?.map(pista => (
 
 				<div className="card mt-3" key={pista.id} style={{ width: "800px" }}>
 					{/* <img src="..." className="card-img-top" alt="..." /> */}
@@ -47,7 +47,7 @@ export const Pistas = () => {
 					</div>
 				</div>
 
-			))}
-		</div>
-	);
+            ))}
+        </div>
+    );
 };
