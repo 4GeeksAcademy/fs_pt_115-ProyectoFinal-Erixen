@@ -94,7 +94,6 @@ export const getUser = async () => {
 }
 
 // Obtener un usuario concreto por id
-
 export const getUserForId = async (userId) => {
 
 const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${userId}`)
@@ -107,8 +106,6 @@ return data
 console.log("Usuario no encontrado")
 
 } 
-
-
 
 // Modificar usuario
 export const updateUser = async (id, updatedDataUser) => {

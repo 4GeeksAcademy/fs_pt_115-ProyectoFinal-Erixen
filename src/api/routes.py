@@ -229,11 +229,11 @@ def update_club(id):
     
     required_fields = ["nombre", "email", "direccion", "telefono", "hora_apertura", "hora_cierre"]
 
-    if not all(data.get(field) for field in required_fields):
+    if not all(data.get(f) and str(data[f]).strip() for f in required_fields):
         return jsonify({"msg": "Todos los campos son requeridos"}), 400
     
     existing_club = db.session.execute(db.select(Club).where(
-        Club.email == data["email"]
+        Club.email == data["email"], Club.id != id
     )).scalar_one_or_none()
 
     if existing_club:
@@ -245,6 +245,11 @@ def update_club(id):
     club.telefono=data["telefono"]
     club.hora_apertura=data["hora_apertura"]
     club.hora_cierre=data["hora_cierre"]
+
+    club.imagen=data["imagen"]
+    club.imagenDos=data["imagenDos"]
+    club.imagenTres=data["imagenTres"]
+    club.descripcion=data["descripcion"]
 
     db.session.commit()
 
