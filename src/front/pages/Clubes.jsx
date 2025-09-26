@@ -66,7 +66,7 @@ export const Clubes = () => {
 								<h5 className="card-title">{Club.nombre}</h5>
 								<p className="card-text">{Club.descripcion}</p>
 							</div>
-							<Link to={"/pistas"} className="btn btn-primary m-1">Ver pistas</Link>
+							<Link to={`/pistas/${Club.id}`} className="btn btn-primary m-1">Ver pistas</Link>
 
 						</div>
 					))

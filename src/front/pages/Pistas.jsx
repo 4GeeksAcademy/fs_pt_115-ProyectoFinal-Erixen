@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { getPistas, getReservas } from "../../services/servicesAPI.js";
-import { useNavigate, Link } from "react-router-dom";
+import { getPistas, getPistasClub, getReservas } from "../../services/servicesAPI.js";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { PageHeader } from "../components/PageHeader";
 
 
 export const Pistas = () => {
 
 	const navigate = useNavigate()
-
+	const {id} = useParams()
 	const [pistas, setPistas] = useState([]);
-
+	console.log(id);
+	
 	useEffect(() => {
 		if (localStorage.getItem("token") == null) {
 			navigate("/")
 		} else {
-			getPistas().then(
+			getPistasClub(id).then(
 				data => {
 					if (Array.isArray(data) && data.length > 0) {
 						setPistas(data)
@@ -31,6 +32,11 @@ export const Pistas = () => {
 				title="Puedes ver todas nuestras pistas"
 				lead="Aqui encontraras todas las pistas de las que disponemos para ti y tus acompañantes, disfruta del encanto de nuestro club."
 			/>
+			
+			<button type="button" onClick={()=>navigate("/crearPista")} class="btn btn-primary">
+				Crear pista
+			</button>
+
 			<div className="container row d-flex justify-content-center gap-3">
 				{pistas?.map(pista => (
 
@@ -55,29 +61,6 @@ export const Pistas = () => {
 					</div>
 
 				))}
-
-				{/* <!-- Button trigger modal --> */}
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-				  Crear pista
-				</button>
-
-				{/* <!-- Modal --> */}
-				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear pista</h1>
-				      </div>
-				      <div class="modal-body">
-
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-				        <button type="submit" class="btn btn-primary" onSubmit={()=> setPistas()}>Añadir pista</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
 			</div>
 		</>
 
