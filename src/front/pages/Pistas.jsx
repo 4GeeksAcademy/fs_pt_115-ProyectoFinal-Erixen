@@ -50,4 +50,7 @@ export const Pistas = () => {
             ))}
         </div>
     );
+
+	// errores arreglados
 };
+
