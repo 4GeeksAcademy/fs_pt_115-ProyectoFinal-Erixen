@@ -15,22 +15,13 @@ export const CalendarioPista = () => {
     const [pista, setPista] = useState(null)
     const { pista_id } = useParams()
     const [eventos, setEventos] = useState([])
-    const [FechaVisible, setFechaVisible] = useState(new Date())
+    const [fechaVisible, setFechaVisible] = useState(new Date())
     const [vista, setVista] = useState('month')
     const [modalVisible, setModalVisible] = useState(false)
     const [modalDosVisible, setModalDosVisible] = useState(false)
     const [celdaSeleccionada, setCeldaSeleccionada] = useState({})
     const [mensajeReserva, setMensajeReserva] = useState("")
     const [confirmacionReserva, setConfirmacionReserva] = useState("")
-    // const [fechaReserva, setFechaReserva] = useState("")
-    // const [horaInicio, setHoraInicio] = useState("")
-    // const [horaFin, setHoraFin] = useState("")
-
-    const id = localStorage.getItem("id")
-
-    const fechaMinimaReserva = new Date()
-    const fechaMaximaReserva = new Date(fechaMinimaReserva)
-    fechaMaximaReserva.setDate(fechaMaximaReserva.getDate() + 14)
 
     const estiloReservas = (event) => {
         return {
@@ -42,6 +33,10 @@ export const CalendarioPista = () => {
     }
 
     const estaDisponible = (date) => {
+        const fechaMinimaReserva = new Date()
+        const fechaMaximaReserva = new Date(fechaMinimaReserva)
+        fechaMaximaReserva.setDate(fechaMaximaReserva.getDate() + 14)
+
         const dateSinHoras = new Date(date.getFullYear(), date.getMonth(), date.getDate())
         const minDateSinHoras = new Date(
             fechaMinimaReserva.getFullYear(),
@@ -55,6 +50,23 @@ export const CalendarioPista = () => {
         )
 
         return dateSinHoras >= minDateSinHoras && dateSinHoras <= maxDateSinHoras
+    }
+
+    const estaCerrado = (fecha) => {
+        const horaDeCelda = `${fecha.getHours()}:${fecha.getMinutes()}`
+
+        const horaCeldaEnMinutos = fecha.getHours() * 60 + fecha.getMinutes()
+
+        const aperturaClub = pista.club_info["hora_apertura"]
+        const cierreClub = pista.club_info["hora_cierre"]
+
+        const [horaApertura, minutosApertura] = aperturaClub.split(':').map(Number);
+        const [horaCierre, minutosCierre] = cierreClub.split(':').map(Number)
+
+        const minApertura = horaApertura * 60 + minutosApertura
+        const minCierre = horaCierre * 60 + minutosCierre
+
+        return horaCeldaEnMinutos < minApertura || horaCeldaEnMinutos >= minCierre
     }
 
     const estaReservado = (date) => {
@@ -93,6 +105,7 @@ export const CalendarioPista = () => {
     const celdasHorasPersonalizadas = ({ children, value }) => {
         const disponible = estaDisponible(value)
         const reservado = estaReservado(value)
+        const cerrado = estaCerrado(value)
 
         return (
             <div className="rbc-time-slot">
@@ -101,29 +114,31 @@ export const CalendarioPista = () => {
                         width: "100%",
                         height: "100%",
                         border: "none",
-                        backgroundColor: disponible
-                                ? "#2e832dff"
-                                : "#adadadff",
+                        backgroundColor: disponible && !cerrado
+                            ? "#2e832dff"
+                            : "#adadadff",
                         cursor: disponible && !reservado
                             ? "pointer"
-                            : "default"
+                            : "default",
+                        pointerEvents: reservado || cerrado
+                            ? "none"
+                            : "auto"
                     }}
                     onClick={() => {
                         if (!disponible) return;
 
+                        // console.log(value);
+
+
                         const inicio = moment(value);
                         const fin = moment(value).add(30, "minutes");
 
-                        // Guardamos inicio y fin en el estado para el botón de reservar
                         setCeldaSeleccionada({ inicio, fin });
 
-                        // Usamos directamente inicio y fin para mostrar el mensaje
                         setMensajeReserva(`¿Está seguro de que quiere reservar la pista el día ${inicio.format("DD/MM/YYYY")} de ${inicio.format("HH:mm")} a ${fin.format("HH:mm")}?`);
                         setConfirmacionReserva(`Se ha reservado la pista el dia ${inicio.format("DD/MM/YYYY")} de ${inicio.format("HH:mm")} a ${fin.format("HH:mm")} con éxito`);
 
                         setModalVisible(true);
-
-                        console.log(value);
                     }}
                 >
                     {children}
@@ -153,6 +168,7 @@ export const CalendarioPista = () => {
     }, [recarga])
 
     if (!pista) return null
+    const id = localStorage.getItem("id")
 
     return (
         <div className="container text-dark mt-3">
@@ -164,7 +180,7 @@ export const CalendarioPista = () => {
 
             <div className="mx-auto mb-4" style={{ height: '600px', width: '1000px' }}>
                 <Calendar
-                    date={FechaVisible}
+                    date={fechaVisible}
                     localizer={localizer}
                     events={eventos}
                     startAccessor="start"
@@ -236,7 +252,7 @@ export const CalendarioPista = () => {
                                         } catch (err) {
                                             console.error("Error en la petición:", err);
                                         }
-                                            
+
                                         setRecarga(prev => !prev)
                                     }}
                                 >
