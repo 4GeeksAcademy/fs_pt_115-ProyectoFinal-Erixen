@@ -1,52 +1,67 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
+import { Carousel } from "../components/Carousel";
+import { PageHeader } from "../components/PageHeader";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export const Home = () => {
 
-	const { store, dispatch } = useGlobalReducer()
-
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
-	}
+	const navigate = useNavigate()
 
 	useEffect(() => {
-		loadMessage()
-	}, [])
+		if (localStorage.getItem("token") == null) {
+			navigate("/")
+		}
+	}, [localStorage.getItem("token")]);
 
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
+		<div className="main-content">
+			<div className="hero-content">
+				{/* Hero Section */}
+
+				<PageHeader
+					title="Reserva tu pista de pádel en segundos"
+					lead="Encuentra horarios disponibles, elige tu pista favorita y prepárate para jugar"
+				/>
+
+				{/* Carrusel Section */}
+				<Carousel />
+
+				{/* body section */}
+				<div className="container my-5">
+					<div className="row text-center">
+						<div className="col-md-4 mb-4">
+							<div className="card h-100">
+								{/* deberia aplicar un efectivo de hover a las cards de aqui embaixo */}
+								<div className="card-body">
+									<h5 className="card-title">Encuentra Clubes</h5>
+									<p className="card-text">Explora los clubes de pádel cercanos y encuentra el lugar perfecto para tu próximo partido.</p>
+									<Link to="/clubes" className="btn btn-outline-primary boton-padelplus">Ver Clubes</Link>
+								</div>
+							</div>
+						</div>
+						<div className="col-md-4 mb-4">
+							<div className="card h-100">
+								<div className="card-body">
+									<h5 className="card-title">Gestiona tus Reservas</h5>
+									<p className="card-text">Accede a tu historial de reservas, y gestiona tus partidos con facilidad.</p>
+									<Link to="/reservas/1" className="btn btn-outline-primary boton-padelplus">Mis Reservas</Link>
+								</div>
+							</div>
+						</div>
+						<div className="col-md-4 mb-4">
+							<div className="card h-100">
+								<div className="card-body">
+									<h5 className="card-title">Tu Perfil</h5>
+									<p className="card-text">Mantén tu información actualizada y gestiona tu perfil de jugador.</p>
+									<Link to="/profile/<int:user_id>" className="btn btn-outline-primary boton-padelplus">Mi Perfil</Link>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
-}; 
+};

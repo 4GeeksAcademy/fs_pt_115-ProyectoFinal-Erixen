@@ -1,0 +1,147 @@
+body {
+  color: black;
+}
+
+body.reserva{
+  background-color: rgb(240, 239, 239);
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
+}
+
+input.input-personalizado {
+  background-color: transparent;
+  border-radius: 5px;
+  transition: background-color 5000s ease-in-out 0s; /* truco para autofill */
+}
+
+
+
+.cubrir {
+ position: fixed;     /* Flota encima, no depende de otros contenedores */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;       /* Número muy alto para que tape TODO */
+
+  background-image: url('/src/front/assets/cortinas.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.myButton:hover{
+  text-decoration: underline;
+}
+.socialButton{
+  color:black
+}
+
+.socialButton:hover{
+  color: #3374beff !important;
+}
+.slide-out-top {
+	-webkit-animation: slide-out-top 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-top 2s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+.mi-caja {
+  border: 2px solid transparent; /* borde inicial invisible */
+  transition: border 0.3s ease;  
+  border-radius: 8px; /* opcional: esquinas redondeadas */
+}
+
+.mi-caja:hover {
+  border: 2px solid #3374beff; /* borde azul neón */
+  box-shadow: 0 0 5px #3374beff,
+              0 0 10px #3374beff,
+              0 0 20px #3374beff,
+              0 0 40px #3374beff;
+  animation: neon-glow 1.5s infinite alternate;
+}
+
+@keyframes neon-glow {
+  from {
+    box-shadow: 0 0 5px #3374beff,
+                0 0 10px #3374beff,
+                0 0 20px #3374beff,
+                0 0 40px #3374beff;
+  }
+  to {
+    box-shadow: 0 0 10px #3374beff,
+                0 0 20px #3374beff,
+                0 0 40px #3374beff,
+                0 0 80px #3374beff;
+  }
+}
+
+.mi-caja-reservas {
+  border: 2px solid black; /* borde inicial invisible */
+  transition: border 0.3s ease;  
+  border-radius: 8px; /* opcional: esquinas redondeadas */
+}
+
+.mi-caja-reservas:hover {
+  border: 2px solid #3374beff; /* borde azul neón */
+  box-shadow: 0 0 5px #3374beff,
+              0 0 10px #3374beff,
+              0 0 20px #3374beff,
+              0 0 40px #3374beff;
+  animation: neon-glow 1.5s infinite alternate;
+}
+
+.TextOfReservasInfo{
+font-size:25px;
+
+}
+
+.borderInfoUsuario{
+  display: inline-block;
+  width: fit-content;
+  border: 3px solid #3374beff; /* borde azul neón */
+  padding: 2px 8px;        /* opcional, para que no quede tan pegado */
+  margin: 2px 0;
+}
+
+.boton-padelplus{
+  background-color: #3374beff;
+  border-color: #3374beff;
+  color: white;
+}
+
+.boton-padelplus:hover{
+  background-color: rgb(37, 86, 141);
+  border-color: rgb(37, 86, 141);
+  color: white
+}
+
+.boton-padelplus-reserva{
+  background-color: #3374beff;
+  border-color: #3374beff;
+}
+
+.boton-padelplus-reserva:hover{
+  background-color: rgb(43, 98, 161);
+  border-color: rgb(43, 98, 161);
+}
+
+.rbc-time-slot {
+  border-top: none !important;
+  z-index: 1;
+}
+
+.rbc-event {
+  z-index: 2;
+  width: 100%;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.rbc-time-gutter .rbc-timeslot-group .rbc-time-slot button{
+  background-color: white !important;  
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
