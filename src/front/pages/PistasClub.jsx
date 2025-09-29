@@ -9,6 +9,10 @@ export const PistasClub = () => {
     const navigate = useNavigate()
     const {id} = useParams()
     const [pistas, setPistas] = useState([]);
+    const tipoDeUsuario = localStorage.getItem("user_type");
+    const clubId =localStorage.getItem("club_id");
+    const buttomCreate = tipoDeUsuario == "club";
+
     console.log(id);
     
     useEffect(() => {
@@ -32,12 +36,13 @@ export const PistasClub = () => {
                 title="Puedes ver todas nuestras pistas"
                 lead="Aqui encontraras todas las pistas de las que disponemos para ti y tus acompañantes, disfruta del encanto de nuestro club."
             />
-
+            { buttomCreate && (
             <div class="d-grid gap-2 col-6 mx-auto">
             <button class="btn btn-outline-primary " type="button" onClick={()=>navigate("/crearPista")}>
                 Crear pista
             </button>
             </div>
+            )}
 
             <div className="container row d-flex justify-content-center gap-3">
                 {pistas?.map(pista => (
@@ -68,3 +73,5 @@ export const PistasClub = () => {
 
     );
 };
+
+// Aqui en este componente me hace falta meter la condicion de que el club logueado solo le aparezca el boton de crear en su perfil de club
