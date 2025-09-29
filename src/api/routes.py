@@ -217,6 +217,7 @@ def get_club_profile():
         return ({"message": f"Club con id {id} no encontrado"}), 404
 
     return jsonify([unique_club.serialize()]), 200
+
 # Modificar club
 @api.route('/clubs/<int:id>', methods=['PUT'])
 def update_club(id):
