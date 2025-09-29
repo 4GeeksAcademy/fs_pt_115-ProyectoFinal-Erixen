@@ -20,7 +20,7 @@ export const Navbar = () => {
 			{location.pathname === "/" ? (
 				<div className="container-fluid">
 					<div className="d-flex align-items-center cursor-pointer ms-3">
-						<img src="/src/front/assets/logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
+						<img src="logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
 						<a className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</a>
 					</div>
 
@@ -40,7 +40,7 @@ export const Navbar = () => {
 				<div className="container-fluid">
 					<Link to="/home" style={{ textDecoration: "none" }}>
 						<div className="d-flex align-items-center cursor-pointer ms-3">
-							<img src="/src/front/assets/logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
+							<img src="logo_cortado.png" className="my-1" style={{ maxHeight: "40px" }} />
 							<span className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</span>
 						</div>
 					</Link>
@@ -77,7 +77,7 @@ export const Navbar = () => {
 								</Link>
 							</li>
 							<li className="nav-item dropdown m-1" style={{ paddingLeft: "12px", paddingRight: "12px" }}>
-								<img src="/src/front/assets/default_profile.jpg" className="dropdown-toggle" style={{ maxWidth: "37px", borderRadius: "25px" }} role="button" data-bs-toggle="dropdown" aria-expanded="false" />
+								<img src="default_profile.jpg" className="dropdown-toggle" style={{ maxWidth: "37px", borderRadius: "25px" }} role="button" data-bs-toggle="dropdown" aria-expanded="false" />
 
 								<ul className="dropdown-menu dropdown-menu-end">
 									<li>

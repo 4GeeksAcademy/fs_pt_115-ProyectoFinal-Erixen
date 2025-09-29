@@ -57,7 +57,7 @@ export const ContactUs = () => {
             <div className="TitleContactUs container-fluid"
                 style={{
                     background: '#3374beff', // Color
-                    backgroundImage: 'url("/src/front/assets/RaquetasPadelJc.jpg")', // Imagen de fondo
+                    backgroundImage: 'url("RaquetasPadelJc.jpg")', // Imagen de fondo
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundBlendMode: 'multiply',

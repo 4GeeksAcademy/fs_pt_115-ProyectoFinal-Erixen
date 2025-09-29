@@ -1,5 +1,4 @@
 import React from "react"; // Asegúrate de tener React importado
-import profilePic from "../assets/default_profile.jpg";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "../components/PageHeader";
@@ -9,7 +8,7 @@ const creatorInfo = {
 	name: "Erixen",
 	title: "Colectivo de Desarrolladores Full-Stack",
 	bio: "Erixen es un colectivo de desarrolladores y entusiastas, mezcla de habilidades en desarrollo de software y diseño de experiencias de usuario. El objetivo de Erixen es simple: crear soluciones tecnológicas que mejoren la experiencia de los jugadores.",
-	image: profilePic
+	image: "default_profile.jpg"
 };
 
 export const SobreNosotros = () => {

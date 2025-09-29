@@ -12,7 +12,7 @@ export const Carousel = () => {
             <div className="carousel-inner">
                 {/* --- Slide 1 (Este ya estaba bien) --- */}
                 <div className="carousel-item active">
-                    <img src="src/front/assets/PadelImage1Jc.jpg" className="d-block w-100" alt="Pista de Padel 1" style={{ objectFit: 'cover', maxHeight: '400px' }} />
+                    <img src="PadelImage1Jc.jpg" className="d-block w-100" alt="Pista de Padel 1" style={{ objectFit: 'cover', maxHeight: '400px' }} />
                     <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                         <h5>Club Padel Central</h5>
                         <p>Las mejores pistas y ambiente para tu juego.</p>
@@ -22,7 +22,7 @@ export const Carousel = () => {
 
                 {/* --- Slide 2 (Aquí estaba el error) --- */}
                 <div className="carousel-item">
-                    <img src="src/front/assets/ChanchaPadelImageJc.jpg" className="d-block w-100" alt="Pista de Padel 2" style={{ objectFit: 'cover', maxHeight: '400px' }} />
+                    <img src="ChanchaPadelImageJc.jpg" className="d-block w-100" alt="Pista de Padel 2" style={{ objectFit: 'cover', maxHeight: '400px' }} />
                     <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                         {/* Contenido que faltaba */}
                         <h5>Club Padel Pro</h5>
@@ -33,7 +33,7 @@ export const Carousel = () => {
                 
                 {/* Puedes agregar un tercer slide si quieres, siguiendo el mismo patrón */}
                 <div className="carousel-item">
-                    <img src="src/front/assets/RaquetasPadelJc.jpg" className="d-block w-100" alt="Pista de Padel 2" style={{ objectFit: 'cover', maxHeight: '400px' }} />
+                    <img src="RaquetasPadelJc.jpg" className="d-block w-100" alt="Pista de Padel 2" style={{ objectFit: 'cover', maxHeight: '400px' }} />
                     <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
                         {/* Contenido que faltaba */}
                         <h5>Club Padel Pro</h5>

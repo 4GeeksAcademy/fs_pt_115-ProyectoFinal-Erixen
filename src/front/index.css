@@ -27,7 +27,7 @@ input.input-personalizado {
   height: 100vh;
   z-index: 9999;       /* Número muy alto para que tape TODO */
 
-  background-image: url('/src/front/assets/cortinas.png');
+  background-image: url('cortinas.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
