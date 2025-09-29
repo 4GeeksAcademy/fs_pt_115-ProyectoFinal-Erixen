@@ -90,6 +90,7 @@ export const Profile = () => {
   const handleInputimagenTres = (e) => { setInputimagenTres(e.target.value) }
   const handleInputDescripcion = (e) => { setInputDescripcion(e.target.value) }
 
+   console.log(id)
 
   return (
     <>
@@ -277,7 +278,7 @@ export const Profile = () => {
 
                       type="button"
                       onClick={async () => {
-                        const updatedDataUser = {
+                        const updatedDataIMGS = {
                           imagen: (inputImagen1 ?? "").trim() || (club?.imagen ?? ""),
                           imagenDos: (inputimagenDos ?? "").trim() || (club?.imagenDos ?? ""),
                           imagenTres: (inputimagenTres ?? "").trim() || (club?.imagenTres ?? ""),
@@ -291,15 +292,15 @@ export const Profile = () => {
                           telefono: (((inputTelefono ?? "") || (club?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
                         };
 
-                        const result = await updateClub(id, updatedDataUser);
-                        console.log(updatedDataUser);
+                        const result = await updateClub(id, updatedDataIMGS);
+                        console.log(updatedDataIMGS);
 
                         if (result.error) {
                           alert(`Error al actualizar:${result.error.message}`);
                           console.error(result.error);
                         } else {
                           // actualiza el estado local para que la UI refleje los cambios
-                          setClub(prev => ({ ...prev, ...updatedDataUser }));
+                          setClub(prev => ({ ...prev, ...updatedDataIMGS }));
                           SetModoEdicion(false); // opcional: salir del modo edición
                           alert("Club actualizado correctamente");
                           console.log(result);
@@ -361,7 +362,11 @@ export const Profile = () => {
                           hora_apertura: (inputHoraApertura ?? "").trim() || (club?.hora_apertura ?? ""),
                           hora_cierre: (inputHoraDeCierre ?? "").trim() || (club?.hora_cierre ?? ""),
                           email: (inputEmail ?? "").trim() || (club?.email ?? ""),
-                          telefono: (((inputTelefono ?? "") || (club?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
+                          telefono: (((inputTelefono ?? "") || (club?.telefono ?? "")).toString().replace(/\D/g, "")), // elimina cualquier letra
+                          imagen: (inputImagen1 ?? "").trim() || (club?.imagen ?? ""),
+                          imagenDos: (inputimagenDos ?? "").trim() || (club?.imagenDos ?? ""),
+                          imagenTres: (inputimagenTres ?? "").trim() || (club?.imagenTres ?? ""),
+                          descripcion: (inputDeDescripcion ?? "").trim() || (club?.descripcion ?? "")
                         };
 
                         const result = await updateClub(id, updatedDataUser);

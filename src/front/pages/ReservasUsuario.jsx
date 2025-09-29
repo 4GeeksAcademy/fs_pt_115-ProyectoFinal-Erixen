@@ -51,7 +51,7 @@ const [reserva, setreserva] = useState();
 				) : (user.reservas.map((reserva) => (
 					<div key={reserva.id} className="col-md-3 col-12 mt-2">
 						<div className="card mi-caja-reservas" style={{ width: "18rem;" }}>
-							<img src="/src/front/assets/imagenERROR.jpg" className="card-img-top boorder border-bottom" alt="..." />
+							<img src="/src/front/assets/miraESTOpeneycaca.jpg" className="card-img-top boorder border-bottom" alt="..." />
 							<div className="card-body">
 								<h5 className="card-title">Reserva en {}</h5>
 								<p className="card-text">Fecha de reserva: {reserva.fecha_reserva}</p>
