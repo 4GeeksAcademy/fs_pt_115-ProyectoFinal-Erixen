@@ -1,39 +1,43 @@
-import React from 'react'
-import { PageHeader } from '../components/PageHeader'
+import React, { useState } from 'react';
+import { Navigate } from 'react-big-calendar';
+import { PageHeader } from "../components/PageHeader";
+import { file } from 'zod';
 
 export const CrearPista = () => {
+
+  
+  const [numeropista, setnumeroPista] = useState ("");
+  const [imagen, setImagen] = useState (file[0]);
+  const [imagenpistaDos, setImagenpistaDos] = useState (file[0]);
+  const [imagenpistaTres, setImagenpistaTres] = useState (file[0]);
   return (
-    <div>
-      <PageHeader
-        title=""
-      
+    <>
+
+      <div className='bg-primary bg-opacity-25 mt-5 rounded-top-5'>
+        <PageHeader
+        title="Creando tu nueva pista"
+        
       />
-      <h1 className='mb-5'>Estoy en proceso de mi formulario tenme un poco de paciencia "PROFESORES".</h1>
-      <div className="container m-2">
-        <div className="row">
-          <form>
-            <div className="imagen">
-              <label className='mb-1' htmlFor='imagen'>Inserte enlace de la imagen.</label>
-              <input className='form-control mb-3' type='text' id='imagen' placeholder='Obligatoria'required></input>
-            </div>
-            <div className="imagenDos">
-              <label className='mb-1' htmlFor='imagenDos'>Inserte segunda imagen.</label>
-              <input className='form-control mb-3' type='text' id='imagenDos' placeholder='Opcional'></input>
-            </div>
-            <div className="imagenTres">
-              <label className='mb-1' htmlFor='imagenTres'>Inserte tercera imagen.</label>
-              <input className='form-control mb-3' type='text' id='imagenTres' placeholder='Opcional'></input>
-            </div>
-            <div className='Numero de pista'>
-              <label className='mb-1' htmlFor='numeropista'>Numero de la pista.</label>
-              <input className='form-control mb-3' type='text' id='numeropista' placeholder='indica el numero de la pista' required></input> 
-            </div>
 
-          </form>
-
+        <div className='titulo p-3'>
+          <h1 className=''>Como Club aqui tienes el proceso para poder añadir tantas pistas como tengas.</h1>
         </div>
+        <form className='p-3'>
+          <label className='mb-3 mt-3' htmlFor='numero de pista'>Introduce el numero de pista</label>
+          <input type='text' className='form-control mb-5' id='numero de pista' placeholder='introduce el numero de la pista' required></input>
+          <label className='mb-3' htmlFor='imagenes'>Seleciona las imagenes de tu pista</label>
+          <input type="file" className='imagen form-control mb-2' required />
+          <input type="file" className='imagenpistaDos form-control mb-2' />
+          <input type="file" className='imagenpistaTres form-control mb-2' />
+          <div className='d-flex justify-content-center align-items-center'>
+            <button className='btn btn-outline-primary mt-3' type='submit' >Guardar pista.</button>
+          </div>
+        </form>
       </div>
-    </div>
+    </>
   )
 }
 
+// RECORDATORIO IMPORTANTE:
+
+// EN EL BACKEND NECESITAMOS LO QUE ES PARA LA PISTA TRES OPCIONES DE IMAGEN QUE SE PUEDAN REGISTRAR Y SE PUEDAN GUARDAR
