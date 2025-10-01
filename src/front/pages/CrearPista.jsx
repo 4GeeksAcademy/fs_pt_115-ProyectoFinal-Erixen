@@ -8,7 +8,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const CrearPista = () => {
 
-  const { id_club } = useParams()
+  //TRABAJAR AQUI EN LO QUE ESTA COMENTADO
+  //UNA VEZ QUE FUNCIONE SWEETALERT PARA EXITO.
+
+  // const { id_club } = useParams()
+  // const [idClub, setIdClub] = useState ("id_club")
   const [numeropista, setNumeroPista] = useState("");
   const [preciohora, setPrecioHora] = useState("");
   const [superficie, setSuperficie] = useState("");
@@ -18,7 +22,7 @@ export const CrearPista = () => {
     e.preventDefault();
 
     const newPista = {
-      id_club: id_club,
+      // id_club: idClub,
       numero_pista: numeropista,
       precio_hora: preciohora,
       superficie: superficie,
