@@ -38,7 +38,7 @@ export const PistasClub = () => {
             />
             { buttomCreate && (
             <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-outline-primary " type="button" onClick={()=>navigate("/crearPista")}>
+            <button class="btn btn-outline-primary " type="button" onClick={()=>navigate(`/crearPista/${id}`)}>
                 Crear pista
             </button>
             </div>
