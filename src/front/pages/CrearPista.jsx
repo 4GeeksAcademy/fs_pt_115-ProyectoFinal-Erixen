@@ -2,44 +2,73 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-big-calendar';
 import { PageHeader } from "../components/PageHeader";
 import { file, set } from 'zod';
-import { createPista } from '../../services/servicesAPI';
+import { createPista, getPistasClub } from '../../services/servicesAPI';
 import { id } from 'zod/locales';
 import { useNavigate, useParams } from "react-router-dom";
+import { PistasClub } from './PistasClub';
+import Swal from 'sweetalert2';
 
 export const CrearPista = () => {
 
-  //TRABAJAR AQUI EN LO QUE ESTA COMENTADO
-  //UNA VEZ QUE FUNCIONE SWEETALERT PARA EXITO.
+  const Navigate = useNavigate()
 
-  // const { id_club } = useParams()
-  // const [idClub, setIdClub] = useState ("id_club")
+  const { id_club } = useParams()
   const [numeropista, setNumeroPista] = useState("");
   const [preciohora, setPrecioHora] = useState("");
   const [superficie, setSuperficie] = useState("");
   const [estado, setEstado] = useState("");
 
-  const createPistaForApi = (e) => {
+
+
+  const createPistaForApi = async (e) => {
     e.preventDefault();
 
     const newPista = {
-      // id_club: idClub,
+      id_club: id_club,
       numero_pista: numeropista,
       precio_hora: preciohora,
       superficie: superficie,
       estado_pista: estado
     }
-    
-    createPista(newPista);
 
-    setNumeroPista("")
-    setEstado("")
-    setPrecioHora("")
-    setSuperficie("")
+    try {
+      const response = await createPista(newPista)
+      console.log("Pista creada con exito!", response)
+
+      setNumeroPista("")
+      setEstado("")
+      setPrecioHora("")
+      setSuperficie("")
+
+      await Swal.fire({
+        icon: 'success',
+        title: '¡Pista Creada!',
+        text: `La Pista ${newPista.numero_pista} ha sido añadida.`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      Navigate(`/pistas/${id_club}`)
+
+    } catch (err) {
+
+      console.error("ERROR");
+
+      const errorMessage = "Comprueba que todos los campos esten rellenos."
+      Swal.fire({
+        icon: 'error',
+        title: 'Error de Guardado',
+        text: errorMessage,
+        confirmButtonText: 'Entendido'
+      });
+
+    }
   }
+
 
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
-      navigate("/")
+      Navigate("/")
     }
   }, [localStorage.getItem("token")]);
 
@@ -58,7 +87,7 @@ export const CrearPista = () => {
         </div>
         <form className='p-3' onSubmit={createPistaForApi}>
           <label className='mb-3 mt-3' htmlFor='numero de pista'>Introduce el numero de pista</label>
-          <input type='text'
+          <input type='number'
             className='form-control mb-5'
             id='numero de pista'
             placeholder='introduce el numero de la pista'
@@ -75,15 +104,15 @@ export const CrearPista = () => {
             onChange={(e) => { setSuperficie(e.target.value) }}
             required />
           <datalist id='optionSuperficie'>
-            <option value="cesped" /> cambiar
-            <option value="hormigon" />
-            <option value="sintetico" />
+            <option value="CESPED" /> cambiar
+            <option value="HORMIGON" />
+            <option value="SINTETICO" />
           </datalist>
           <label className='form-label mb-3 ' htmlFor='precio pista'>Precio Hora.</label>
           <input type="text"
             className='form-control mb-2'
             id='precio pista'
-            placeholder='Precio de pista'
+            placeholder='Precio de pista, ej 10'
             value={preciohora}
             onChange={(e) => { setPrecioHora(e.target.value) }}
           />
@@ -96,8 +125,8 @@ export const CrearPista = () => {
             onChange={(e) => { setEstado(e.target.value) }}
             required />
           <datalist id='optionEstado'>
-            <option value="libre" />
-            <option value="mantenimiento" />
+            <option value="LIBRE" />
+            <option value="MANTENIMIENTO" />
           </datalist>
           <div className='d-flex justify-content-center align-items-center'>
             <button className='btn btn-outline-primary mt-3' type='submit' >Guardar pista.</button>
@@ -107,8 +136,3 @@ export const CrearPista = () => {
     </>
   )
 }
-
-// RECORDATORIO IMPORTANTE:
-
-// YA NO SE PUEDE TOCAR BACKEND, AL NO TENER LA OPCION DE IMAGEN LA CARTA SE QUEDARA SIMPLE CON SOLO TEXT.
-// CREO QUE HAY PROBLEMA EN LA RUTA PARA PODER CREAR LA PISTA FUNCIONALIDAD HECHA A MIRAR QUE LO GUARDE EN LA INFORMACION DEL CLUB.
