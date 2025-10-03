@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import { getPistas, getPistasClub, getReservas } from "../../services/servicesAPI.js";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { PageHeader } from "../components/PageHeader";
+import { CrearPista } from "./CrearPista.jsx";
 
 
 export const PistasClub = () => {
 
     const navigate = useNavigate()
-    const {id} = useParams()
+    const { id } = useParams()
     const [pistas, setPistas] = useState([]);
     const tipoDeUsuario = localStorage.getItem("user_type");
-    const clubId =localStorage.getItem("club_id");
-    const buttomCreate = tipoDeUsuario == "club";
-
-    console.log(id);
+    const clubId = localStorage.getItem("id")
+    const buttomCreate = tipoDeUsuario == "club" && clubId == id;
     
+
     useEffect(() => {
         if (localStorage.getItem("token") == null) {
             navigate("/")
@@ -36,12 +36,12 @@ export const PistasClub = () => {
                 title="Puedes ver todas nuestras pistas"
                 lead="Aqui encontraras todas las pistas de las que disponemos para ti y tus acompañantes, disfruta del encanto de nuestro club."
             />
-            { buttomCreate && (
-            <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-outline-primary " type="button" onClick={()=>navigate("/crearPista")}>
-                Crear pista
-            </button>
-            </div>
+            {buttomCreate && (
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-outline-primary " type="button" onClick={() => navigate(`/crearPista/${id}`)}>
+                        Crear pista
+                    </button>
+                </div>
             )}
 
             <div className="container row d-flex justify-content-center gap-3">
@@ -73,5 +73,3 @@ export const PistasClub = () => {
 
     );
 };
-
-// Aqui en este componente me hace falta meter la condicion de que el club logueado solo le aparezca el boton de crear en su perfil de club

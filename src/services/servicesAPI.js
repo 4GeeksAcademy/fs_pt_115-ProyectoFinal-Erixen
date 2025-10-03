@@ -1,5 +1,7 @@
 //---------------------------------------------------------------------
 
+import { id } from "zod/locales";
+
 // Registro de un usuario
 export const createUser = async (newUser) => {
 	const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
