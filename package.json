@@ -58,6 +58,7 @@
 		"@react-three/fiber": "^8.18.0",
 		"bootstrap-icons": "^1.13.1",
 		"moment": "^2.30.1",
+		"node-fetch": "^3.3.2",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-big-calendar": "^1.19.4",
