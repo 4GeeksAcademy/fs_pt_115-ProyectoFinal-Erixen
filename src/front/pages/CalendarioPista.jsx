@@ -171,45 +171,51 @@ export const CalendarioPista = () => {
     const id = localStorage.getItem("id")
 
     return (
-        <div className="container text-dark mt-3">
+        <div className="container-fluid text-dark mt-3 ">
 
             <h1 className="mb-4 text-center">
                 Horarios de la pista {pista['numero_pista']} de {' '}
                 <span style={{ color: '#3374beff' }}>{pista["club_info"]['nombre']}</span>
             </h1>
 
-            <div className="mx-auto mb-4" style={{ height: '600px', width: '1000px' }}>
-                <Calendar
-                    date={fechaVisible}
-                    localizer={localizer}
-                    events={eventos}
-                    startAccessor="start"
-                    endAccessor='end'
-                    dateFormat='DD/MM/YYYY'
-                    view={vista}
-                    step={30}
-                    timeslots={1}
-                    onView={(view) => {
-                        setVista(view)
-                        if (view == 'month' || view == 'week') {
-                            setFechaVisible(new Date())
-                        }
-                    }}
-                    onNavigate={(date) => setFechaVisible(date)}
-                    messages={{
-                        today: 'Hoy',
-                        previous: 'Anterior',
-                        next: 'Siguiente',
-                        month: 'Mes',
-                        week: 'Semana',
-                        day: 'Día'
-                    }}
-                    components={{
-                        dateCellWrapper: celdasPersonalizadas,
-                        timeSlotWrapper: celdasHorasPersonalizadas
-                    }}
-                    eventPropGetter={estiloReservas}
-                />
+
+            <div className="d-flex justify-content-center">
+                <div className="overflow-x-auto">
+                    <div className="mb-4" style={{ height: '600px', width: '1000px' }}>
+
+                        <Calendar
+                            date={fechaVisible}
+                            localizer={localizer}
+                            events={eventos}
+                            startAccessor="start"
+                            endAccessor='end'
+                            dateFormat='DD/MM/YYYY'
+                            view={vista}
+                            step={30}
+                            timeslots={1}
+                            onView={(view) => {
+                                setVista(view)
+                                if (view == 'month' || view == 'week') {
+                                    setFechaVisible(new Date())
+                                }
+                            }}
+                            onNavigate={(date) => setFechaVisible(date)}
+                            messages={{
+                                today: 'Hoy',
+                                previous: 'Anterior',
+                                next: 'Siguiente',
+                                month: 'Mes',
+                                week: 'Semana',
+                                day: 'Día'
+                            }}
+                            components={{
+                                dateCellWrapper: celdasPersonalizadas,
+                                timeSlotWrapper: celdasHorasPersonalizadas
+                            }}
+                            eventPropGetter={estiloReservas}
+                        />
+                    </div>
+                </div>
             </div>
 
             {modalVisible && (
