@@ -7,7 +7,7 @@ export const Footer = () => {
 	return (
 		<div>
 			<hr className="text-black mb-0" />
-			<div className='d-md-flex'>
+			<div className='d-md-flex'  style={{backgroundColor: "white"}}>
 				<div className="col-12 col-md-6">
 					<div className='px-4 py-3'>
 						<p className="text-black mb-0 py-1" style={{ fontSize: "20px" }}>Síguenos en nuestras redes sociales!</p>
