@@ -22,7 +22,7 @@ export const Layout = () => {
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <ScrollToTop>
                     <Navbar/>
-                    <main style={{ flex: 1, width: '100%', padding: '0 1rem' }}>
+                    <main style={{ flex: 1, width: '100%' }}>
                         <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
                             <Outlet />
                         </div>
