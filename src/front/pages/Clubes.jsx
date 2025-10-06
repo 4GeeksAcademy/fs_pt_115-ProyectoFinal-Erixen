@@ -25,10 +25,11 @@ export const Clubes = () => {
 
 	// // FUNCION PARA UN FUTURO PARA CONSEGUIR LOS CLUBS
 
-	useEffect(()=>{
+	useEffect(() => {
 		getClubsFromApi()
 
-	},[])
+
+	}, [])
 
 	return (
 		<>
@@ -38,9 +39,10 @@ export const Clubes = () => {
 			/>
 			<div className="container row mx-auto">
 				{/*carousel*/}
-				{
-						(clubs.map((Club) => (
-						<div className="card m-2" style={{ width: "400px", height: "700px" }}>
+				{/* linea 43 es el operador ternario que hace la condicion de que renderizar si esta el array vacio o tiene longitud */}
+				{clubs && clubs.length > 0 ? 
+					(clubs.map((Club) => (
+						<div className="card m-2" key={Club.id} style={{ width: "400px", height: "700px" }}>
 							<div id="carouselExample" className="carousel slide">
 								<div className="carousel-inner">
 									<div className="carousel-item active ratio ratio-1x1">
@@ -70,10 +72,14 @@ export const Clubes = () => {
 
 						</div>
 					))
-					)
-				}
+					) : (
+					<div className="col-12 mt-5 p-5 text-center">
+						<h2 className="text-dark mb-3">Aún no hay clubes registrados.</h2>
+						<p className="lead">Vuelve pronto, ¡esperamos tener nuevos clubes para ti!</p>
+					</div>
+				)}
 			</div>
-			
+
 
 
 		</>
