@@ -26,7 +26,7 @@ export const PistasClub = () => {
                     setPistas([]); // Si no hay pistas, asegura que el estado esté vacío
                 }
             })
-            
+            .catch(error => console.error("Error al cargar pistas:", error));
         }
 
         const deleteField = async (pistaId, numeroPista) => {
@@ -52,7 +52,7 @@ export const PistasClub = () => {
                     fetchPistas();
 
                 } catch (error) {
-                    
+                    console.error("Error al eliminar la pista:", error);
                     Swal.fire('Error', 'No se pudo eliminar la pista.', 'error');
                 }
             }
@@ -69,7 +69,7 @@ export const PistasClub = () => {
             }
         }, [localStorage.getItem("token")])
 
-     
+        console.log(pistas[id]);
 
 
         return (

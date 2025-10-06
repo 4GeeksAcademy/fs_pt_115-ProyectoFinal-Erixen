@@ -33,7 +33,7 @@ export const CrearPista = () => {
 
     try {
       const response = await createPista(newPista)
-      
+      console.log("Pista creada con exito!", response)
 
       setNumeroPista("")
       setEstado("")
@@ -52,7 +52,7 @@ export const CrearPista = () => {
 
     } catch (err) {
 
-    
+      console.error("ERROR");
 
       const errorMessage = "Comprueba que todos los campos esten rellenos."
       Swal.fire({

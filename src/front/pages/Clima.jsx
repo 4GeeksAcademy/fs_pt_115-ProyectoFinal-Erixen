@@ -44,7 +44,7 @@ export const Clima = () => {
 
             setClima(climaData[0]);
         } catch (error) {
-            
+            console.error("Error obteniendo clima:", error);
         } finally {
             setLoading(false);
         }
