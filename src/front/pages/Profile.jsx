@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getClub, getUserForId, updateClub, updateUser } from "../../services/servicesAPI";
+import { Link } from "react-router-dom";
 
 
 export const Profile = () => {
@@ -31,7 +32,6 @@ export const Profile = () => {
     }
   }, [id, tipoDeUsuario]);
 
-  console.log(user)
 
   useEffect(() => {
     if (tipoDeUsuario == "user") {
@@ -58,7 +58,7 @@ export const Profile = () => {
     }
   }, [user, club]);
 
-  console.log(club)
+
 
 
   const [ModoEdicion, SetModoEdicion] = useState(false)
@@ -90,7 +90,7 @@ export const Profile = () => {
   const handleInputimagenTres = (e) => { setInputimagenTres(e.target.value) }
   const handleInputDescripcion = (e) => { setInputDescripcion(e.target.value) }
 
-  console.log(id)
+
 
   return (
     <>
@@ -112,7 +112,8 @@ export const Profile = () => {
       {tipoDeUsuario == "user" && (
         user && (
 
-          <div className="container mi-caja mt-5 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "600px" }}>
+          <div className="container mi-caja mt-5 p-1 pb-2" style={{ borderRadius: "10px",}}>
+            
             <div className="d-flex justify-content-between">
               <div className="Spacer No borrar"></div>
               <img src="default_profile.jpg" className="ms-3" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} />
@@ -128,18 +129,18 @@ export const Profile = () => {
                   <div className=" col-12 col-md-12 align-items-center" >
                     <div className="" style={{ borderRadius: "10px" }}>
                       <div className="d-flex justify-content-center mx-auto align-items-center" >
-                        <h3 className="mt-2" style={{ fontFamily: "Lexend Peta" }}>{user.nombre}</h3>
-                        <h3 style={{ fontFamily: "Lexend Peta" }} className="ms-2 mt-2">{user.apellidos}</h3>
+                        <h3 className="mt-2" >{user.nombre}</h3>
+                        <h3  className="ms-2 mt-2">{user.apellidos}</h3>
                       </div>
                     </div>
                   </div>
                   <div className=" col-12 col-md-12 align-items-center" >
                     <div className="" style={{ borderRadius: "10px" }}>
                       <div className="d-flex flex-column align-items-center">
-                        <h3 className="mt-2" style={{ fontFamily: "Lexend Peta" }}>{user.email}</h3>
+                        <h3 className="mt-2" >{user.email}</h3>
                       </div>
                       <div className="d-flex flex-column align-items-center">
-                        <h3 className="mt-2" style={{ fontFamily: "Lexend Peta" }}>{user.telefono}</h3>
+                        <h3 className="mt-2" >{user.telefono}</h3>
                       </div>
                     </div>
                   </div>
@@ -147,10 +148,12 @@ export const Profile = () => {
                     <div className="mt-2 align-items-center" >
                       <div>
                         <div className="d-flex flex-column align-items-center" >
-                          <h2 className="mt-1" style={{ fontFamily: "DM Serif Text" }}>MIS RESERVAS</h2>
+                          <h2 className="mt-1" >MIS RESERVAS</h2>
                         </div>
                         <div className="d-flex flex-column pb-2 align-items-center">
-                          <button type="button" style={{ fontFamily: "DM Serif Text" }} className="btn btn-outline-primary btn-lg">ACCEDER</button>
+                          <Link to={`/reservas/${id}`}>
+                          <button type="button"  className="btn btn-outline-primary btn-lg">ACCEDER</button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -161,7 +164,7 @@ export const Profile = () => {
                 <div className="row m-0 d-flex justify-content-around">
                   <div className="mt-2 col-12 col-md-12 align-items-center" >
                     <div className="pb-2" style={{ borderRadius: "10px" }}>
-                      <div className="d-flex flex-column align-items-center" >
+                      <div className="d-flex flex-column align-items-center" style={{width: "auto"}} >
                         <label htmlFor="nombre"><h3>NOMBRE:</h3></label>
                         <input className="form-control text-center border-0" placeholder={user.nombre} type="text" value={inputNombre} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputNombre(e)} id="nombre" />
 
@@ -172,7 +175,7 @@ export const Profile = () => {
                   </div>
                   <div className="mt-2 col-12 col-md-12 align-items-center" >
                     <div className="pb-2" style={{ borderRadius: "10px" }}>
-                      <div className="d-flex flex-column align-items-center" >
+                      <div className="d-flex flex-column align-items-center" style={{width: "auto"}}  >
                         <label htmlFor="Email"><h3>EMAIL:</h3></label>
                         <input className="form-control text-center border-0" placeholder={user.email} type="text" value={inputEmail} style={{ backgroundColor: "transparent", color: "black" }} onChange={(e) => handleInputEmail(e)} id="Email" />
 
@@ -194,17 +197,17 @@ export const Profile = () => {
                         };
 
                         const result = await updateUser(id, updatedDataUser);
-                        console.log(updatedDataUser);
+                        
 
                         if (result.error) {
                           alert(`Error al actualizar:${result.error.message}`);
-                          console.error(result.error);
+                          
                         } else {
                           // actualiza el estado local para que la UI refleje los cambios
                           setUser(prev => ({ ...prev, ...updatedDataUser }));
                           SetModoEdicion(false); // opcional: salir del modo edición
                           alert("Usuario actualizado correctamente");
-                          console.log(result);
+                          
                         }
                       }}
                       className="btn btn-outline-primary btn-lg"
@@ -221,7 +224,7 @@ export const Profile = () => {
       )}
       {tipoDeUsuario == "club" && (
         club && (
-          <div className="container mi-caja mt-5 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", maxWidth: "500px" }}>
+          <div className="container mi-caja mt-5 p-1 pb-2" id="FondoMegatop" style={{ borderRadius: "10px", }}>
             <div className="d-flex justify-content-between">
               <div className="Spacer No borrar"></div>
               <img src="default_profile.jpg" className="ms-3" style={{ maxWidth: "150px", maxHeight: "200px", borderRadius: "100px", objectFit: "cover", }} />
@@ -265,82 +268,81 @@ export const Profile = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                      <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          Accordion Item #1
+                 
+                  <div class="accordion text-center " id="accordionExample">
+                    <div class="accordion-item text-center">
+                      <h2 class="accordion-header text-center">
+                        <button class="accordion-button text-center mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <span className="mx-auto me-2">ACABA DE PERSONALIZAR TU CLUB</span>
                         </button>
                       </h2>
+                      <div id="collapseOne" class="accordion-collapse text-center mx-auto collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body  text-center mx-auto">
+                          <div className=" col-md-10 mt-2  text-center mx-auto align-items-center" id="divAcederReservas" style={{ borderRadius: "10px" }}>
+                            <div className="mt-2 align-items-center text-center" >
+                              <div>
+                                <div className="d-flex text-center flex-column pb-2 align-items-center">
+                                  <h2 className="mt-2 text-center">PON IMAGENES</h2>
+                                  <label className="mt-2" htmlFor="Imagen1"><h3>IMAGEN 1:</h3></label>
+                                  <input className="form-control text-center border-0" placeholder={club.imagenTres} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputImagen1} onChange={(e) => handleInputImagen1(e)} id="Imagen1" />
+                                  <label htmlFor="imagenDos"><h3>IMAGEN 2:</h3></label>
+                                  <input className="form-control text-center border-0" placeholder={club.imagenDos} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputimagenDos} onChange={(e) => handleInputimagenDos(e)} id="imagenDos" />
+                                  <label htmlFor="imagenTres"><h3>IMAGEN 3:</h3></label>
+                                  <input className="form-control text-center border-0" placeholder={club.imagenTres} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputimagenTres} onChange={(e) => handleInputimagenTres(e)} id="imagenTres" />
+                                  <label htmlFor="DescripcionDeClub"><h3>DESCRIBE TU CLUB:</h3></label>
+                                  <div className="form-floating mb-4 text-primary">
+                                    <textarea
+                                      className="form-control"
+                                      id="DescripcionDeClub"
+                                      placeholder="Cuentanos como es tu club"
+                                      style={{ backgroundColor: "transparent", color: "black" }}
+                                      value={inputDescripcion}
+                                      onChange={(e) => handleInputDescripcion(e)}
+                                      required
+                                    ></textarea>
+                                  </div>
+                                  <button
 
-                      <div className=" col-md-10 mt-2 align-items-center" id="divAcederReservas" style={{ borderRadius: "10px" }}>
-                        <div className="mt-2 align-items-center" >
-                          <div>
-                            <div className="d-flex text-center flex-column align-items-center" >
-                              <h2 className="mt-1" style={{}}>ACABA DE PERSONALIZAR TU CLUB</h2>
-                            </div>
-                            <div className="d-flex flex-column pb-2 align-items-center">
-                              <h2 className="mt-2">PON IMAGENES</h2>
-                              <label className="mt-2" htmlFor="Imagen1"><h3>IMAGEN 1:</h3></label>
-                              <input className="form-control text-center border-0" placeholder={club.imagenTres} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputImagen1} onChange={(e) => handleInputImagen1(e)} id="Imagen1" />
-                              <label htmlFor="imagenDos"><h3>IMAGEN 2:</h3></label>
-                              <input className="form-control text-center border-0" placeholder={club.imagenDos} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputimagenDos} onChange={(e) => handleInputimagenDos(e)} id="imagenDos" />
-                              <label htmlFor="imagenTres"><h3>IMAGEN 3:</h3></label>
-                              <input className="form-control text-center border-0" placeholder={club.imagenTres} style={{ backgroundColor: "transparent", color: "black" }} type="text" value={inputimagenTres} onChange={(e) => handleInputimagenTres(e)} id="imagenTres" />
-                              <label htmlFor="DescripcionDeClub"><h3>DESCRIBE TU CLUB:</h3></label>
-                              <div className="form-floating mb-4 text-primary">
-                                <textarea
-                                  className="form-control"
-                                  id="DescripcionDeClub"
-                                  placeholder="Cuentanos como es tu club"
-                                  style={{ backgroundColor: "transparent", color: "black" }}
-                                  value={inputDescripcion}
-                                  onChange={(e) => handleInputDescripcion(e)}
-                                  required
-                                ></textarea>
+                                    type="button"
+                                    onClick={async () => {
+                                      const updatedDataIMGS = {
+                                        imagen: (inputImagen1 ?? "").trim() || (club?.imagen ?? ""),
+                                        imagenDos: (inputimagenDos ?? "").trim() || (club?.imagenDos ?? ""),
+                                        imagenTres: (inputimagenTres ?? "").trim() || (club?.imagenTres ?? ""),
+                                        descripcion: (inputDescripcion ?? "").trim() || (club?.descripcion ?? ""),
+                                        // LOS PONGO PARA NO TOCAR BACK-END YA QUE SON NECESARIOS PARA PODER MODIFICAR
+                                        nombre: (inputNombre ?? "").trim() || (club?.nombre ?? ""),
+                                        direccion: (inputDireccion ?? "").trim() || (club?.direccion ?? ""),
+                                        hora_apertura: (inputHoraApertura ?? "").trim() || (club?.hora_apertura ?? ""),
+                                        hora_cierre: (inputHoraDeCierre ?? "").trim() || (club?.hora_cierre ?? ""),
+                                        email: (inputEmail ?? "").trim() || (club?.email ?? ""),
+                                        telefono: (((inputTelefono ?? "") || (club?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
+                                      };
+
+                                      const result = await updateClub(id, updatedDataIMGS);
+                                      
+
+                                      if (result.error) {
+                                        alert(`Error al actualizar:${result.error.message}`);
+                                        
+                                      } else {
+                                        // actualiza el estado local para que la UI refleje los cambios
+                                        setClub(prev => ({ ...prev, ...updatedDataIMGS }));
+                                        SetModoEdicion(false); // opcional: salir del modo edición
+                                        alert("Club actualizado correctamente");
+                                        
+                                      }
+                                    }}
+                                    className="btn btn-outline-primary btn-lg"
+                                  >
+                                    Guardar Cambios
+                                  </button>
+                                </div>
                               </div>
-                              <button
-
-                                type="button"
-                                onClick={async () => {
-                                  const updatedDataIMGS = {
-                                    imagen: (inputImagen1 ?? "").trim() || (club?.imagen ?? ""),
-                                    imagenDos: (inputimagenDos ?? "").trim() || (club?.imagenDos ?? ""),
-                                    imagenTres: (inputimagenTres ?? "").trim() || (club?.imagenTres ?? ""),
-                                    descripcion: (inputDescripcion ?? "").trim() || (club?.descripcion ?? ""),
-                                    // LOS PONGO PARA NO TOCAR BACK-END YA QUE SON NECESARIOS PARA PODER MODIFICAR
-                                    nombre: (inputNombre ?? "").trim() || (club?.nombre ?? ""),
-                                    direccion: (inputDireccion ?? "").trim() || (club?.direccion ?? ""),
-                                    hora_apertura: (inputHoraApertura ?? "").trim() || (club?.hora_apertura ?? ""),
-                                    hora_cierre: (inputHoraDeCierre ?? "").trim() || (club?.hora_cierre ?? ""),
-                                    email: (inputEmail ?? "").trim() || (club?.email ?? ""),
-                                    telefono: (((inputTelefono ?? "") || (club?.telefono ?? "")).toString().replace(/\D/g, "")) // elimina cualquier letra
-                                  };
-
-                                  const result = await updateClub(id, updatedDataIMGS);
-                                  console.log(updatedDataIMGS);
-
-                                  if (result.error) {
-                                    alert(`Error al actualizar:${result.error.message}`);
-                                    console.error(result.error);
-                                  } else {
-                                    // actualiza el estado local para que la UI refleje los cambios
-                                    setClub(prev => ({ ...prev, ...updatedDataIMGS }));
-                                    SetModoEdicion(false); // opcional: salir del modo edición
-                                    alert("Club actualizado correctamente");
-                                    console.log(result);
-                                  }
-                                }}
-                                className="btn btn-outline-primary btn-lg"
-                              >
-                                Guardar Cambios
-                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
 
@@ -400,17 +402,17 @@ export const Profile = () => {
                         };
 
                         const result = await updateClub(id, updatedDataUser);
-                        console.log(updatedDataUser);
+                       
 
                         if (result.error) {
                           alert(`Error al actualizar:${result.error.message}`);
-                          console.error(result.error);
+                          
                         } else {
                           // actualiza el estado local para que la UI refleje los cambios
                           setClub(prev => ({ ...prev, ...updatedDataUser }));
                           SetModoEdicion(false); // opcional: salir del modo edición
                           alert("Club actualizado correctamente");
-                          console.log(result);
+                          
                         }
                       }}
                       className="btn btn-outline-primary btn-lg"

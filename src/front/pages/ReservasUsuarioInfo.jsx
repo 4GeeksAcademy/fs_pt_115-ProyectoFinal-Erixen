@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 export const ReservasUsuarioInfo = () => {
 	const { idReserva } = useParams(); // aquí recuperas el id de la URL
 
-	console.log(idReserva)
+	
 
 	const navigate = useNavigate()
 
@@ -34,7 +34,7 @@ export const ReservasUsuarioInfo = () => {
 				const UserArray = await getUser(id); // esto devuelve un array
 				setUser(UserArray[0]); // me quedo con el objeto dentro
 			} catch (error) {
-				console.error("Error cargando usuario:", error);
+				
 			}
 		};
 
@@ -48,12 +48,12 @@ export const ReservasUsuarioInfo = () => {
 		const fetchReserva = async () => {
 			try {
 				const data = await getReserva(idReserva); // esto devuelve un objeto
-				console.log("Reserva recibida:", data);    // inspecciona los datos
+				
 				setreserva(data);
 				const pista = await getPista(data.id_pista)
 				setpista(pista)                           // guarda directamente el objeto
 			} catch (error) {
-				console.error("Error cargando reserva:", error);
+				
 			}
 		};
 

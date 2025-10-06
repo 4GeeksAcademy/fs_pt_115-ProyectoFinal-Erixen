@@ -27,7 +27,7 @@ const [reserva, setreserva] = useState();
 				const userTemp = ((Array.isArray(data) ? data[0] : data))
 				setreserva(userTemp.reservas || [])
 			} catch (error) {
-				console.error("Error cargando usuario:", error);
+				
 			}
 		};
 		fetchUser();
@@ -37,6 +37,21 @@ const [reserva, setreserva] = useState();
 	
 
 	return (
+		<>
+		<div class="background" style={{ zIndex: "-99" }}>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+        <span class="ball"></span>
+      </div>
 		<div className="container">
 			<PageHeader 
 			title="Mis Reservas"
@@ -61,10 +76,8 @@ const [reserva, setreserva] = useState();
 				) : (user.reservas.map((reserva) => (
 					<div key={reserva.id} className="col-md-3 col-12 mt-2">
 						<div className="card mi-caja-reservas" style={{ width: "18rem;" }}>
-							<img src="miraESTOpeneycaca.jpg" className="card-img-top boorder border-bottom" alt="..." />
 							<div className="card-body">
-								<h5 className="card-title">Reserva en {}</h5>
-								<p className="card-text">Fecha de reserva: {reserva.fecha_reserva}</p>
+								<h5 className="card-title">Tu reserva del dia {reserva.fecha_reserva}</h5>
 								<p className="card-text">Horario: {reserva.hora_inicio} a {reserva.hora_fin}</p>
 
 							</div>
@@ -80,5 +93,6 @@ const [reserva, setreserva] = useState();
 
 			</div>
 		</div >
+		</>
 	);
 };              
