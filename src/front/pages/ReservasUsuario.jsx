@@ -45,7 +45,17 @@ const [reserva, setreserva] = useState();
 			
 			<div className="row  d-flex justify-content-around mt-3">
 				{!user ? (
-					<p className="text-center">Cargando reservas...</p>
+					<div class="loader">
+						<div class="square" id="sq1"></div>
+						<div class="square" id="sq2"></div>
+						<div class="square" id="sq3"></div>
+						<div class="square" id="sq4"></div>
+						<div class="square" id="sq5"></div>
+						<div class="square" id="sq6"></div>
+						<div class="square" id="sq7"></div>
+						<div class="square" id="sq8"></div>
+						<div class="square" id="sq9"></div>
+					</div>
 				) : !user.reservas || user.reservas.length === 0 ? (
 					<p className="text-center">No tienes reservas todavía.</p>
 				) : (user.reservas.map((reserva) => (
