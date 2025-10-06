@@ -17,7 +17,10 @@ import { ContactUs } from "./pages/ContactUs";
 import { ReservasUsuarioInfo } from "./pages/ReservasUsuarioInfo";
 import { CalendarioPista } from "./pages/CalendarioPista";
 import { CrearPista } from "./pages/CrearPista";
-import { PistasClub } from "./pages/PistasClub"
+import { PistasClub } from "./pages/PistasClub";
+import { Clima } from "./pages/Clima";
+
+
 export const router = createBrowserRouter(
   createRoutesFromElements(
     // CreateRoutesFromElements function allows you to build route elements declaratively.
@@ -38,12 +41,11 @@ export const router = createBrowserRouter(
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/reservas/:user_id" element={<ReservasUsuario />} />
-        <Route path="/reservasInfo/:idReserva" element={<ReservasUsuarioInfo />} />
+      <Route path="/reservasInfo/:idReserva" element={<ReservasUsuarioInfo />} />
       <Route path="/contacto" element={<ContactUs />} />
       <Route path="/calendario-pista/:pista_id" element={<CalendarioPista />} />
       <Route path="/crearPista/:id_club" element={<CrearPista />} />
+      <Route path="/clima" element={<Clima />} />
     </Route>
   )
 );
-
-//añadido aqui ruta para crear pista linea 42;
