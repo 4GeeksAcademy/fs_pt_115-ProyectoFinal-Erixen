@@ -25,19 +25,19 @@ export const SobreNosotros = () => {
 
 		<div className=" text-center text-dark">
 			<PageHeader
-					title="Sobre Nosotros"
+					title="Sobre nosotros"
 					lead="Conoce más sobre el equipo y el propósito de nuestro proyecto."
 				/>
 
 			<div className="row mt-5">
 				<div className="col-md-6">
-					<h2>Nuestra Misión</h2>
+					<h2>Nuestra misión</h2>
 					<p>
 						¿Pádel? Menos líos, más juego. Olvídate de organizar. Solo abre la app, reserva y a disfrutar en la pista.
 					</p>
 				</div>
 				<div className="col-md-6">
-					<h2>Nuestra Visión</h2>
+					<h2>Nuestra visión</h2>
 					<p>
 						Pádel para todos. Así de simple. Queremos que cualquiera pueda jugar. Fácil, divertido y a tu alcance. ¡Únete a la comunidad!
 					</p>
@@ -46,7 +46,7 @@ export const SobreNosotros = () => {
 
 			<div className="row mt-5 justify-content-center">
 				<div className="col-lg-8">
-					<h2 className="mb-4">El Creador</h2>
+					<h2 className="mb-4">El creador</h2>
 					{/* 2. usamos las props del objeto */}
 					<img src={creatorInfo.image} alt="Logo de Erixen" className="img-fluid rounded-circle mb-3" style={{ width: "150px", height: "150px" }} />
 					<h4>{creatorInfo.name}</h4>

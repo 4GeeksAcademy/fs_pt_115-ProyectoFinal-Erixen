@@ -24,11 +24,7 @@ export const Navbar = () => {
 						<a className="navbar-brand text-white ms-1" style={{ fontFamily: "Impact, fantasy" }}>Padel+</a>
 					</div>
 
-					<button className="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
-
-					<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<div>
 						<ul className="navbar-nav ms-auto">
 							<li className="nav-item m-1">
 								<button type="button" className="btn btn-outline-light" style={{ border: "none" }} onClick={() => setShowLoginModal(true)}>Iniciar sesión</button>
@@ -67,13 +63,18 @@ export const Navbar = () => {
 								</Link>
 							</li>
 							<li className="nav-item m-1">
+								<Link to="/clima">
+									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Clima</button>
+								</Link>
+							</li>
+							<li className="nav-item m-1">
 								<Link to="/sobre-nosotros">
 									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Sobre nosotros</button>
 								</Link>
 							</li>
 							<li className="nav-item m-1">
 								<Link to="/contacto">
-									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>¡Contáctanos!</button>
+									<button type="button" className="btn btn-outline-light" style={{ border: "none" }}>Contáctanos</button>
 								</Link>
 							</li>
 							<li className="nav-item dropdown m-1" style={{ paddingLeft: "12px", paddingRight: "12px" }}>

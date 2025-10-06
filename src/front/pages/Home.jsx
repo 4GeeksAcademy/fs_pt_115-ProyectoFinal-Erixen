@@ -31,26 +31,36 @@ export const Home = () => {
 				{/* body section */}
 				<div className="container my-5">
 					<div className="row text-center">
-						<div className="col-md-4 mb-4">
+						<div className="col-sm-12 col-md-6 col-lg-3 mb-4">
 							<div className="card h-100">
 								{/* deberia aplicar un efectivo de hover a las cards de aqui embaixo */}
 								<div className="card-body">
-									<h5 className="card-title">Encuentra Clubes</h5>
+									<h5 className="card-title">Encuentra clubes</h5>
 									<p className="card-text">Explora los clubes de pádel cercanos y encuentra el lugar perfecto para tu próximo partido.</p>
-									<Link to="/clubes" className="btn btn-outline-primary boton-padelplus">Ver Clubes</Link>
+									<Link to="/clubes" className="btn btn-outline-primary boton-padelplus">Ver clubes</Link>
 								</div>
 							</div>
 						</div>
-						<div className="col-md-4 mb-4">
+						<div className="col-sm-12 col-md-6 col-lg-3 mb-4">
+							<div className="card h-100">
+								{/* deberia aplicar un efectivo de hover a las cards de aqui embaixo */}
+								<div className="card-body">
+									<h5 className="card-title">Predicción del clima</h5>
+									<p className="card-text">Consulta el tiempo que hará en tu ciudad durante los próximos 7 días antes de reservar pista.</p>
+									<Link to="/clima" className="btn btn-outline-primary boton-padelplus">Ver clima</Link>
+								</div>
+							</div>
+						</div>
+						<div className="col-sm-12 col-md-6 col-lg-3 mb-4">
 							<div className="card h-100">
 								<div className="card-body">
-									<h5 className="card-title">Gestiona tus Reservas</h5>
-									<p className="card-text">Accede a tu historial de reservas, y gestiona tus partidos con facilidad.</p>
-									<Link to="/reservas/1" className="btn btn-outline-primary boton-padelplus">Mis Reservas</Link>
+									<h5 className="card-title">Gestiona tus reservas</h5>
+									<p className="card-text">Accede a tu historial de reservas de pistas, y gestiona tus partidos con facilidad.</p>
+									<Link to="/reservas/<int:user_id>" className="btn btn-outline-primary boton-padelplus">Mis reservas</Link>
 								</div>
 							</div>
 						</div>
-						<div className="col-md-4 mb-4">
+						<div className="col-sm-12 col-md-6 col-lg-3 mb-4">
 							<div className="card h-100">
 								<div className="card-body">
 									<h5 className="card-title">Tu Perfil</h5>
