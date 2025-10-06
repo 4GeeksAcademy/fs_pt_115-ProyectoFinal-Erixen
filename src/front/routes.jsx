@@ -41,7 +41,7 @@ export const router = createBrowserRouter(
         <Route path="/reservasInfo/:idReserva" element={<ReservasUsuarioInfo />} />
       <Route path="/contacto" element={<ContactUs />} />
       <Route path="/calendario-pista/:pista_id" element={<CalendarioPista />} />
-      <Route path="/crearPista" element={<CrearPista />} />
+      <Route path="/crearPista/:id_club" element={<CrearPista />} />
     </Route>
   )
 );
