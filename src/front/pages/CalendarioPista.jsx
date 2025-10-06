@@ -127,7 +127,7 @@ export const CalendarioPista = () => {
                     onClick={() => {
                         if (!disponible) return;
 
-                        // console.log(value);
+                       
 
 
                         const inicio = moment(value);
@@ -153,7 +153,7 @@ export const CalendarioPista = () => {
 
         getPista(pista_id).then((data) => {
             setPista(data)
-            console.log(data);
+           
 
             const eventosFormateados = data['reservas'].map(reserva => ({
                 title: "Reservado",
@@ -237,7 +237,7 @@ export const CalendarioPista = () => {
                                     onClick={async () => {
                                         const { inicio, fin } = celdaSeleccionada
 
-                                        console.log(celdaSeleccionada);
+                                       
                                         setModalDosVisible(true)
                                         setModalVisible(false)
 
@@ -251,12 +251,12 @@ export const CalendarioPista = () => {
                                             });
 
                                             if (response.status === 200 || response.status === 201) {
-                                                console.log("Reserva creada: ", response.msg);
+                                                
                                             } else {
-                                                console.error("Error creando reserva: ", response.msg);
+                                                
                                             }
                                         } catch (err) {
-                                            console.error("Error en la petición:", err);
+                                            
                                         }
 
                                         setRecarga(prev => !prev)
